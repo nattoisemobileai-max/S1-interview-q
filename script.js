@@ -14,6 +14,7 @@ const questionCountInput = document.getElementById('questionCount');
 let schoolsData = null;
 let questionsData = null;
 let mathQuestionsData = null;
+let quickSetButtons = [];
 
 // Load schools data
 async function loadSchoolsData() {
@@ -307,7 +308,7 @@ function getDisplayNameForQuestionType(type) {
     return names[type] || type;
 }
 
-// Toggle answer visibility - FIXED VERSION
+// Toggle answer visibility
 function toggleAnswer(questionId) {
     const answerPanel = document.getElementById(`answer-${questionId}`);
     const button = document.getElementById(`btn-${questionId}`);
@@ -316,10 +317,7 @@ function toggleAnswer(questionId) {
         if (answerPanel.classList.contains('show')) {
             // Hide the answer
             answerPanel.style.maxHeight = answerPanel.scrollHeight + "px";
-            
-            // Force reflow to make the transition work
             answerPanel.offsetHeight;
-            
             answerPanel.style.maxHeight = "0";
             answerPanel.classList.remove('show');
             
@@ -327,7 +325,7 @@ function toggleAnswer(questionId) {
                 if (!answerPanel.classList.contains('show')) {
                     answerPanel.style.overflow = "hidden";
                 }
-            }, 500); // Match the transition duration
+            }, 500);
             
             button.innerHTML = '<i class="fas fa-eye"></i> View Answer';
             button.classList.remove('active');
@@ -335,27 +333,22 @@ function toggleAnswer(questionId) {
             // Show the answer
             answerPanel.classList.add('show');
             answerPanel.style.overflow = "hidden";
-            
-            // Set initial height
             answerPanel.style.maxHeight = "0";
             
-            // Calculate the actual height needed
             const contentHeight = answerPanel.querySelector('.answer-content').scrollHeight;
-            const padding = 50; // Account for padding
+            const padding = 50;
             const totalHeight = contentHeight + padding;
             
-            // Set the max-height to show all content
             setTimeout(() => {
                 answerPanel.style.maxHeight = totalHeight + "px";
             }, 10);
             
-            // After transition completes, allow content to expand naturally
             setTimeout(() => {
                 if (answerPanel.classList.contains('show')) {
                     answerPanel.style.maxHeight = "none";
                     answerPanel.style.overflow = "visible";
                 }
-            }, 550); // Slightly longer than transition duration
+            }, 550);
             
             button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
             button.classList.add('active');
@@ -363,7 +356,7 @@ function toggleAnswer(questionId) {
     }
 }
 
-// Toggle section collapse/expand - FIXED VERSION
+// Toggle section collapse/expand
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -380,7 +373,6 @@ function toggleSection(sectionId) {
             content.style.padding = "20px";
             content.style.overflow = "visible";
             
-            // After transition, remove max-height to allow natural expansion
             setTimeout(() => {
                 if (!header.classList.contains('collapsed')) {
                     content.style.maxHeight = "none";
@@ -390,10 +382,7 @@ function toggleSection(sectionId) {
             // Collapse
             header.classList.add('collapsed');
             content.style.maxHeight = content.scrollHeight + "px";
-            
-            // Force reflow
             content.offsetHeight;
-            
             content.style.maxHeight = "0";
             content.style.opacity = "0";
             content.style.padding = "0 20px";
@@ -405,7 +394,6 @@ function toggleSection(sectionId) {
 // Expand all sections
 function expandAllSections() {
     document.querySelectorAll('.section').forEach(section => {
-        const sectionId = section.id;
         const header = section.querySelector('.section-header');
         const content = section.querySelector('.section-content');
         
@@ -428,14 +416,13 @@ function expandAllSections() {
 // Collapse all sections
 function collapseAllSections() {
     document.querySelectorAll('.section').forEach(section => {
-        const sectionId = section.id;
         const header = section.querySelector('.section-header');
         const content = section.querySelector('.section-content');
         
         if (header && content) {
             header.classList.add('collapsed');
             content.style.maxHeight = content.scrollHeight + "px";
-            content.offsetHeight; // Force reflow
+            content.offsetHeight;
             content.style.maxHeight = "0";
             content.style.opacity = "0";
             content.style.padding = "0 20px";
@@ -463,11 +450,24 @@ function initializeSections() {
         }
     });
     
-    // Initialize answer panels
     document.querySelectorAll('.answer-panel').forEach(panel => {
         if (!panel.classList.contains('show')) {
             panel.style.maxHeight = "0";
             panel.style.overflow = "hidden";
+        }
+    });
+}
+
+// Set quick question count
+function setQuestionCount(count) {
+    questionCountInput.value = count;
+    
+    // Update active state of buttons
+    quickSetButtons.forEach(btn => {
+        if (btn.dataset.count == count) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
         }
     });
 }
@@ -501,7 +501,10 @@ async function generateQuestions() {
         
         let html = '';
         
-        if (selectedSchoolId !== "all") {
+        // Check if we should show school details (only when school is selected AND question type is "all")
+        const showSchoolDetails = selectedSchoolId !== "all" && questionType === "all";
+        
+        if (showSchoolDetails) {
             const school = schoolsData.schools.find(s => s.id == selectedSchoolId);
             
             if (school) {
@@ -560,54 +563,55 @@ async function generateQuestions() {
                     </div>
                 `;
                 
-                if (questionType !== 'all') {
-                    const schoolSpecificQuestions = getSchoolSpecificQuestions(school.chineseName);
-                    if (schoolSpecificQuestions.length > 0) {
-                        const specificSectionId = `school-specific-${Date.now()}`;
+                // Add school specific questions
+                const schoolSpecificQuestions = getSchoolSpecificQuestions(school.chineseName);
+                if (schoolSpecificQuestions.length > 0) {
+                    const specificSectionId = `school-specific-${Date.now()}`;
+                    html += `
+                        <div class="section highlight" id="${specificSectionId}">
+                            <div class="section-header" onclick="toggleSection('${specificSectionId}')">
+                                <h3>
+                                    <i class="fas fa-star"></i>
+                                    School Specific Questions
+                                    <span class="question-count">${schoolSpecificQuestions.length}</span>
+                                </h3>
+                                <i class="fas fa-chevron-down toggle-icon"></i>
+                            </div>
+                            <div class="section-content">
+                                <div class="question-list">
+                    `;
+                    
+                    schoolSpecificQuestions.forEach((q, index) => {
+                        const questionId = `school-specific-${Date.now()}-${index}`;
                         html += `
-                            <div class="section highlight" id="${specificSectionId}">
-                                <div class="section-header" onclick="toggleSection('${specificSectionId}')">
-                                    <h3>
-                                        <i class="fas fa-star"></i>
-                                        School Specific Questions
-                                        <span class="question-count">${schoolSpecificQuestions.length}</span>
-                                    </h3>
-                                    <i class="fas fa-chevron-down toggle-icon"></i>
+                            <div class="question-item">
+                                <div class="question-content">${q.question || q}</div>
+                                <div class="question-actions">
+                                    <button class="view-answer-btn" id="btn-${questionId}" onclick="toggleAnswer('${questionId}')">
+                                        <i class="fas fa-eye"></i> View Answer
+                                    </button>
                                 </div>
-                                <div class="section-content">
-                                    <div class="question-list">
-                        `;
-                        
-                        schoolSpecificQuestions.forEach((q, index) => {
-                            const questionId = `school-specific-${Date.now()}-${index}`;
-                            html += `
-                                <div class="question-item">
-                                    <div class="question-content">${q.question || q}</div>
-                                    <div class="question-actions">
-                                        <button class="view-answer-btn" id="btn-${questionId}" onclick="toggleAnswer('${questionId}')">
-                                            <i class="fas fa-eye"></i> View Answer
-                                        </button>
-                                    </div>
-                                    <div class="answer-panel" id="answer-${questionId}">
-                                        <div class="answer-content">
-                                            ${q.modelAnswer || "No answer provided"}
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                        });
-                        
-                        html += `
+                                <div class="answer-panel" id="answer-${questionId}">
+                                    <div class="answer-content">
+                                        ${q.modelAnswer || "No answer provided"}
                                     </div>
                                 </div>
                             </div>
                         `;
-                    }
+                    });
+                    
+                    html += `
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 }
             }
         }
         
+        // Generate questions based on selected type
         if (questionType === 'all') {
+            // Show all question types
             const questionTypes = ['chinese', 'english', 'math', 'current', 'science', 'creative', 'other'];
             
             questionTypes.forEach(type => {
@@ -654,14 +658,65 @@ async function generateQuestions() {
                     `;
                 }
             });
+            
+            // Only show interview tips when showing all question types
+            const tipsSectionId = `interview-tips-${Date.now()}`;
+            html += `
+                <div class="section" id="${tipsSectionId}">
+                    <div class="section-header" onclick="toggleSection('${tipsSectionId}')">
+                        <h3>
+                            <i class="fas fa-lightbulb"></i>
+                            Interview Tips
+                            <span class="question-count">6</span>
+                        </h3>
+                        <i class="fas fa-chevron-down toggle-icon"></i>
+                    </div>
+                    <div class="section-content">
+                        <div class="question-list">
+                            <div class="question-item">
+                                <div class="question-content">Research the school's history and achievements</div>
+                            </div>
+                            <div class="question-item">
+                                <div class="question-content">Prepare specific examples to support your answers</div>
+                            </div>
+                            <div class="question-item">
+                                <div class="question-content">Practice expressing ideas clearly and logically</div>
+                            </div>
+                            <div class="question-item">
+                                <div class="question-content">Prepare questions to ask the interviewers</div>
+                            </div>
+                            <div class="question-item">
+                                <div class="question-content">Dress neatly and maintain good posture</div>
+                            </div>
+                            <div class="question-item">
+                                <div class="question-content">Arrive on time with all required documents</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add section controls for "all" mode
+            html = `
+                <div class="section-controls">
+                    <button class="expand-all-btn" onclick="expandAllSections()">
+                        <i class="fas fa-expand-alt"></i> Expand All
+                    </button>
+                    <button class="collapse-all-btn" onclick="collapseAllSections()">
+                        <i class="fas fa-compress-alt"></i> Collapse All
+                    </button>
+                </div>
+                ${html}
+            `;
         } else {
+            // Show single question type - auto-expand by default (don't collapse)
             const questions = getQuestionsByType(questionType, questionCount);
             
             if (questions.length > 0) {
                 const sectionId = `section-${questionType}-${Date.now()}`;
                 html += `
-                    <div class="section" id="${sectionId}">
-                        <div class="section-header" onclick="toggleSection('${sectionId}')">
+                    <div class="section" id="${sectionId}" style="border-left: 6px solid #58cc02;">
+                        <div class="section-header" onclick="toggleSection('${sectionId}')" style="background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);">
                             <h3>
                                 <i class="fas ${getIconForQuestionType(questionType)}"></i>
                                 ${getDisplayNameForQuestionType(questionType)} Questions
@@ -698,62 +753,29 @@ async function generateQuestions() {
                 </div>
                 `;
             }
+            
+            // Don't add section controls for single question type
+            html = `
+                <div class="selected-type-header">
+                    <h3><i class="fas ${getIconForQuestionType(questionType)}"></i> Showing Only: ${getDisplayNameForQuestionType(questionType)} Questions</h3>
+                    <p>${questions.length} questions generated. Click "View Answer" to see model answers.</p>
+                </div>
+                ${html}
+            `;
         }
         
-        const tipsSectionId = `interview-tips-${Date.now()}`;
-        html += `
-            <div class="section" id="${tipsSectionId}">
-                <div class="section-header" onclick="toggleSection('${tipsSectionId}')">
-                    <h3>
-                        <i class="fas fa-lightbulb"></i>
-                        Interview Tips
-                        <span class="question-count">6</span>
-                    </h3>
-                    <i class="fas fa-chevron-down toggle-icon"></i>
-                </div>
-                <div class="section-content">
-                    <div class="question-list">
-                        <div class="question-item">
-                            <div class="question-content">Research the school's history and achievements</div>
-                        </div>
-                        <div class="question-item">
-                            <div class="question-content">Prepare specific examples to support your answers</div>
-                        </div>
-                        <div class="question-item">
-                            <div class="question-content">Practice expressing ideas clearly and logically</div>
-                        </div>
-                        <div class="question-item">
-                            <div class="question-content">Prepare questions to ask the interviewers</div>
-                        </div>
-                        <div class="question-item">
-                            <div class="question-content">Dress neatly and maintain good posture</div>
-                        </div>
-                        <div class="question-item">
-                            <div class="question-content">Arrive on time with all required documents</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        html = `
-            <div class="section-controls">
-                <button class="expand-all-btn" onclick="expandAllSections()">
-                    <i class="fas fa-expand-alt"></i> Expand All
-                </button>
-                <button class="collapse-all-btn" onclick="collapseAllSections()">
-                    <i class="fas fa-compress-alt"></i> Collapse All
-                </button>
-            </div>
-            ${html}
-        `;
-        
+        // Update display
         questionsOutput.innerHTML = html;
         questionsOutput.style.display = 'block';
         loadingIndicator.style.display = 'none';
         
         setTimeout(() => {
             initializeSections();
+            
+            // Auto-expand the single section when only one question type is selected
+            if (questionType !== 'all') {
+                expandAllSections();
+            }
         }, 100);
         
         questionsOutput.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -792,6 +814,30 @@ function searchSchools(query) {
         option.textContent = `${school.chineseName} (${school.name})`;
         schoolSelect.appendChild(option);
     });
+}
+
+// Initialize quick set buttons
+function initializeQuickSetButtons() {
+    const quickSetContainer = document.querySelector('.quick-set-buttons');
+    if (!quickSetContainer) return;
+    
+    const quickSetValues = [3, 5, 8, 10];
+    
+    quickSetValues.forEach(value => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.className = 'quick-set-btn';
+        button.dataset.count = value;
+        button.textContent = value;
+        button.onclick = () => setQuestionCount(value);
+        
+        quickSetContainer.appendChild(button);
+        quickSetButtons.push(button);
+    });
+    
+    // Set initial active button
+    const initialValue = parseInt(questionCountInput.value) || 4;
+    setQuestionCount(initialValue);
 }
 
 // Event listeners
@@ -844,6 +890,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             generateQuestions();
         }
     });
+    
+    // Initialize quick set buttons
+    initializeQuickSetButtons();
     
     initializeSections();
     
