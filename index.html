@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -88,7 +88,7 @@
                 
                 <div id="resultsContainer">
                     <div class="no-school" id="noSchoolMessage">
-                        <i class="fas fa-info-circle" style="font-size: 3rem; margin-bottom: 15px;"></i>
+                        <i class="fas fa-info-circle"></i>
                         <h3>Please make a selection</h3>
                         <p>Select a school or question type, then click "Generate Questions".</p>
                         
@@ -103,14 +103,14 @@
                             <div class="section-content">
                                 <div class="guide-grid">
                                     <div class="guide-item">
-                                        <i class="fas fa-language"></i>
+                                        <i class="fas fa-comment-dots"></i>
                                         <div>
                                             <strong>Chinese</strong>
                                             <p>Chinese language ability</p>
                                         </div>
                                     </div>
                                     <div class="guide-item">
-                                        <i class="fas fa-language"></i>
+                                        <i class="fas fa-comments"></i>
                                         <div>
                                             <strong>English</strong>
                                             <p>English communication</p>
@@ -165,35 +165,10 @@
         
         <div class="footer">
             <p>This tool generates practice questions for S1 interviews. Actual interview questions may vary.</p>
-            <p>Hosted on GitHub Pages | Made for students <i class="fas fa-heart" style="color: #e74c3c;"></i></p>
+            <p>Hosted on GitHub Pages | Made for students <i class="fas fa-heart" style="color: #ff6b6b;"></i></p>
         </div>
     </div>
 
     <script src="script.js"></script>
-    <script>
-        function toggleSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (!section) return;
-            
-            const header = section.querySelector('.section-header');
-            const content = section.querySelector('.section-content');
-            
-            if (header && content) {
-                header.classList.toggle('collapsed');
-            }
-        }
-        
-        function expandAllSections() {
-            document.querySelectorAll('.section-header').forEach(header => {
-                header.classList.remove('collapsed');
-            });
-        }
-        
-        function collapseAllSections() {
-            document.querySelectorAll('.section-header').forEach(header => {
-                header.classList.add('collapsed');
-            });
-        }
-    </script>
 </body>
 </html>
