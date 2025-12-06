@@ -125,6 +125,71 @@ option {
     font-size: 1rem;
 }
 
+/* Quick set buttons container */
+.quick-set-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.quick-set-label {
+    font-size: 0.95rem;
+    color: #666;
+    font-weight: 600;
+    margin-right: 5px;
+}
+
+.quick-set-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.quick-set-btn {
+    background: #f0f2f5;
+    color: #666;
+    border: 2px solid #ddd;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 45px;
+    text-align: center;
+}
+
+.quick-set-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.quick-set-btn.active {
+    background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
+    color: white;
+    border-color: #58cc02;
+    box-shadow: 0 3px 0 #3ca100;
+}
+
+.quick-set-btn.active:hover {
+    box-shadow: 0 5px 0 #3ca100;
+}
+
+.quick-tip {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.quick-tip i {
+    color: #1cb0f6;
+}
+
 /* Button styles - Duolingo Inspired */
 .btn {
     background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
@@ -203,6 +268,30 @@ option {
 
 .view-answer-btn.active:hover {
     box-shadow: 0 5px 0 #e66a00;
+}
+
+/* Selected type header */
+.selected-type-header {
+    background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
+    color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 20px rgba(88, 204, 2, 0.2);
+}
+
+.selected-type-header h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.selected-type-header p {
+    margin: 0;
+    opacity: 0.9;
+    font-size: 1rem;
 }
 
 /* Section controls */
@@ -358,7 +447,7 @@ option {
     justify-content: flex-end;
 }
 
-/* Answer panel - FIXED VERSION */
+/* Answer panel */
 .answer-panel {
     max-height: 0;
     overflow: hidden;
@@ -403,7 +492,6 @@ option {
     display: block;
 }
 
-/* Ensure answer content doesn't get cut off */
 .answer-content * {
     max-width: 100%;
     overflow-wrap: break-word;
@@ -775,6 +863,20 @@ option {
         padding: 15px;
         font-size: 1rem;
     }
+    
+    .quick-set-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .quick-set-buttons {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .quick-set-btn {
+        flex: 1;
+    }
 }
 
 @media (max-width: 576px) {
@@ -842,5 +944,23 @@ option {
     
     .detail-value {
         font-size: 1rem;
+    }
+    
+    .quick-set-btn {
+        padding: 6px 12px;
+        min-width: 40px;
+        font-size: 0.85rem;
+    }
+    
+    .selected-type-header {
+        padding: 15px 20px;
+    }
+    
+    .selected-type-header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .selected-type-header p {
+        font-size: 0.9rem;
     }
 }
