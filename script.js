@@ -15,6 +15,75 @@ let schoolsData = null;
 let questionsData = null;
 let mathQuestionsData = null;
 let quickSetButtons = [];
+let doneQuestions = new Set();
+
+// Load done questions from localStorage
+function loadDoneQuestions() {
+    try {
+        const saved = localStorage.getItem('doneQuestions');
+        if (saved) {
+            doneQuestions = new Set(JSON.parse(saved));
+        }
+    } catch (e) {
+        console.error('Error loading done questions:', e);
+    }
+}
+
+// Save done questions to localStorage
+function saveDoneQuestions() {
+    try {
+        localStorage.setItem('doneQuestions', JSON.stringify([...doneQuestions]));
+    } catch (e) {
+        console.error('Error saving done questions:', e);
+    }
+}
+
+// Mark question as done
+function markQuestionDone(questionId, button) {
+    if (doneQuestions.has(questionId)) {
+        // Already done, undo it
+        doneQuestions.delete(questionId);
+        button.innerHTML = '<i class="fas fa-check-circle"></i> DONE';
+        button.classList.remove('done-active');
+        
+        // Remove done style from question
+        const questionItem = button.closest('.question-item');
+        if (questionItem) {
+            questionItem.classList.remove('question-done');
+        }
+    } else {
+        // Mark as done
+        doneQuestions.add(questionId);
+        button.innerHTML = '<i class="fas fa-undo"></i> UNDO';
+        button.classList.add('done-active');
+        
+        // Add done style to question
+        const questionItem = button.closest('.question-item');
+        if (questionItem) {
+            questionItem.classList.add('question-done');
+        }
+    }
+    
+    // Save to localStorage
+    saveDoneQuestions();
+    
+    // Update statistics if they exist
+    updateDoneStatistics();
+}
+
+// Update done statistics
+function updateDoneStatistics() {
+    const totalQuestions = document.querySelectorAll('.question-item').length;
+    const doneCount = doneQuestions.size;
+    const statsElement = document.querySelector('.done-stats');
+    
+    if (statsElement) {
+        statsElement.innerHTML = `
+            <i class="fas fa-chart-bar"></i>
+            <span>${doneCount}/${totalQuestions} questions completed</span>
+        `;
+    }
+}
 
 // Load schools data
 async function loadSchoolsData() {
@@ -472,6 +541,11 @@ function setQuestionCount(count) {
     });
 }
 
+// Generate unique question ID
+function generateQuestionId(category, index) {
+    return `${category}-${Date.now()}-${index}`;
+}
+
 // Generate interview questions
 async function generateQuestions() {
     const selectedSchoolId = schoolSelect.value;
@@ -500,6 +574,7 @@ async function generateQuestions() {
         noSchoolMessage.style.display = 'none';
         
         let html = '';
+        const timestamp = Date.now();
         
         // Check if we should show school details (only when school is selected AND question type is "all")
         const showSchoolDetails = selectedSchoolId !== "all" && questionType === "all";
@@ -508,7 +583,7 @@ async function generateQuestions() {
             const school = schoolsData.schools.find(s => s.id == selectedSchoolId);
             
             if (school) {
-                const schoolSectionId = `school-details-${Date.now()}`;
+                const schoolSectionId = `school-details-${timestamp}`;
                 html += `
                     <div class="school-name-display">
                         <div class="chinese-name">${school.chineseName}</div>
@@ -566,7 +641,7 @@ async function generateQuestions() {
                 // Add school specific questions
                 const schoolSpecificQuestions = getSchoolSpecificQuestions(school.chineseName);
                 if (schoolSpecificQuestions.length > 0) {
-                    const specificSectionId = `school-specific-${Date.now()}`;
+                    const specificSectionId = `school-specific-${timestamp}`;
                     html += `
                         <div class="section highlight" id="${specificSectionId}">
                             <div class="section-header" onclick="toggleSection('${specificSectionId}')">
@@ -582,13 +657,21 @@ async function generateQuestions() {
                     `;
                     
                     schoolSpecificQuestions.forEach((q, index) => {
-                        const questionId = `school-specific-${Date.now()}-${index}`;
+                        const questionId = `school-specific-${timestamp}-${index}`;
+                        const isDone = doneQuestions.has(questionId);
+                        const doneClass = isDone ? ' question-done' : '';
+                        const doneButtonText = isDone ? '<i class="fas fa-undo"></i> UNDO' : '<i class="fas fa-check-circle"></i> DONE';
+                        const doneButtonClass = isDone ? 'done-btn done-active' : 'done-btn';
+                        
                         html += `
-                            <div class="question-item">
+                            <div class="question-item${doneClass}">
                                 <div class="question-content">${q.question || q}</div>
                                 <div class="question-actions">
                                     <button class="view-answer-btn" id="btn-${questionId}" onclick="toggleAnswer('${questionId}')">
                                         <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                    <button class="${doneButtonClass}" onclick="markQuestionDone('${questionId}', this)">
+                                        ${doneButtonText}
                                     </button>
                                 </div>
                                 <div class="answer-panel" id="answer-${questionId}">
@@ -617,7 +700,7 @@ async function generateQuestions() {
             questionTypes.forEach(type => {
                 const questions = getQuestionsByType(type, Math.min(questionCount, 3));
                 if (questions.length > 0) {
-                    const sectionId = `section-${type}-${Date.now()}`;
+                    const sectionId = `section-${type}-${timestamp}`;
                     html += `
                         <div class="section" id="${sectionId}">
                             <div class="section-header" onclick="toggleSection('${sectionId}')">
@@ -633,13 +716,21 @@ async function generateQuestions() {
                     `;
                     
                     questions.forEach((q, index) => {
-                        const questionId = `${type}-${Date.now()}-${index}`;
+                        const questionId = generateQuestionId(type, index);
+                        const isDone = doneQuestions.has(questionId);
+                        const doneClass = isDone ? ' question-done' : '';
+                        const doneButtonText = isDone ? '<i class="fas fa-undo"></i> UNDO' : '<i class="fas fa-check-circle"></i> DONE';
+                        const doneButtonClass = isDone ? 'done-btn done-active' : 'done-btn';
+                        
                         html += `
-                            <div class="question-item">
+                            <div class="question-item${doneClass}">
                                 <div class="question-content">${q.question}</div>
                                 <div class="question-actions">
                                     <button class="view-answer-btn" id="btn-${questionId}" onclick="toggleAnswer('${questionId}')">
                                         <i class="fas fa-eye"></i> View Answer
+                                    </button>
+                                    <button class="${doneButtonClass}" onclick="markQuestionDone('${questionId}', this)">
+                                        ${doneButtonText}
                                     </button>
                                 </div>
                                 <div class="answer-panel" id="answer-${questionId}">
@@ -660,7 +751,7 @@ async function generateQuestions() {
             });
             
             // Only show interview tips when showing all question types
-            const tipsSectionId = `interview-tips-${Date.now()}`;
+            const tipsSectionId = `interview-tips-${timestamp}`;
             html += `
                 <div class="section" id="${tipsSectionId}">
                     <div class="section-header" onclick="toggleSection('${tipsSectionId}')">
@@ -673,24 +764,27 @@ async function generateQuestions() {
                     </div>
                     <div class="section-content">
                         <div class="question-list">
-                            <div class="question-item">
-                                <div class="question-content">Research the school's history and achievements</div>
-                            </div>
-                            <div class="question-item">
-                                <div class="question-content">Prepare specific examples to support your answers</div>
-                            </div>
-                            <div class="question-item">
-                                <div class="question-content">Practice expressing ideas clearly and logically</div>
-                            </div>
-                            <div class="question-item">
-                                <div class="question-content">Prepare questions to ask the interviewers</div>
-                            </div>
-                            <div class="question-item">
-                                <div class="question-content">Dress neatly and maintain good posture</div>
-                            </div>
-                            <div class="question-item">
-                                <div class="question-content">Arrive on time with all required documents</div>
-                            </div>
+            `;
+            
+            // Interview tips don't have DONE buttons
+            const tips = [
+                "Research the school's history and achievements",
+                "Prepare specific examples to support your answers",
+                "Practice expressing ideas clearly and logically",
+                "Prepare questions to ask the interviewers",
+                "Dress neatly and maintain good posture",
+                "Arrive on time with all required documents"
+            ];
+            
+            tips.forEach((tip, index) => {
+                html += `
+                    <div class="question-item">
+                        <div class="question-content">${tip}</div>
+                    </div>
+                `;
+            });
+            
+            html += `
                         </div>
                     </div>
                 </div>
@@ -699,12 +793,18 @@ async function generateQuestions() {
             // Add section controls for "all" mode
             html = `
                 <div class="section-controls">
-                    <button class="expand-all-btn" onclick="expandAllSections()">
-                        <i class="fas fa-expand-alt"></i> Expand All
-                    </button>
-                    <button class="collapse-all-btn" onclick="collapseAllSections()">
-                        <i class="fas fa-compress-alt"></i> Collapse All
-                    </button>
+                    <div class="done-stats">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>0/0 questions completed</span>
+                    </div>
+                    <div class="section-buttons">
+                        <button class="expand-all-btn" onclick="expandAllSections()">
+                            <i class="fas fa-expand-alt"></i> Expand All
+                        </button>
+                        <button class="collapse-all-btn" onclick="collapseAllSections()">
+                            <i class="fas fa-compress-alt"></i> Collapse All
+                        </button>
+                    </div>
                 </div>
                 ${html}
             `;
@@ -713,10 +813,10 @@ async function generateQuestions() {
             const questions = getQuestionsByType(questionType, questionCount);
             
             if (questions.length > 0) {
-                const sectionId = `section-${questionType}-${Date.now()}`;
+                const sectionId = `section-${questionType}-${timestamp}`;
                 html += `
-                    <div class="section" id="${sectionId}" style="border-left: 6px solid #58cc02;">
-                        <div class="section-header" onclick="toggleSection('${sectionId}')" style="background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);">
+                    <div class="section" id="${sectionId}" style="border-left: 6px solid #58cc00;">
+                        <div class="section-header" onclick="toggleSection('${sectionId}')" style="background: linear-gradient(135deg, #58cc00 0%, #1cb0f6 100%);">
                             <h3>
                                 <i class="fas ${getIconForQuestionType(questionType)}"></i>
                                 ${getDisplayNameForQuestionType(questionType)} Questions
@@ -729,13 +829,21 @@ async function generateQuestions() {
                 `;
                 
                 questions.forEach((q, index) => {
-                    const questionId = `${questionType}-${Date.now()}-${index}`;
+                    const questionId = generateQuestionId(questionType, index);
+                    const isDone = doneQuestions.has(questionId);
+                    const doneClass = isDone ? ' question-done' : '';
+                    const doneButtonText = isDone ? '<i class="fas fa-undo"></i> UNDO' : '<i class="fas fa-check-circle"></i> DONE';
+                    const doneButtonClass = isDone ? 'done-btn done-active' : 'done-btn';
+                    
                     html += `
-                        <div class="question-item">
+                        <div class="question-item${doneClass}">
                             <div class="question-content">${q.question}</div>
                             <div class="question-actions">
                                 <button class="view-answer-btn" id="btn-${questionId}" onclick="toggleAnswer('${questionId}')">
                                     <i class="fas fa-eye"></i> View Answer
+                                </button>
+                                <button class="${doneButtonClass}" onclick="markQuestionDone('${questionId}', this)">
+                                    ${doneButtonText}
                                 </button>
                             </div>
                             <div class="answer-panel" id="answer-${questionId}">
@@ -758,7 +866,10 @@ async function generateQuestions() {
             html = `
                 <div class="selected-type-header">
                     <h3><i class="fas ${getIconForQuestionType(questionType)}"></i> Showing Only: ${getDisplayNameForQuestionType(questionType)} Questions</h3>
-                    <p>${questions.length} questions generated. Click "View Answer" to see model answers.</p>
+                    <div class="done-stats">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>0/${questions.length} questions completed</span>
+                    </div>
                 </div>
                 ${html}
             `;
@@ -776,6 +887,9 @@ async function generateQuestions() {
             if (questionType !== 'all') {
                 expandAllSections();
             }
+            
+            // Update statistics
+            updateDoneStatistics();
         }, 100);
         
         questionsOutput.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -843,6 +957,9 @@ function initializeQuickSetButtons() {
 // Event listeners
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Page loaded, initializing...');
+    
+    // Load done questions first
+    loadDoneQuestions();
     
     await Promise.all([
         loadSchoolsData(),
