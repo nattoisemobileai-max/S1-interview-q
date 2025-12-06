@@ -14,7 +14,6 @@ const questionCountInput = document.getElementById('questionCount');
 let schoolsData = null;
 let questionsData = null;
 let mathQuestionsData = null;
-let collapsedSections = new Set();
 
 // Load schools data
 async function loadSchoolsData() {
@@ -26,7 +25,6 @@ async function loadSchoolsData() {
         initializeSchoolDropdown();
     } catch (error) {
         console.error('Error loading school data:', error);
-        // Use hardcoded school data as backup
         schoolsData = {
             schools: [
                 {
@@ -109,7 +107,6 @@ async function loadQuestionsData() {
         console.log('Questions data loaded successfully');
     } catch (error) {
         console.error('Error loading questions data:', error);
-        // Use hardcoded questions data as backup
         questionsData = {
             questions: [
                 {
@@ -123,18 +120,6 @@ async function loadQuestionsData() {
                     category: "chinese",
                     question: "你為什麼選擇我們學校？",
                     modelAnswer: "我選擇貴校主要有三個原因..."
-                },
-                {
-                    id: "ENG-001",
-                    category: "english",
-                    question: "Tell us about yourself in three minutes.",
-                    modelAnswer: "Good morning, teachers. My name is Chan Siu Ming..."
-                },
-                {
-                    id: "ENG-002",
-                    category: "english",
-                    question: "Why do you want to study at our school?",
-                    modelAnswer: "I want to study at your school for several reasons..."
                 }
             ]
         };
@@ -150,7 +135,6 @@ async function loadMathQuestionsData() {
         console.log('Math questions data loaded successfully');
     } catch (error) {
         console.error('Error loading math questions data:', error);
-        // Use hardcoded math questions data as backup
         mathQuestionsData = [
             {
                 Number: 1,
@@ -175,10 +159,8 @@ function initializeSchoolDropdown() {
         return;
     }
     
-    // Clear existing options (keeping the "All Schools" option)
     schoolSelect.innerHTML = '<option value="all">All Schools</option>';
     
-    // Add school options
     schoolsData.schools.forEach(school => {
         const option = document.createElement('option');
         option.value = school.id;
@@ -186,7 +168,6 @@ function initializeSchoolDropdown() {
         schoolSelect.appendChild(option);
     });
     
-    // Update school count display
     if (schoolCount) {
         schoolCount.textContent = `${schoolsData.schools.length} schools available`;
     }
@@ -197,7 +178,6 @@ function initializeSchoolDropdown() {
 // Get questions by type
 function getQuestionsByType(questionType, count = 4) {
     if (questionType === 'math') {
-        // Get math questions
         if (!mathQuestionsData || mathQuestionsData.length === 0) {
             return [{
                 question: "數學問題數據加載中...",
@@ -208,11 +188,8 @@ function getQuestionsByType(questionType, count = 4) {
         
         const questions = [...mathQuestionsData];
         const selected = [];
-        
-        // If we have fewer questions than requested, adjust the count
         const questionsToSelect = Math.min(count, questions.length);
         
-        // If we're requesting fewer questions than available, select randomly
         if (questionsToSelect < questions.length) {
             for (let i = 0; i < questionsToSelect; i++) {
                 const randomIndex = Math.floor(Math.random() * questions.length);
@@ -225,7 +202,6 @@ function getQuestionsByType(questionType, count = 4) {
                 questions.splice(randomIndex, 1);
             }
         } else {
-            // Otherwise, use all questions
             questions.forEach(q => {
                 selected.push({
                     question: q.問題,
@@ -238,7 +214,6 @@ function getQuestionsByType(questionType, count = 4) {
         
         return selected;
     } else {
-        // Get regular questions
         if (!questionsData || !questionsData.questions) {
             return [{
                 question: "問題數據加載中...",
@@ -247,10 +222,8 @@ function getQuestionsByType(questionType, count = 4) {
             }];
         }
         
-        // Filter questions by category
         let filteredQuestions = questionsData.questions.filter(q => q.category === questionType);
         
-        // If no questions found for this category, return empty
         if (filteredQuestions.length === 0) {
             return [{
                 question: `No ${questionType} questions available`,
@@ -260,11 +233,8 @@ function getQuestionsByType(questionType, count = 4) {
         }
         
         const selected = [];
-        
-        // If we have fewer questions than requested, adjust the count
         const questionsToSelect = Math.min(count, filteredQuestions.length);
         
-        // If we're requesting fewer questions than available, select randomly
         if (questionsToSelect < filteredQuestions.length) {
             for (let i = 0; i < questionsToSelect; i++) {
                 const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
@@ -272,7 +242,6 @@ function getQuestionsByType(questionType, count = 4) {
                 filteredQuestions.splice(randomIndex, 1);
             }
         } else {
-            // Otherwise, use all questions
             selected.push(...filteredQuestions);
         }
         
@@ -286,7 +255,6 @@ function getSchoolSpecificQuestions(schoolChineseName) {
         return [`你為什麼選擇${schoolChineseName}？`];
     }
     
-    // Filter questions for this specific school
     const schoolQuestions = questionsData.questions.filter(q => q.school === schoolChineseName);
     
     if (schoolQuestions.length === 0) {
@@ -294,8 +262,6 @@ function getSchoolSpecificQuestions(schoolChineseName) {
     }
     
     const selected = [];
-    
-    // Select up to 3 school specific questions
     const questionsToSelect = Math.min(3, schoolQuestions.length);
     
     if (questionsToSelect < schoolQuestions.length) {
@@ -341,25 +307,63 @@ function getDisplayNameForQuestionType(type) {
     return names[type] || type;
 }
 
-// Toggle answer visibility
+// Toggle answer visibility - FIXED VERSION
 function toggleAnswer(questionId) {
     const answerPanel = document.getElementById(`answer-${questionId}`);
     const button = document.getElementById(`btn-${questionId}`);
     
     if (answerPanel && button) {
         if (answerPanel.classList.contains('show')) {
+            // Hide the answer
+            answerPanel.style.maxHeight = answerPanel.scrollHeight + "px";
+            
+            // Force reflow to make the transition work
+            answerPanel.offsetHeight;
+            
+            answerPanel.style.maxHeight = "0";
             answerPanel.classList.remove('show');
+            
+            setTimeout(() => {
+                if (!answerPanel.classList.contains('show')) {
+                    answerPanel.style.overflow = "hidden";
+                }
+            }, 500); // Match the transition duration
+            
             button.innerHTML = '<i class="fas fa-eye"></i> View Answer';
             button.classList.remove('active');
         } else {
+            // Show the answer
             answerPanel.classList.add('show');
+            answerPanel.style.overflow = "hidden";
+            
+            // Set initial height
+            answerPanel.style.maxHeight = "0";
+            
+            // Calculate the actual height needed
+            const contentHeight = answerPanel.querySelector('.answer-content').scrollHeight;
+            const padding = 50; // Account for padding
+            const totalHeight = contentHeight + padding;
+            
+            // Set the max-height to show all content
+            setTimeout(() => {
+                answerPanel.style.maxHeight = totalHeight + "px";
+            }, 10);
+            
+            // After transition completes, allow content to expand naturally
+            setTimeout(() => {
+                if (answerPanel.classList.contains('show')) {
+                    answerPanel.style.maxHeight = "none";
+                    answerPanel.style.overflow = "visible";
+                }
+            }, 550); // Slightly longer than transition duration
+            
             button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Answer';
             button.classList.add('active');
         }
     }
 }
 
-// Toggle section collapse/expand
+// Toggle section collapse/expand - FIXED VERSION
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (!section) return;
@@ -371,17 +375,29 @@ function toggleSection(sectionId) {
         if (header.classList.contains('collapsed')) {
             // Expand
             header.classList.remove('collapsed');
-            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.maxHeight = content.scrollHeight + 100 + "px";
             content.style.opacity = "1";
             content.style.padding = "20px";
-            collapsedSections.delete(sectionId);
+            content.style.overflow = "visible";
+            
+            // After transition, remove max-height to allow natural expansion
+            setTimeout(() => {
+                if (!header.classList.contains('collapsed')) {
+                    content.style.maxHeight = "none";
+                }
+            }, 500);
         } else {
             // Collapse
             header.classList.add('collapsed');
+            content.style.maxHeight = content.scrollHeight + "px";
+            
+            // Force reflow
+            content.offsetHeight;
+            
             content.style.maxHeight = "0";
             content.style.opacity = "0";
             content.style.padding = "0 20px";
-            collapsedSections.add(sectionId);
+            content.style.overflow = "hidden";
         }
     }
 }
@@ -395,10 +411,16 @@ function expandAllSections() {
         
         if (header && content) {
             header.classList.remove('collapsed');
-            content.style.maxHeight = content.scrollHeight + "px";
+            content.style.maxHeight = content.scrollHeight + 100 + "px";
             content.style.opacity = "1";
             content.style.padding = "20px";
-            collapsedSections.delete(sectionId);
+            content.style.overflow = "visible";
+            
+            setTimeout(() => {
+                if (!header.classList.contains('collapsed')) {
+                    content.style.maxHeight = "none";
+                }
+            }, 500);
         }
     });
 }
@@ -412,29 +434,40 @@ function collapseAllSections() {
         
         if (header && content) {
             header.classList.add('collapsed');
+            content.style.maxHeight = content.scrollHeight + "px";
+            content.offsetHeight; // Force reflow
             content.style.maxHeight = "0";
             content.style.opacity = "0";
             content.style.padding = "0 20px";
-            collapsedSections.add(sectionId);
+            content.style.overflow = "hidden";
         }
     });
 }
 
-// Initialize section collapse states
+// Initialize sections with proper height
 function initializeSections() {
     document.querySelectorAll('.section').forEach(section => {
         const header = section.querySelector('.section-header');
         const content = section.querySelector('.section-content');
         
         if (header && content) {
-            // Set initial state
             if (!header.classList.contains('collapsed')) {
-                content.style.maxHeight = content.scrollHeight + "px";
+                content.style.maxHeight = "none";
                 content.style.opacity = "1";
+                content.style.overflow = "visible";
             } else {
                 content.style.maxHeight = "0";
                 content.style.opacity = "0";
+                content.style.overflow = "hidden";
             }
+        }
+    });
+    
+    // Initialize answer panels
+    document.querySelectorAll('.answer-panel').forEach(panel => {
+        if (!panel.classList.contains('show')) {
+            panel.style.maxHeight = "0";
+            panel.style.overflow = "hidden";
         }
     });
 }
@@ -445,7 +478,6 @@ async function generateQuestions() {
     const questionType = questionTypeSelect.value;
     const questionCount = parseInt(questionCountInput.value) || 4;
     
-    // Validate input - either school or question type must be selected
     if (selectedSchoolId === "" && questionType === "all") {
         alert("Please select at least a school or a question type.");
         return;
@@ -461,18 +493,14 @@ async function generateQuestions() {
         return;
     }
     
-    // Show loading indicator
     loadingIndicator.style.display = 'block';
     questionsOutput.style.display = 'none';
     
-    // Simulate loading
     setTimeout(() => {
-        // Hide "no school" message
         noSchoolMessage.style.display = 'none';
         
         let html = '';
         
-        // If a specific school is selected, show school details
         if (selectedSchoolId !== "all") {
             const school = schoolsData.schools.find(s => s.id == selectedSchoolId);
             
@@ -532,7 +560,6 @@ async function generateQuestions() {
                     </div>
                 `;
                 
-                // Add school specific questions if not "all" question types
                 if (questionType !== 'all') {
                     const schoolSpecificQuestions = getSchoolSpecificQuestions(school.chineseName);
                     if (schoolSpecificQuestions.length > 0) {
@@ -580,9 +607,7 @@ async function generateQuestions() {
             }
         }
         
-        // Generate questions based on selected type
         if (questionType === 'all') {
-            // Show all question types
             const questionTypes = ['chinese', 'english', 'math', 'current', 'science', 'creative', 'other'];
             
             questionTypes.forEach(type => {
@@ -630,7 +655,6 @@ async function generateQuestions() {
                 }
             });
         } else {
-            // Show single question type
             const questions = getQuestionsByType(questionType, questionCount);
             
             if (questions.length > 0) {
@@ -676,7 +700,6 @@ async function generateQuestions() {
             }
         }
         
-        // Add interview tips section
         const tipsSectionId = `interview-tips-${Date.now()}`;
         html += `
             <div class="section" id="${tipsSectionId}">
@@ -713,7 +736,6 @@ async function generateQuestions() {
             </div>
         `;
         
-        // Add section controls
         html = `
             <div class="section-controls">
                 <button class="expand-all-btn" onclick="expandAllSections()">
@@ -726,17 +748,14 @@ async function generateQuestions() {
             ${html}
         `;
         
-        // Update display
         questionsOutput.innerHTML = html;
         questionsOutput.style.display = 'block';
         loadingIndicator.style.display = 'none';
         
-        // Initialize sections with proper height
         setTimeout(() => {
             initializeSections();
-        }, 50);
+        }, 100);
         
-        // Scroll to results
         questionsOutput.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 500);
 }
@@ -752,10 +771,8 @@ function searchSchools(query) {
         return;
     }
     
-    // Clear dropdown but keep "All Schools" option
     schoolSelect.innerHTML = '<option value="all">All Schools</option>';
     
-    // Filter schools
     const matchedSchools = schoolsData.schools.filter(school => 
         school.name.toLowerCase().includes(normalizedQuery) ||
         school.chineseName.toLowerCase().includes(normalizedQuery)
@@ -769,7 +786,6 @@ function searchSchools(query) {
         return;
     }
     
-    // Add matched schools
     matchedSchools.forEach(school => {
         const option = document.createElement('option');
         option.value = school.id;
@@ -782,14 +798,12 @@ function searchSchools(query) {
 document.addEventListener('DOMContentLoaded', async () => {
     console.log('Page loaded, initializing...');
     
-    // Load all data
     await Promise.all([
         loadSchoolsData(),
         loadQuestionsData(),
         loadMathQuestionsData()
     ]);
     
-    // Set up event listeners
     if (generateBtn) {
         generateBtn.addEventListener('click', generateQuestions);
     }
@@ -801,24 +815,20 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
             
-            // Randomly choose between "All Schools" or a specific school
             const useAllSchools = Math.random() > 0.5;
             
             if (useAllSchools) {
                 schoolSelect.value = "all";
             } else {
-                // Select random school
                 const randomIndex = Math.floor(Math.random() * schoolsData.schools.length);
                 const randomSchool = schoolsData.schools[randomIndex];
                 schoolSelect.value = randomSchool.id;
             }
             
-            // Select random question type
             const questionTypes = ['all', 'chinese', 'english', 'math', 'current', 'science', 'creative', 'other'];
             const randomTypeIndex = Math.floor(Math.random() * questionTypes.length);
             questionTypeSelect.value = questionTypes[randomTypeIndex];
             
-            // Generate questions
             generateQuestions();
         });
     }
@@ -829,14 +839,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
     
-    // Add keyboard shortcut for Enter key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             generateQuestions();
         }
     });
     
-    // Initialize existing sections
     initializeSections();
     
     console.log('Application initialized');
