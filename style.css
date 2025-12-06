@@ -358,7 +358,7 @@ option {
     justify-content: flex-end;
 }
 
-/* Answer panel */
+/* Answer panel - FIXED VERSION */
 .answer-panel {
     max-height: 0;
     overflow: hidden;
@@ -370,10 +370,11 @@ option {
 }
 
 .answer-panel.show {
-    max-height: 2000px;
+    max-height: none;
     padding: 25px;
     border-color: #1cb0f6;
     animation: slideDown 0.5s ease;
+    overflow: visible;
 }
 
 @keyframes slideDown {
@@ -396,6 +397,17 @@ option {
     font-size: 1.05rem;
     color: #444;
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    display: block;
+}
+
+/* Ensure answer content doesn't get cut off */
+.answer-content * {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 /* School details */
@@ -444,6 +456,8 @@ option {
     font-size: 1.1rem;
     color: #333;
     font-weight: 600;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .detail-value a {
@@ -681,36 +695,6 @@ option {
     animation: fadeIn 0.5s ease;
 }
 
-/* Badge styles for categories */
-.category-badge {
-    background: linear-gradient(135deg, #ffc800 0%, #ff9600 100%);
-    color: white;
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    display: inline-block;
-    margin-left: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* Progress bar style (for future features) */
-.progress-bar {
-    height: 10px;
-    background: #e8e8e8;
-    border-radius: 5px;
-    overflow: hidden;
-    margin: 15px 0;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #58cc02 0%, #1cb0f6 100%);
-    border-radius: 5px;
-    transition: width 0.3s ease;
-}
-
 /* Responsive design */
 @media (max-width: 992px) {
     .content {
@@ -786,6 +770,11 @@ option {
     .section-controls {
         flex-direction: column;
     }
+    
+    .answer-content {
+        padding: 15px;
+        font-size: 1rem;
+    }
 }
 
 @media (max-width: 576px) {
@@ -827,7 +816,8 @@ option {
     }
     
     .answer-content {
-        padding: 18px;
+        padding: 12px;
+        font-size: 0.95rem;
     }
     
     .section-header h3 {
@@ -837,12 +827,13 @@ option {
     
     .view-answer-btn {
         font-size: 0.9rem;
-        padding: 14px;
+        padding: 10px 15px;
+        min-width: 120px;
     }
     
     .question-count {
         font-size: 0.8rem;
-        padding: 5px 10px;
+        padding: 4px 8px;
     }
     
     .detail-label {
