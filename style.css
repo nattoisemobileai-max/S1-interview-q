@@ -1,17 +1,16 @@
-/* Reset styles */
+/* Reset styles - Duolingo Inspired */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
 }
 
 body {
-    background-color: #f5f9ff;
+    background-color: #f0f2f5;
     color: #333;
     line-height: 1.6;
     padding: 20px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e3e9f7 100%);
     min-height: 100vh;
 }
 
@@ -21,15 +20,15 @@ body {
     padding: 20px;
 }
 
-/* Header styles */
+/* Header styles - Duolingo Green */
 header {
     text-align: center;
     margin-bottom: 30px;
     padding: 25px;
-    background: linear-gradient(to right, #2c3e50, #4a6491);
+    background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
     color: white;
-    border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(88, 204, 2, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -41,14 +40,15 @@ header::before {
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(to right, #3498db, #2ecc71);
+    background: linear-gradient(to right, #ffc800, #ff9600);
 }
 
 h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 /* Content area */
@@ -64,9 +64,9 @@ h1 {
     min-width: 350px;
     background-color: white;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid #eaeaea;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border: 3px solid #e8e8e8;
 }
 
 .results-panel {
@@ -74,63 +74,66 @@ h1 {
     min-width: 350px;
     background-color: white;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    border: 1px solid #eaeaea;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border: 3px solid #e8e8e8;
 }
 
 h2 {
-    color: #2c3e50;
+    color: #1cb0f6;
     margin-bottom: 25px;
     padding-bottom: 15px;
-    border-bottom: 3px solid #eaeaea;
+    border-bottom: 3px solid #58cc02;
     font-size: 1.8rem;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-/* Form styles */
+/* Form styles - Duolingo Style */
 .form-group {
     margin-bottom: 25px;
 }
 
 label {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     font-weight: 600;
-    color: #3a506b;
+    color: #333;
     font-size: 1.1rem;
+    font-weight: 700;
 }
 
 select, input {
     width: 100%;
-    padding: 14px 18px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
+    padding: 16px 20px;
+    border: 3px solid #e0e0e0;
+    border-radius: 15px;
     font-size: 1rem;
     transition: all 0.3s ease;
     background-color: white;
+    font-weight: 500;
 }
 
 select:focus, input:focus {
-    border-color: #4a6491;
+    border-color: #58cc02;
     outline: none;
-    box-shadow: 0 0 0 3px rgba(74, 100, 145, 0.1);
+    box-shadow: 0 0 0 3px rgba(88, 204, 2, 0.2);
+    transform: translateY(-2px);
 }
 
 option {
-    padding: 10px;
+    padding: 12px;
     font-size: 1rem;
 }
 
-/* Button styles */
+/* Button styles - Duolingo Inspired */
 .btn {
-    background: linear-gradient(to right, #4a6491, #2c3e50);
+    background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
     color: white;
     border: none;
-    padding: 16px 24px;
-    border-radius: 8px;
+    padding: 18px 28px;
+    border-radius: 15px;
     font-size: 1.1rem;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     width: 100%;
@@ -139,65 +142,118 @@ option {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 12px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 0 #3ca100;
 }
 
 .btn:hover {
-    background: linear-gradient(to right, #3a5478, #1f2d3d);
     transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 0 #3ca100;
 }
 
 .btn:active {
     transform: translateY(-1px);
+    box-shadow: 0 2px 0 #3ca100;
 }
 
 .random-btn {
-    background: linear-gradient(to right, #3498db, #2980b9);
-    margin-bottom: 15px;
+    background: linear-gradient(135deg, #ffc800 0%, #ff9600 100%);
+    box-shadow: 0 4px 0 #e6a700;
 }
 
 .random-btn:hover {
-    background: linear-gradient(to right, #2980b9, #1c5a7d);
+    box-shadow: 0 6px 0 #e6a700;
+}
+
+.random-btn:active {
+    box-shadow: 0 2px 0 #e6a700;
 }
 
 /* View answer button */
 .view-answer-btn {
-    background: linear-gradient(to right, #9b59b6, #8e44ad);
+    background: linear-gradient(135deg, #1cb0f6 0%, #1899d6 100%);
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    font-weight: 500;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
     cursor: pointer;
     transition: all 0.3s ease;
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    min-width: 120px;
+    min-width: 140px;
     justify-content: center;
+    box-shadow: 0 3px 0 #0d8ecf;
+    text-transform: uppercase;
 }
 
 .view-answer-btn:hover {
-    background: linear-gradient(to right, #8e44ad, #7d3c98);
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(155, 89, 182, 0.3);
+    box-shadow: 0 5px 0 #0d8ecf;
 }
 
-/* Section styles */
+.view-answer-btn.active {
+    background: linear-gradient(135deg, #ff9600 0%, #ff7a00 100%);
+    box-shadow: 0 3px 0 #e66a00;
+}
+
+.view-answer-btn.active:hover {
+    box-shadow: 0 5px 0 #e66a00;
+}
+
+/* Section controls */
+.section-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 2px solid #e8e8e8;
+}
+
+.expand-all-btn, .collapse-all-btn {
+    flex: 1;
+    background: linear-gradient(135deg, #ffc800 0%, #ff9600 100%);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    box-shadow: 0 3px 0 #e6a700;
+    text-transform: uppercase;
+}
+
+.expand-all-btn:hover, .collapse-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 #e6a700;
+}
+
+/* Section styles - Duolingo Card Style */
 .section {
     margin-bottom: 30px;
-    padding: 25px;
-    border-radius: 10px;
-    background-color: #f8fafc;
-    border-left: 6px solid #4a6491;
-    transition: transform 0.3s ease;
+    background-color: white;
+    border-radius: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border: 2px solid #e8e8e8;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
 }
 
 .section:hover {
-    transform: translateY(-2px);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 .section-header {
@@ -205,33 +261,38 @@ option {
     align-items: center;
     justify-content: space-between;
     cursor: pointer;
-    padding: 15px 20px;
-    border-radius: 8px;
-    background: #f8fafc;
-    border: 1px solid #eaeaea;
-    margin-bottom: 10px;
-    transition: all 0.3s ease;
+    padding: 25px 30px;
+    background: linear-gradient(135deg, #1cb0f6 0%, #0d8ecf 100%);
+    color: white;
     user-select: none;
+    transition: all 0.3s ease;
 }
 
 .section-header:hover {
-    background: #f0f4f8;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    background: linear-gradient(135deg, #1cb0f6 0%, #0a7bb9 100%);
 }
 
 .section-header h3 {
     margin: 0;
-    color: #2c3e50;
-    font-size: 1.2rem;
+    color: white;
+    font-size: 1.3rem;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 15px;
+    font-weight: 700;
 }
 
 .toggle-icon {
     transition: transform 0.3s ease;
-    color: #4a6491;
-    font-size: 1.1rem;
+    color: white;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.2);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .collapsed .toggle-icon {
@@ -240,29 +301,21 @@ option {
 
 .section-content {
     overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
-    max-height: 2000px;
-    opacity: 1;
-    padding: 15px;
-}
-
-.collapsed + .section-content {
+    transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                opacity 0.3s ease, 
+                padding 0.3s ease;
     max-height: 0;
     opacity: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-bottom: 0;
-    overflow: hidden;
+    padding: 0 30px;
 }
 
-.section > .section-content {
-    padding: 0;
-    border-left: none;
-    background: transparent;
+/* Highlight sections */
+.highlight .section-header {
+    background: linear-gradient(135deg, #ffc800 0%, #ff9600 100%);
 }
 
-.section > .section-header + .section-content {
-    padding: 0 15px 15px 15px;
+.highlight .section-header:hover {
+    background: linear-gradient(135deg, #ffc800 0%, #e66a00 100%);
 }
 
 /* Question list */
@@ -271,28 +324,31 @@ option {
 }
 
 .question-item {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 25px;
     margin-bottom: 20px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-    border: 1px solid #eaeaea;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 2px solid #e8e8e8;
     transition: all 0.3s ease;
 }
 
 .question-item:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #1cb0f6;
 }
 
 .question-content {
     flex: 1;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    color: #2c3e50;
-    font-weight: 500;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: #333;
+    font-weight: 600;
     margin-right: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    padding-left: 10px;
+    border-left: 4px solid #58cc02;
 }
 
 .question-actions {
@@ -307,16 +363,16 @@ option {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    background: #f9f9f9;
-    border-radius: 8px;
-    margin-top: 15px;
-    border: 1px solid transparent;
+    background: #f0f9ff;
+    border-radius: 15px;
+    margin-top: 20px;
+    border: 2px solid transparent;
 }
 
 .answer-panel.show {
     max-height: 2000px;
-    padding: 20px;
-    border-color: #eaeaea;
+    padding: 25px;
+    border-color: #1cb0f6;
     animation: slideDown 0.5s ease;
 }
 
@@ -333,59 +389,75 @@ option {
 
 .answer-content {
     background: white;
-    padding: 18px;
-    border-radius: 8px;
-    border-left: 4px solid #4a6491;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 5px solid #58cc02;
     line-height: 1.7;
-    font-size: 1rem;
+    font-size: 1.05rem;
     color: #444;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
 }
 
 /* School details */
 .school-details {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 20px;
     margin-top: 15px;
 }
 
 .detail-item {
     background-color: white;
-    padding: 18px;
-    border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
-    border: 1px solid #eaeaea;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border: 2px solid #e8e8e8;
     transition: transform 0.3s ease;
 }
 
 .detail-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #58cc02;
 }
 
 .detail-label {
-    font-weight: 600;
-    color: #3a506b;
+    font-weight: 700;
+    color: #1cb0f6;
     font-size: 0.95rem;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.detail-label:before {
+    content: "✓";
+    color: #58cc02;
+    font-weight: bold;
 }
 
 .detail-value {
-    margin-top: 5px;
-    font-size: 1.05rem;
-    color: #2c3e50;
+    margin-top: 8px;
+    font-size: 1.1rem;
+    color: #333;
+    font-weight: 600;
 }
 
 .detail-value a {
-    color: #4a6491;
+    color: #1cb0f6;
     text-decoration: none;
     word-break: break-all;
+    font-weight: 700;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease;
 }
 
 .detail-value a:hover {
-    text-decoration: underline;
+    color: #58cc02;
+    border-bottom: 2px solid #58cc02;
 }
 
 /* School name display */
@@ -393,92 +465,119 @@ option {
     display: flex;
     flex-direction: column;
     margin-bottom: 25px;
-    padding-bottom: 20px;
-    border-bottom: 3px solid #eaeaea;
+    padding: 25px;
+    border-bottom: 3px solid #e8e8e8;
+    background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
+    border-radius: 20px;
+    color: white;
+    box-shadow: 0 8px 25px rgba(88, 204, 2, 0.2);
 }
 
 .chinese-name {
-    font-size: 1.8rem;
-    color: #2c3e50;
-    font-weight: 700;
-    margin-bottom: 8px;
+    font-size: 2rem;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .english-name {
-    font-size: 1.5rem;
-    color: #4a6491;
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
     margin-bottom: 15px;
 }
 
 /* Question count label */
 .question-count {
-    background: #4a6491;
+    background: rgba(255, 255, 255, 0.2);
     color: white;
-    padding: 4px 12px;
+    padding: 6px 14px;
     border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
+    font-size: 0.9rem;
+    font-weight: 700;
     margin-left: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 /* No school information */
 .no-school {
     text-align: center;
-    color: #7f8c8d;
+    color: #666;
     padding: 50px 30px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    border: 2px dashed #ddd;
+    background-color: #f8f9fa;
+    border-radius: 20px;
+    border: 3px dashed #1cb0f6;
 }
 
 .no-school i {
     font-size: 4rem;
     margin-bottom: 20px;
-    color: #bdc3c7;
+    color: #1cb0f6;
+    background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .no-school h3 {
     font-size: 1.8rem;
     margin-bottom: 15px;
-    color: #7f8c8d;
+    color: #333;
+    font-weight: 700;
+}
+
+.no-school p {
+    color: #666;
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 30px;
 }
 
 /* Quick guide */
 .guide-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
 }
 
 .guide-item {
     display: flex;
-    align-items: flex-start;
-    gap: 15px;
-    padding: 15px;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
     background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    border: 2px solid #e8e8e8;
+    transition: all 0.3s ease;
 }
 
 .guide-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #58cc02;
 }
 
 .guide-item i {
-    color: #4a6491;
-    font-size: 1.5rem;
-    margin-top: 3px;
-    min-width: 24px;
+    color: #1cb0f6;
+    font-size: 2rem;
+    background: #f0f9ff;
+    padding: 15px;
+    border-radius: 50%;
+    min-width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .guide-item strong {
     display: block;
-    margin-bottom: 5px;
-    color: #2c3e50;
-    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 700;
 }
 
 .guide-item p {
@@ -488,48 +587,45 @@ option {
     line-height: 1.5;
 }
 
-/* Highlight area */
-.highlight {
-    background-color: #fff8e1;
-    border-left-color: #ffc107;
-}
-
-.highlight .section-header i {
-    color: #ff9800;
-}
-
 /* Loading indicator */
 .loading {
     display: none;
     text-align: center;
-    padding: 40px;
-    color: #4a6491;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
+    padding: 50px;
+    color: #1cb0f6;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
     margin: 20px 0;
+    border: 3px solid #1cb0f6;
 }
 
 .loading i {
-    font-size: 3rem;
+    font-size: 3.5rem;
     margin-bottom: 20px;
+    background: linear-gradient(135deg, #58cc02 0%, #1cb0f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .loading p {
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #333;
 }
 
 /* School count display */
 .school-count {
-    font-size: 1rem;
-    color: #4a6491;
+    font-size: 1.1rem;
+    color: #1cb0f6;
     margin-top: 10px;
     text-align: center;
-    font-weight: 500;
-    background-color: #f0f4f8;
-    padding: 10px 15px;
-    border-radius: 8px;
+    font-weight: 700;
+    background-color: #f0f9ff;
+    padding: 12px 18px;
+    border-radius: 15px;
     display: inline-block;
+    border: 2px solid #1cb0f6;
 }
 
 /* Footer */
@@ -537,39 +633,82 @@ option {
     text-align: center;
     margin-top: 40px;
     padding-top: 25px;
-    border-top: 2px solid #ddd;
-    color: #7f8c8d;
+    border-top: 3px solid #e8e8e8;
+    color: #666;
     font-size: 0.95rem;
     line-height: 1.8;
 }
 
 .footer p {
     margin-bottom: 10px;
+    font-weight: 500;
 }
 
 /* Instruction list */
 .instruction-list {
     list-style-type: decimal;
     padding-left: 25px;
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
 .instruction-list li {
-    margin-bottom: 12px;
-    padding: 8px 0;
-    color: #555;
-    font-size: 1.05rem;
-    line-height: 1.5;
+    margin-bottom: 15px;
+    padding: 12px 0;
+    color: #333;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-weight: 500;
+    padding-left: 10px;
+    border-left: 3px solid #58cc02;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 15px;
 }
 
 /* Animation effects */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { 
+        opacity: 0; 
+        transform: translateY(15px); 
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
 }
 
 .question-item {
     animation: fadeIn 0.5s ease;
+}
+
+/* Badge styles for categories */
+.category-badge {
+    background: linear-gradient(135deg, #ffc800 0%, #ff9600 100%);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Progress bar style (for future features) */
+.progress-bar {
+    height: 10px;
+    background: #e8e8e8;
+    border-radius: 5px;
+    overflow: hidden;
+    margin: 15px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #58cc02 0%, #1cb0f6 100%);
+    border-radius: 5px;
+    transition: width 0.3s ease;
 }
 
 /* Responsive design */
@@ -588,11 +727,11 @@ option {
     }
     
     .school-details {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
     
     .guide-grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
 }
 
@@ -620,7 +759,7 @@ option {
     
     .question-content {
         margin-right: 0;
-        margin-bottom: 15px;
+        margin-bottom: 20px;
     }
     
     .question-actions {
@@ -633,15 +772,19 @@ option {
     }
     
     .section-header h3 {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     
     .section-header {
-        padding: 12px 15px;
+        padding: 20px;
     }
     
     .guide-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .section-controls {
+        flex-direction: column;
     }
 }
 
@@ -672,32 +815,41 @@ option {
     }
     
     .chinese-name {
-        font-size: 1.5rem;
+        font-size: 1.7rem;
     }
     
     .english-name {
-        font-size: 1.3rem;
+        font-size: 1.4rem;
     }
     
     .question-content {
-        font-size: 1rem;
+        font-size: 1.1rem;
     }
     
     .answer-content {
-        padding: 15px;
+        padding: 18px;
     }
     
     .section-header h3 {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        flex-wrap: wrap;
     }
     
     .view-answer-btn {
-        font-size: 0.85rem;
-        padding: 8px 15px;
+        font-size: 0.9rem;
+        padding: 14px;
     }
     
     .question-count {
-        font-size: 0.75rem;
-        padding: 3px 8px;
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+    
+    .detail-label {
+        font-size: 0.9rem;
+    }
+    
+    .detail-value {
+        font-size: 1rem;
     }
 }
