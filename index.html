@@ -47,7 +47,17 @@
                 
                 <div class="form-group">
                     <label for="questionCount">Questions per category:</label>
+                    <div class="quick-set-container">
+                        <div class="quick-set-label">Quick Set:</div>
+                        <div class="quick-set-buttons">
+                            <!-- Quick set buttons will be added by JavaScript -->
+                        </div>
+                    </div>
                     <input type="number" id="questionCount" min="1" max="10" value="4" placeholder="Enter 1-10">
+                    <div class="quick-tip">
+                        <i class="fas fa-info-circle"></i>
+                        Click numbers above for quick selection
+                    </div>
                 </div>
                 
                 <button class="btn random-btn" id="randomBtn">
@@ -74,10 +84,11 @@
                     <div class="section-content">
                         <ol class="instruction-list">
                             <li>Select school and/or question type</li>
-                            <li>Set questions per category</li>
+                            <li>Set questions per category using quick buttons or input</li>
                             <li>Click "Generate Questions"</li>
+                            <li>When selecting a single question type, only that section will show</li>
                             <li>Click "View Answer" button to see answer</li>
-                            <li>Click section headers to expand/collapse</li>
+                            <li>Click section headers to expand/collapse (for "All Types")</li>
                         </ol>
                     </div>
                 </div>
