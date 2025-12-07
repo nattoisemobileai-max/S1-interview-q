@@ -1,3 +1,4 @@
+```json
 {
   "questions": [
     {
@@ -70,231 +71,230 @@
       "difficulty": "hard",
       "modal_answer": "A good leader should be empathetic, decisive, communicative, and inspiring. An example is Nelson Mandela, who demonstrated resilience, forgiveness, and a strong vision for equality, uniting people during and after apartheid in South Africa."
     },
-{
-  "questions": [
     {
       "id": "EN-0011",
-      "category": "English",
+      "category": "english",
       "text": "What is your name? Which school do you come from? / Please tell me something about yourself.",
       "difficulty": "easy",
       "modal_answer": "My name is [Your English Name]. I come from [Your Primary School Name] Primary School. I am a diligent and cheerful person who enjoys [mention 1-2 hobbies, e.g., reading, playing basketball]. I always try my best in both studies and extracurricular activities. I am excited about starting a new chapter in secondary school."
     },
     {
       "id": "EN-0012",
-      "category": "English",
+      "category": "english",
       "text": "Please introduce your family.",
       "difficulty": "easy",
       "modal_answer": "I have a [describe family, e.g., small and warm] family. There are [number] members in my family: my parents and me. [Optional: mention siblings]. My father is a [occupation] and my mother is a [occupation]. They are very supportive and always encourage me to work hard and pursue my interests. We enjoy spending time together, such as [mention a family activity]."
     },
     {
       "id": "EN-0013",
-      "category": "English",
+      "category": "english",
       "text": "What are your favourite sports?",
       "difficulty": "easy",
       "modal_answer": "My favourite sport is [sport name, e.g., basketball, swimming, badminton]. I enjoy it because it is not only fun but also helps me to [mention benefits, e.g., stay healthy, learn teamwork, relieve stress]. I usually play it [frequency, e.g., once a week] with my friends or family."
     },
     {
       "id": "EN-0014",
-      "category": "English",
+      "category": "english",
       "text": "Why do you want to study in our school? / Why do you choose our school?",
       "difficulty": "medium",
       "modal_answer": "I am very interested in your school because of its excellent reputation in [mention specific areas, e.g., academic achievements, language environment, STEM education, sports teams]. After visiting your school website and open day, I was deeply impressed by [mention specific observations, e.g., the friendly teachers, well-equipped facilities, active learning atmosphere]. I believe your school can provide a supportive environment for me to develop my potential in both academics and personal growth."
     },
     {
       "id": "EN-0015",
-      "category": "English",
+      "category": "english",
       "text": "What are your hobbies?",
       "difficulty": "easy",
       "modal_answer": "My hobbies are [mention 2-3 hobbies, e.g., reading, drawing, playing the piano]. I especially enjoy [choose one hobby] because it allows me to [explain why, e.g., be creative, relax, learn new things]. I usually spend [amount of time] on my hobbies every week."
     },
     {
       "id": "EN-0016",
-      "category": "English",
+      "category": "english",
       "text": "What are your strengths and weaknesses?",
       "difficulty": "medium",
       "modal_answer": "My strength is that I am [mention a strength, e.g., responsible and persistent]. For example, I always complete my tasks on time and never give up easily when facing challenges. My weakness is that I am sometimes [mention a manageable weakness, e.g., too cautious about trying new things]. To improve, I am learning to [explain how you are improving, e.g., step out of my comfort zone and take small risks]."
     },
     {
       "id": "EN-0017",
-      "category": "English",
+      "category": "english",
       "text": "Who is your best friend?",
       "difficulty": "easy",
       "modal_answer": "My best friend is [friend's name]. We have been friends since [duration, e.g., primary three]. He/She is a very [describe personality, e.g., kind and humorous] person. We share many interests, such as [mention a common interest], and we always support each other in both studies and personal matters."
     },
     {
       "id": "EN-0018",
-      "category": "English",
+      "category": "english",
       "text": "Who do you respect the most?",
       "difficulty": "easy",
       "modal_answer": "I respect [person, e.g., my parents, a teacher, a historical figure] the most. [He/She/They] [explain why, e.g., have taught me important values like honesty and perseverance, or have made great contributions to society]. I admire [his/her/their] [qualities, e.g., dedication, wisdom] and hope to learn from [him/her/them]."
     },
     {
       "id": "EN-0019",
-      "category": "English",
+      "category": "english",
       "text": "Do you have any special skills or talents?",
       "difficulty": "easy",
       "modal_answer": "Yes, I am good at [mention a skill or talent, e.g., playing a musical instrument, coding, public speaking]. I have been practicing [it] for [duration]. This skill has helped me to [mention benefits, e.g., develop patience, express myself better, solve problems creatively]."
     },
     {
       "id": "EN-0020",
-      "category": "English",
+      "category": "english",
       "text": "Do you have any duties at school?",
       "difficulty": "easy",
       "modal_answer": "Yes, I am currently serving as a [mention duty, e.g., class monitor, library prefect, member of the student council]. My responsibilities include [briefly describe duties, e.g., helping teachers with classroom tasks, organizing activities]. This experience has taught me [mention learning points, e.g., leadership, responsibility, time management]."
     },
     {
       "id": "EN-0021",
-      "category": "English",
+      "category": "english",
       "text": "Do you have any leadership experience?",
       "difficulty": "medium",
       "modal_answer": "Yes, I have some leadership experience. For example, I was the [position, e.g., group leader] of a [project/activity, e.g., science project, class performance]. I was responsible for [describe tasks, e.g., assigning jobs, coordinating with team members, making sure we met the deadline]. I learned the importance of [mention learning points, e.g., communication, teamwork, decision-making]."
     },
     {
       "id": "EN-0022",
-      "category": "English",
+      "category": "english",
       "text": "How do you spend your leisure time?",
       "difficulty": "easy",
       "modal_answer": "In my leisure time, I usually [mention 2-3 activities, e.g., read books, play sports, spend time with my family]. I also like to [mention another activity, e.g., explore new hobbies or volunteer]. I think it is important to have a balance between studies and relaxation."
     },
     {
       "id": "EN-0023",
-      "category": "English",
+      "category": "english",
       "text": "Which school is your second choice? Why?",
       "difficulty": "hard",
       "modal_answer": "[Be diplomatic and positive] My first choice is definitely your school because it matches my goals and interests the most. If I were to consider other options, I would look for schools that also emphasise [mention a value or feature important to you, e.g., all-rounded education, strong language support]. However, my main focus and hope is to be admitted to your school."
     },
     {
       "id": "EN-0024",
-      "category": "English",
+      "category": "english",
       "text": "Who is your idol? / Who do you admire the most? Why?",
       "difficulty": "medium",
       "modal_answer": "I admire [name of a positive role model, e.g., a scientist, an athlete, a community leader]. [He/She] inspires me because of [his/her] [mention admirable qualities/achievements, e.g., perseverance, creativity, contribution to society]. I have learned from [him/her] that [mention a lesson, e.g., hard work and kindness can make a difference]."
     },
     {
       "id": "EN-0025",
-      "category": "English",
+      "category": "english",
       "text": "Who is your favourite author?",
       "difficulty": "easy",
       "modal_answer": "My favourite author is [author's name]. I enjoy [his/her] books, such as [book title], because [explain why, e.g., the stories are imaginative, the characters are inspiring, or they teach me about different cultures]. Reading [his/her] books has improved my [mention benefit, e.g., vocabulary, creativity]."
     },
     {
       "id": "EN-0026",
-      "category": "English",
+      "category": "english",
       "text": "What is your general feeling towards your primary school?",
       "difficulty": "easy",
       "modal_answer": "I have had a very positive experience in my primary school. I am grateful for the knowledge and skills I have gained, and for the teachers who have guided me. I have also made many good friends there. My primary school life has prepared me well for the next stage of my studies."
     },
     {
       "id": "EN-0027",
-      "category": "English",
+      "category": "english",
       "text": "Do you think our school can excel your potential to the full? Why?",
       "difficulty": "medium",
       "modal_answer": "Yes, I believe so. From what I have learned about your school, you offer [mention specific programmes/support, e.g., a wide range of subjects, diverse extracurricular activities, encouraging teachers]. These resources and opportunities align with my interests in [mention your interests] and can help me to develop my abilities in [mention areas, e.g., academics, leadership, arts]. I am confident that I can grow and achieve my potential here."
     },
     {
       "id": "EN-0028",
-      "category": "English",
+      "category": "english",
       "text": "If you face difficulties or problems, how do you overcome them?",
       "difficulty": "medium",
       "modal_answer": "When I face difficulties, I first try to stay calm and analyse the problem. Then, I will [mention steps, e.g., break it down into smaller parts, research solutions, or seek advice from teachers or parents]. I believe that persistence and a positive attitude are important. Learning from mistakes helps me to improve and become stronger."
     },
     {
       "id": "EN-0029",
-      "category": "English",
+      "category": "english",
       "text": "Which is your favourite festival? Why?",
       "difficulty": "easy",
       "modal_answer": "My favourite festival is [festival name, e.g., Chinese New Year, Christmas, Mid-Autumn Festival]. I like it because it is a time when [explain why, e.g., my whole family gathers together, we share delicious food, or we practice meaningful traditions]. It makes me feel [mention feeling, e.g., happy, grateful, connected to my culture]."
     },
     {
       "id": "EN-0030",
-      "category": "English",
+      "category": "english",
       "text": "Can you briefly introduce the background of our school?",
       "difficulty": "hard",
       "modal_answer": "[Show you have done research] From my understanding, your school was founded in [year, if known] and has a long history of providing quality education. The school's vision/mission emphasises [mention school's vision/mission or key values, e.g., whole-person development, nurturing students to be responsible citizens]. Your school is also well-known for [mention notable achievements/features, e.g., academic excellence, strong language programmes, vibrant student activities]."
     },
     {
       "id": "EN-0031",
-      "category": "English",
+      "category": "english",
       "text": "How often do you read newspapers?",
       "difficulty": "easy",
       "modal_answer": "I try to read newspapers [frequency, e.g., a few times a week]. I usually read [sections, e.g., local news, international affairs, science and technology] to keep myself updated on current events. Reading newspapers helps me to [mention benefits, e.g., broaden my knowledge, improve my language skills, and form my own opinions]."
     },
     {
       "id": "EN-0032",
-      "category": "English",
+      "category": "english",
       "text": "Do you have any habits of using social media? How often do you use it?",
       "difficulty": "easy",
       "modal_answer": "I use social media [frequency, e.g., occasionally, about 30 minutes a day] mainly to [mention purposes, e.g., keep in touch with friends, follow educational pages, or see news updates]. I am careful about my usage and make sure it does not interfere with my studies or rest. I also remember to be polite and respectful online."
     },
     {
       "id": "EN-0033",
-      "category": "English",
+      "category": "english",
       "text": "What is your dream when you grow up?",
       "difficulty": "easy",
       "modal_answer": "My dream is to become a [career aspiration, e.g., doctor, engineer, teacher]. I want to [explain why, e.g., help people, create useful things, inspire young minds]. To achieve this dream, I know I need to work hard in my studies, especially in subjects like [mention relevant subjects], and develop skills like [mention relevant skills]."
     },
     {
       "id": "EN-0034",
-      "category": "English",
+      "category": "english",
       "text": "Do you want to join the Olympics? Which sports do you want to join?",
       "difficulty": "medium",
       "modal_answer": "Joining the Olympics would be an amazing honour, but it requires extreme dedication and talent. If I had the opportunity, I would be interested in [mention a sport you are familiar with, e.g., swimming, table tennis] because I enjoy it and admire the athletes' discipline. Right now, my focus is on enjoying sports as a healthy hobby and doing my best in school."
     },
     {
       "id": "EN-0035",
-      "category": "English",
+      "category": "english",
       "text": "Do you prefer to watch a movie at home or in the cinema? Why?",
       "difficulty": "easy",
       "modal_answer": "I prefer to watch movies [choose one: at home / in the cinema]. [If home] Because it is more comfortable and convenient, and I can enjoy it with my family. [If cinema] Because the big screen and sound system make the experience more immersive and exciting. It's also a fun activity to do with friends."
     },
     {
       "id": "EN-0036",
-      "category": "English",
+      "category": "english",
       "text": "If you can choose to be an animal, what kind of animal would you like to be?",
       "difficulty": "easy",
       "modal_answer": "If I could be an animal, I would like to be a [animal, e.g., eagle, dolphin]. Because [explain with positive traits, e.g., an eagle can fly high and see far, which symbolizes freedom and a broad perspective; a dolphin is intelligent and friendly, living in social groups]. I admire these qualities."
     },
     {
       "id": "EN-0037",
-      "category": "English",
+      "category": "english",
       "text": "Do you like English? Why/ why not?",
       "difficulty": "easy",
       "modal_answer": "Yes, I like English very much. I find it interesting because [give reasons, e.g., it is a global language that allows me to communicate with people from different countries, I enjoy reading English stories and watching English movies, learning new words is fun]. I will continue to work hard to improve my English skills."
     },
     {
       "id": "EN-0038",
-      "category": "English",
+      "category": "english",
       "text": "Please introduce yourself.",
       "difficulty": "easy",
       "modal_answer": "Good morning/afternoon. My name is [Your English Name]. I am [Age] years old and I graduate from [Your Primary School Name] Primary School. I am a [describe your personality, e.g., curious and responsible] person. In my free time, I like to [mention hobbies]. I am looking forward to learning and growing in secondary school. Thank you."
     },
     {
       "id": "EN-0039",
-      "category": "English",
+      "category": "english",
       "text": "Which is your favourite festival?",
       "difficulty": "easy",
       "modal_answer": "My favourite festival is [Festival Name]. During this festival, we [describe activities, e.g., have a family reunion dinner, give red packets, light lanterns]. I love it because it brings joy and allows me to spend quality time with my family and learn about our traditions."
     },
     {
       "id": "EN-0040",
-      "category": "English",
+      "category": "english",
       "text": "How often do you use computers?",
       "difficulty": "easy",
       "modal_answer": "I use computers [frequency, e.g., daily for about an hour]. I mainly use them for [purposes, e.g., doing homework, searching for information, learning coding, or occasional entertainment]. I understand the importance of using technology responsibly and balancing screen time with other activities."
     },
     {
       "id": "EN-0041",
-      "category": "English",
+      "category": "english",
       "text": "If you have difficulties, what will you do?",
       "difficulty": "easy",
       "modal_answer": "When I have difficulties, I will first try to solve the problem myself by thinking carefully or looking for information. If I still cannot solve it, I will not be afraid to ask for help from my teachers, parents, or classmates. I believe that seeking help is a smart way to learn and overcome challenges."
     },
     {
       "id": "EN-0042",
-      "category": "English",
+      "category": "english",
       "text": "Please suggest 2 ways to make primary students happier.",
       "difficulty": "medium",
       "modal_answer": "I think we can make primary students happier by: 1) Having more fun and interactive learning activities, such as educational games or group projects, to make lessons more engaging. 2) Providing more opportunities for students to participate in different clubs and sports, so they can explore their interests and make friends outside the classroom."
     }
   ]
 }
+```
