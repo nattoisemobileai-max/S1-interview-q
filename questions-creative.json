@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": 6001,
+      "category": "creative",
+      "text": "If you could invent a new subject to be taught in schools, what would it be and why?",
+      "difficulty": "medium"
+    },
+    {
+      "id": 6002,
+      "category": "creative",
+      "text": "Design a new school facility that would improve student learning and wellbeing.",
+      "difficulty": "hard"
+    },
+    {
+      "id": 6003,
+      "category": "creative",
+      "text": "If you were the principal for a day, what three changes would you make to your school?",
+      "difficulty": "medium"
+    },
+    {
+      "id": 6004,
+      "category": "creative",
+      "text": "Imagine you have to solve the problem of plastic pollution in Hong Kong. What creative solution would you propose?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 6005,
+      "category": "creative",
+      "text": "Create a new school event that would promote teamwork and school spirit.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 6006,
+      "category": "creative",
+      "text": "If you could time travel to any period in history, when and where would you go? What would you do there?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 6007,
+      "category": "creative",
+      "text": "Design a mobile app that would help students with their studies.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 6008,
+      "category": "creative",
+      "text": "How would you redesign the traditional classroom to make learning more engaging?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 6009,
+      "category": "creative",
+      "text": "If you could create a new school club, what would it be and what activities would it organize?",
+      "difficulty": "easy"
+    },
+    {
+      "id": 6010,
+      "category": "creative",
+      "text": "Imagine you have unlimited resources to solve one world problem. Which problem would you choose and how would you solve it?",
+      "difficulty": "hard"
+    }
+  ]
+}
