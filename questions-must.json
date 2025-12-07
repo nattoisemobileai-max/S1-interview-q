@@ -34,6 +34,48 @@
       "text": "[FW] 你的父母平常有沒有為你檢查家課?",
       "difficulty": "easy",
       "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0006",
+      "category": "必考題目",
+      "text": "[學思] 最新有什麼新聞最值得你關注?",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0007",
+      "category": "必考題目",
+      "text": "[學思] 請你用1分鐘以廣東話自我介紹。",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0007",
+      "category": "必考題目",
+      "text": "[學思] 請你用1分鐘以英文自我介紹。",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0008",
+      "category": "必考題目",
+      "text": "[學思] 介紹你未來的職業。",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0009",
+      "category": "必考題目",
+      "text": "[學思] 介紹你未來的學習計劃。",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0009",
+      "category": "必考題目",
+      "text": "[學思] 你對本校可以有什麼貢獻?",
+      "difficulty": "easy",
+      "modal_answer": "。"
     }
   ]
 }
