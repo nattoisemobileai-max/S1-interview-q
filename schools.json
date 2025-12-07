@@ -35,7 +35,7 @@
         }
       }
     },{
-      "id": 2,
+      "id": 3,
       "name": "Ying Wa College",
       "chineseName": "英華書院",
       "banding": "Band 1A",
@@ -73,7 +73,7 @@
       }
     },
     {
-      "id": 3,
+      "id": 4,
       "name": "St. Paul's Co-educational College",
       "chineseName": "聖保羅男女中學",
       "banding": "Band 1A",
@@ -108,7 +108,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 6,
       "name": "Alliance Church Chan Sui Ki College",
       "chineseName": "宣道會陳瑞芝紀念中學",
       "banding": "Band 1B",
@@ -141,7 +141,7 @@
       }
     },
     {
-      "id": 4,
+      "id": 5,
       "name": "Po Leung Kuk Tang Yuk Tien College",
       "chineseName": "保良局董玉娣中學",
       "banding": "Band 1A",
@@ -175,7 +175,7 @@
     },
     
     {
-      "id": 6,
+      "id": 2,
       "name": "Lee Kau Pat Memorial College",
       "chineseName": "李國寶中學",
       "banding": "Band 1B",
