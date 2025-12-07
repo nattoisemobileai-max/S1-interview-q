@@ -1,64 +1,74 @@
 {
   "questions": [
     {
-      "id": 2001,
+      "id": "EN-0001",
       "category": "english",
-      "text": "Describe your favorite book and explain why you would recommend it to others.",
-      "difficulty": "medium"
+      "text": "[FW] Describe your favorite book and explain why you would recommend it to others.",
+      "difficulty": "medium",
+      "modal_answer": "One of my favorite books is 'To Kill a Mockingbird' by Harper Lee. I would recommend it because it beautifully explores themes of justice, morality, and racial inequality through the eyes of a young girl. The characters are memorable, and the story remains relevant today."
     },
     {
-      "id": 2002,
+      "id": "EN-0002",
       "category": "english",
-      "text": "What are the advantages and disadvantages of using social media for students?",
-      "difficulty": "hard"
+      "text": "[FW] What are the advantages and disadvantages of using social media for students?",
+      "difficulty": "hard",
+      "modal_answer": "Advantages include staying connected with friends, accessing educational content, and developing digital literacy. Disadvantages may involve distraction from studies, exposure to inappropriate content, and potential negative effects on mental health due to social comparison or cyberbullying."
     },
     {
-      "id": 2003,
+      "id": "EN-0003",
       "category": "english",
-      "text": "Tell us about your family and your relationship with them.",
-      "difficulty": "easy"
+      "text": "[FW] Tell us about your family and your relationship with them.",
+      "difficulty": "easy",
+      "modal_answer": "I come from a family of four—my parents, my older sister, and me. We are very close-knit and supportive of each other. We enjoy spending weekends together, whether it’s cooking, watching movies, or going on outings."
     },
     {
-      "id": 2004,
+      "id": "EN-0004",
       "category": "english",
-      "text": "If you could travel anywhere in the world, where would you go and why?",
-      "difficulty": "easy"
+      "text": "[FW] If you could travel anywhere in the world, where would you go and why?",
+      "difficulty": "easy",
+      "modal_answer": "I would love to visit Japan because I am fascinated by its blend of traditional culture and modern technology. I’d like to experience cherry blossom season, try authentic sushi, and explore historic temples and bustling cities like Tokyo."
     },
     {
-      "id": 2005,
+      "id": "EN-0005",
       "category": "english",
-      "text": "Discuss the importance of learning English in today's globalized world.",
-      "difficulty": "medium"
+      "text": "[FW] Discuss the importance of learning English in today's globalized world.",
+      "difficulty": "medium",
+      "modal_answer": "English is widely used in international communication, business, science, and technology. Learning English opens up opportunities for education, career advancement, and cultural exchange. It also enables access to a vast amount of online information and resources."
     },
     {
-      "id": 2006,
+      "id": "EN-0006",
       "category": "english",
-      "text": "Describe a challenging situation you faced and how you overcame it.",
-      "difficulty": "medium"
+      "text": "[FW] Describe a challenging situation you faced and how you overcame it.",
+      "difficulty": "medium",
+      "modal_answer": "Once, I had to give a presentation in front of a large audience and was extremely nervous. I prepared thoroughly, practiced multiple times, and used breathing techniques to calm myself. On the day, I focused on delivering my message clearly and received positive feedback."
     },
     {
-      "id": 2007,
+      "id": "EN-0007",
       "category": "english",
-      "text": "What are your career aspirations and how do you plan to achieve them?",
-      "difficulty": "hard"
+      "text": "[FW] What are your career aspirations and how do you plan to achieve them?",
+      "difficulty": "hard",
+      "modal_answer": "I aspire to become a software engineer. To achieve this, I am studying computer science, working on personal coding projects, and seeking internships to gain practical experience. I also plan to obtain relevant certifications and stay updated with industry trends."
     },
     {
-      "id": 2008,
+      "id": "EN-0008",
       "category": "english",
-      "text": "Compare traditional classroom learning with online learning. Which do you prefer and why?",
-      "difficulty": "hard"
+      "text": "[FW] Compare traditional classroom learning with online learning. Which do you prefer and why?",
+      "difficulty": "hard",
+      "modal_answer": "Traditional classroom learning offers face-to-face interaction and structured schedules, while online learning provides flexibility and accessibility. I prefer a blended approach because it combines the benefits of direct teacher support with the convenience of learning at my own pace."
     },
     {
-      "id": 2009,
+      "id": "EN-0009",
       "category": "english",
-      "text": "If you could meet any historical figure, who would it be and what would you ask them?",
-      "difficulty": "medium"
+      "text": "[FW] If you could meet any historical figure, who would it be and what would you ask them?",
+      "difficulty": "medium",
+      "modal_answer": "I would like to meet Leonardo da Vinci. I would ask him how he managed to excel in so many different fields—art, science, engineering—and what inspired his incredible curiosity and creativity."
     },
     {
-      "id": 2010,
+      "id": "EN-0010",
       "category": "english",
-      "text": "Describe the qualities of a good leader and provide an example of someone who demonstrates these qualities.",
-      "difficulty": "hard"
+      "text": "[FW] Describe the qualities of a good leader and provide an example of someone who demonstrates these qualities.",
+      "difficulty": "hard",
+      "modal_answer": "A good leader should be empathetic, decisive, communicative, and inspiring. An example is Nelson Mandela, who demonstrated resilience, forgiveness, and a strong vision for equality, uniting people during and after apartheid in South Africa."
     }
   ]
 }
