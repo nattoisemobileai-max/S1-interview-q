@@ -3,185 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S1 Interview Questions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>HK School Interview Question Generator</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-graduation-cap"></i> HK School Interview Question Generator</h1>
+            <p>Generate practice questions and explore information for Hong Kong secondary schools</p>
+        </div>
+    </header>
+
     <div class="container">
-        <header>
-            <h1><i class="fas fa-graduation-cap"></i> S1 Interview Questions</h1>
-        </header>
-        
-        <div class="content">
-            <div class="selection-panel">
-                <h2><i class="fas fa-cog"></i> Settings</h2>
-                
-                <div class="form-group">
-                    <label for="schoolSelect"><i class="fas fa-school"></i> Select School:</label>
-                    <select id="schoolSelect">
-                        <option value="all">All Schools</option>
-                    </select>
-                    <div class="school-count" id="schoolCount">Loading...</div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="questionTypeSelect"><i class="fas fa-question-circle"></i> Question Type:</label>
-                    <select id="questionTypeSelect">
-                        <option value="all">All Types</option>
-                        <option value="chinese">Chinese</option>
-                        <option value="english">English</option>
-                        <option value="math">Math (Mental)</option>
-                        <option value="current">Current Affairs</option>
-                        <option value="science">Science</option>
-                        <option value="creative">Creative</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="schoolSearch"><i class="fas fa-search"></i> Search School:</label>
-                    <input type="text" id="schoolSearch" placeholder="Enter school name in Chinese or English...">
-                </div>
-                
-                <div class="form-group">
-                    <label for="questionCount">Questions per category:</label>
-                    <div class="quick-set-container">
-                        <div class="quick-set-label">Quick Set:</div>
-                        <div class="quick-set-buttons">
-                            <!-- Quick set buttons will be added by JavaScript -->
+        <div class="main-content">
+            <div class="card question-generator">
+                <h2><i class="fas fa-question-circle"></i> Interview Question Generator</h2>
+                <div class="category-section">
+                    <div class="category-buttons">
+                        <button class="category-btn active" data-category="general">General Questions</button>
+                        <button class="category-btn" data-category="academic">Academic</button>
+                        <button class="category-btn" data-category="personal">Personal</button>
+                        <button class="category-btn" data-category="school">School Specific</button>
+                        <button class="category-btn" data-category="current">Current Affairs</button>
+                        <button class="category-btn" data-category="creative">Creative Thinking</button>
+                        <button class="category-btn all-btn" id="all-questions">All Categories</button>
+                    </div>
+                    
+                    <div class="questions-per-category">
+                        <label for="questions-count">Questions per category:</label>
+                        <div class="count-buttons">
+                            <button class="count-btn" data-count="1">1</button>
+                            <button class="count-btn" data-count="2">2</button>
+                            <button class="count-btn" data-count="3">3</button>
+                            <button class="count-btn active" data-count="5">5</button>
                         </div>
                     </div>
-                    <input type="number" id="questionCount" min="1" max="10" value="4" placeholder="Enter 1-10">
-                    <div class="quick-tip">
-                        <i class="fas fa-info-circle"></i>
-                        Click numbers above for quick selection
-                    </div>
                 </div>
                 
-                <button class="btn random-btn" id="randomBtn">
-                    <i class="fas fa-random"></i> Random Generate
-                </button>
-                
-                <button class="btn" id="generateBtn">
-                    <i class="fas fa-magic"></i> Generate Questions
-                </button>
-                
-                <div class="loading" id="loadingIndicator">
-                    <i class="fas fa-spinner fa-spin"></i>
-                    <p>Generating questions...</p>
+                <div class="action-buttons">
+                    <button id="generate-btn" class="generate-btn">
+                        <i class="fas fa-magic"></i> Generate Questions
+                    </button>
+                    <button id="clear-btn" class="clear-btn">
+                        <i class="fas fa-trash-alt"></i> Clear All
+                    </button>
                 </div>
                 
-                <div class="section highlight" id="instructionsSection">
-                    <div class="section-header" onclick="toggleSection('instructionsSection')">
-                        <h3>
-                            <i class="fas fa-lightbulb"></i>
-                            How to Use
-                        </h3>
-                        <i class="fas fa-chevron-down toggle-icon"></i>
-                    </div>
-                    <div class="section-content">
-                        <ol class="instruction-list">
-                            <li>Select school and/or question type</li>
-                            <li>Set questions per category using quick buttons or input</li>
-                            <li>Click "Generate Questions"</li>
-                            <li>When selecting a single question type, only that section will show</li>
-                            <li>Click "View Answer" button to see answer</li>
-                            <li>Click "DONE" button to mark questions as completed</li>
-                            <li>Completed questions will be visually marked and tracked</li>
-                            <li>Click section headers to expand/collapse (for "All Types")</li>
-                        </ol>
-                    </div>
+                <div class="generated-questions">
+                    <h3>Generated Questions</h3>
+                    <div id="questions-container"></div>
                 </div>
             </div>
             
-            <div class="results-panel">
-                <h2><i class="fas fa-file-alt"></i> Interview Questions</h2>
+            <div class="card school-info">
+                <h2><i class="fas fa-school"></i> School Information</h2>
+                <div class="school-selector">
+                    <select id="school-select">
+                        <option value="">Select a school to view details</option>
+                    </select>
+                </div>
                 
-                <div id="resultsContainer">
-                    <div class="no-school" id="noSchoolMessage">
-                        <i class="fas fa-info-circle"></i>
-                        <h3>Please make a selection</h3>
-                        <p>Select a school or question type, then click "Generate Questions".</p>
-                        
-                        <div class="section" id="quickGuideSection">
-                            <div class="section-header" onclick="toggleSection('quickGuideSection')">
-                                <h3>
-                                    <i class="fas fa-graduation-cap"></i>
-                                    Question Types
-                                </h3>
-                                <i class="fas fa-chevron-down toggle-icon"></i>
-                            </div>
-                            <div class="section-content">
-                                <div class="guide-grid">
-                                    <div class="guide-item">
-                                        <i class="fas fa-comment-dots"></i>
-                                        <div>
-                                            <strong>Chinese</strong>
-                                            <p>Chinese language ability</p>
-                                        </div>
-                                    </div>
-                                    <div class="guide-item">
-                                        <i class="fas fa-comments"></i>
-                                        <div>
-                                            <strong>English</strong>
-                                            <p>English communication</p>
-                                        </div>
-                                    </div>
-                                    <div class="guide-item">
-                                        <i class="fas fa-calculator"></i>
-                                        <div>
-                                            <strong>Math (Mental)</strong>
-                                            <p>Mental math and logic</p>
-                                        </div>
-                                    </div>
-                                    <div class="guide-item">
-                                        <i class="fas fa-newspaper"></i>
-                                        <div>
-                                            <strong>Current Affairs</strong>
-                                            <p>Social and current issues</p>
-                                        </div>
-                                    </div>
-                                    <div class="guide-item">
-                                        <i class="fas fa-flask"></i>
-                                        <div>
-                                            <strong>Science</strong>
-                                            <p>Scientific knowledge</p>
-                                        </div>
-                                    </div>
-                                    <div class="guide-item">
-                                        <i class="fas fa-lightbulb"></i>
-                                        <div>
-                                            <strong>Creative</strong>
-                                            <p>Creative thinking</p>
-                                        </div>
-                                    </div>
-                                    <div class="guide-item">
-                                        <i class="fas fa-question-circle"></i>
-                                        <div>
-                                            <strong>Other</strong>
-                                            <p>General questions</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div id="questionsOutput" style="display: none;">
-                        <!-- Content will be generated here -->
-                    </div>
+                <div id="school-details" class="school-details">
+                    <p class="placeholder">Select a school from the dropdown to view detailed information</p>
                 </div>
             </div>
         </div>
         
-        <div class="footer">
-            <p>This tool generates practice questions for S1 interviews. Actual interview questions may vary.</p>
-            <p>Your progress is saved automatically in your browser.</p>
-            <p>Hosted on GitHub Pages | Made for students <i class="fas fa-heart" style="color: #ff6b6b;"></i></p>
+        <div class="card statistics">
+            <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-schools">0</div>
+                    <div class="stat-label">Schools</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-questions">0</div>
+                    <div class="stat-label">Question Pool</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="generated-count">0</div>
+                    <div class="stat-label">Generated Today</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="band1-count">0</div>
+                    <div class="stat-label">Band 1 Schools</div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <footer>
+        <div class="container">
+            <p>HK School Interview Question Generator &copy; 2023 | Data for educational purposes only</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
