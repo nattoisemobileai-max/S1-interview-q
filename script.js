@@ -13,6 +13,7 @@ let selectedCategories = ['all'];
 let questionsPerCategory = 'all';
 let generatedCount = 0;
 let savedAnswersCount = 0;
+let currentQuestionData = null;
 
 // DOM elements
 const questionsContainer = document.getElementById('questions-container');
@@ -20,16 +21,25 @@ const schoolSelect = document.getElementById('school-select');
 const schoolDetails = document.getElementById('school-details');
 const generateBtn = document.getElementById('generate-btn');
 const clearBtn = document.getElementById('clear-btn');
-const saveAnswersBtn = document.getElementById('save-answers-btn');
 const viewHistoryBtn = document.getElementById('view-history-btn');
 const closeHistoryBtn = document.getElementById('close-history-btn');
 const clearHistoryBtn = document.getElementById('clear-history-btn');
 const downloadHistoryBtn = document.getElementById('download-history-btn');
-const loadAnswersBtn = document.getElementById('load-answers-btn');
 const historyLogCard = document.getElementById('history-log-card');
 const historyContainer = document.getElementById('history-container');
 const categoryButtons = document.querySelectorAll('.category-btn');
 const countButtons = document.querySelectorAll('.count-btn');
+
+// Modal elements
+const answerModal = document.getElementById('answer-modal');
+const modalCloseBtn = document.querySelector('.modal-close');
+const modalCancelBtn = document.getElementById('modal-cancel-btn');
+const modalSaveBtn = document.getElementById('modal-save-btn');
+const modalSaveDoneBtn = document.getElementById('modal-save-done-btn');
+const modalAnswerInput = document.getElementById('modal-answer-input');
+const modalCategory = document.getElementById('modal-category');
+const modalQuestionText = document.getElementById('modal-question-text');
+const modalQuestionId = document.getElementById('modal-question-id');
 
 // Statistics elements
 const totalSchoolsEl = document.getElementById('total-schools');
@@ -133,7 +143,7 @@ function setDefaultSelections() {
 
 // Setup event listeners
 function setupEventListeners() {
-    // Category buttons
+    // Category buttons - Fixed: clicking a specific category should unselect "All"
     categoryButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             const category = this.dataset.category;
@@ -148,9 +158,11 @@ function setupEventListeners() {
                 selectedCategories = ['all'];
             } else {
                 // If a specific category is clicked
+                // First, ensure "All" button is deselected
                 const allBtn = document.querySelector('.category-btn.all-btn');
                 allBtn.classList.remove('active');
                 
+                // Toggle the clicked button
                 if (this.classList.contains('active')) {
                     this.classList.remove('active');
                     selectedCategories = selectedCategories.filter(cat => cat !== category);
@@ -162,7 +174,9 @@ function setupEventListeners() {
                     }
                 } else {
                     this.classList.add('active');
-                    selectedCategories.push(category);
+                    if (!selectedCategories.includes(category)) {
+                        selectedCategories.push(category);
+                    }
                 }
             }
         });
@@ -205,9 +219,6 @@ function setupEventListeners() {
     // Clear button
     clearBtn.addEventListener('click', clearQuestions);
     
-    // Save answers button
-    saveAnswersBtn.addEventListener('click', saveAllAnswers);
-    
     // View history button
     viewHistoryBtn.addEventListener('click', showHistory);
     
@@ -220,9 +231,6 @@ function setupEventListeners() {
     // Download history button
     downloadHistoryBtn.addEventListener('click', downloadAnswers);
     
-    // Load answers button
-    loadAnswersBtn.addEventListener('click', loadAnswersFile);
-    
     // School select dropdown
     schoolSelect.addEventListener('change', function() {
         const schoolId = parseInt(this.value);
@@ -230,6 +238,19 @@ function setupEventListeners() {
             displaySchoolDetails(schoolId);
         } else {
             schoolDetails.innerHTML = '<p class="placeholder">Select a school from the dropdown to view detailed information</p>';
+        }
+    });
+    
+    // Modal event listeners
+    modalCloseBtn.addEventListener('click', closeModal);
+    modalCancelBtn.addEventListener('click', closeModal);
+    modalSaveBtn.addEventListener('click', saveAnswer);
+    modalSaveDoneBtn.addEventListener('click', saveAnswerAndMarkDone);
+    
+    // Close modal when clicking outside
+    answerModal.addEventListener('click', function(e) {
+        if (e.target === answerModal) {
+            closeModal();
         }
     });
 }
@@ -310,9 +331,20 @@ function displayQuestion(question) {
     
     // Check if this question has a saved answer
     const savedAnswer = studentAnswers.find(answer => answer.questionId === question.id);
+    const isCompleted = savedAnswer && savedAnswer.completed;
     
-    // Generate unique answer ID for this question
-    const answerId = `answer-${question.id}-${Date.now()}`;
+    if (isCompleted) {
+        questionEl.classList.add('completed');
+    }
+    
+    // Truncate answer preview if too long
+    let answerPreview = '';
+    if (savedAnswer && savedAnswer.answer) {
+        const truncatedAnswer = savedAnswer.answer.length > 200 
+            ? savedAnswer.answer.substring(0, 200) + '...' 
+            : savedAnswer.answer;
+        answerPreview = `<div class="answer-preview"><p><strong>Your Answer:</strong> ${truncatedAnswer}</p></div>`;
+    }
     
     questionEl.innerHTML = `
         <div class="question-item-header">
@@ -320,16 +352,17 @@ function displayQuestion(question) {
                 <div class="category">${categoryNames[question.category] || question.category}</div>
                 <div class="question-id">ID: ${question.id}</div>
             </div>
-            <button class="done-btn" onclick="markQuestionAsDone(${question.id}, '${question.category}', '${question.text.replace(/'/g, "\\'")}', ${question.difficulty === 'hard' ? 3 : question.difficulty === 'medium' ? 2 : 1}, '${answerId}')">
-                <i class="fas fa-check"></i> ${savedAnswer ? 'Answered' : 'Mark as Done'}
+            <button class="done-btn" onclick="markQuestionAsDone(${question.id})">
+                <i class="fas fa-check"></i> ${isCompleted ? 'Completed' : 'Mark as Done'}
             </button>
         </div>
         <div class="text">${question.text}</div>
         
-        <div class="question-answer-section">
-            <label class="answer-label" for="${answerId}">Your Answer:</label>
-            <textarea class="answer-input" id="${answerId}" placeholder="Type your answer here...">${savedAnswer ? savedAnswer.answer : ''}</textarea>
-        </div>
+        ${answerPreview}
+        
+        <button class="answer-btn" onclick="openAnswerModal(${question.id}, '${question.category}', '${question.text.replace(/'/g, "\\'")}', ${question.difficulty === 'hard' ? 3 : question.difficulty === 'medium' ? 2 : 1})">
+            <i class="fas fa-edit"></i> ${savedAnswer ? 'Edit Answer' : 'Add Answer'}
+        </button>
         
         <div class="difficulty">Difficulty: ${getDifficultyStars(question.difficulty)}</div>
     `;
@@ -337,121 +370,223 @@ function displayQuestion(question) {
     questionsContainer.appendChild(questionEl);
 }
 
-// Mark a question as done
-function markQuestionAsDone(questionId, category, text, difficultyLevel, answerId) {
-    // Get the answer text
-    const answerInput = document.getElementById(answerId);
-    const answerText = answerInput ? answerInput.value.trim() : '';
+// Open answer modal
+function openAnswerModal(questionId, category, text, difficultyLevel) {
+    // Store current question data
+    currentQuestionData = {
+        id: questionId,
+        category: category,
+        text: text,
+        difficulty: difficultyLevel
+    };
     
+    // Get category display name
+    const categoryNames = {
+        'chinese': 'Chinese 中文',
+        'english': 'English 英文',
+        'math': 'Mathematics 數學',
+        'science': 'Science 科學',
+        'news': 'Current News 時事',
+        'creative': 'Creative Thinking 創意思維'
+    };
+    
+    // Update modal content
+    modalCategory.textContent = categoryNames[category] || category;
+    modalQuestionText.textContent = text;
+    modalQuestionId.textContent = questionId;
+    
+    // Check for existing answer
+    const savedAnswer = studentAnswers.find(answer => answer.questionId === questionId);
+    if (savedAnswer) {
+        modalAnswerInput.value = savedAnswer.answer;
+    } else {
+        modalAnswerInput.value = '';
+    }
+    
+    // Show modal
+    answerModal.classList.add('show');
+    modalAnswerInput.focus();
+}
+
+// Close modal
+function closeModal() {
+    answerModal.classList.remove('show');
+    currentQuestionData = null;
+    modalAnswerInput.value = '';
+}
+
+// Save answer from modal
+function saveAnswer() {
+    if (!currentQuestionData) return;
+    
+    const answerText = modalAnswerInput.value.trim();
     if (!answerText) {
-        showNotification('Please write an answer before marking as done');
+        showNotification('Please write an answer before saving');
         return;
     }
     
-    // Find the question element
-    const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
+    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId === currentQuestionData.id);
     
-    if (questionElement) {
-        // Mark as completed
-        questionElement.classList.add('completed');
+    const answerData = {
+        questionId: currentQuestionData.id,
+        category: currentQuestionData.category,
+        questionText: currentQuestionData.text,
+        answer: answerText,
+        difficulty: currentQuestionData.difficulty,
+        completed: existingAnswerIndex >= 0 ? studentAnswers[existingAnswerIndex].completed : false,
+        date: getCurrentDate(),
+        time: getCurrentTime(),
+        timestamp: new Date().toISOString()
+    };
+    
+    if (existingAnswerIndex >= 0) {
+        // Update existing answer
+        studentAnswers[existingAnswerIndex] = answerData;
+    } else {
+        // Add new answer
+        studentAnswers.push(answerData);
+        savedAnswersCount++;
+    }
+    
+    // Save to localStorage
+    saveStudentData();
+    
+    // Update statistics
+    savedAnswersEl.textContent = savedAnswersCount;
+    
+    // Update question display
+    updateQuestionDisplay(currentQuestionData.id);
+    
+    // Close modal
+    closeModal();
+    
+    // Show notification
+    showNotification(`Answer saved successfully!`);
+}
+
+// Save answer and mark as done
+function saveAnswerAndMarkDone() {
+    if (!currentQuestionData) return;
+    
+    const answerText = modalAnswerInput.value.trim();
+    if (!answerText) {
+        showNotification('Please write an answer before saving');
+        return;
+    }
+    
+    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId === currentQuestionData.id);
+    
+    const answerData = {
+        questionId: currentQuestionData.id,
+        category: currentQuestionData.category,
+        questionText: currentQuestionData.text,
+        answer: answerText,
+        difficulty: currentQuestionData.difficulty,
+        completed: true,
+        date: getCurrentDate(),
+        time: getCurrentTime(),
+        timestamp: new Date().toISOString()
+    };
+    
+    if (existingAnswerIndex >= 0) {
+        // Update existing answer
+        studentAnswers[existingAnswerIndex] = answerData;
+    } else {
+        // Add new answer
+        studentAnswers.push(answerData);
+        savedAnswersCount++;
+    }
+    
+    // Save to localStorage
+    saveStudentData();
+    
+    // Update statistics
+    savedAnswersEl.textContent = savedAnswersCount;
+    
+    // Update question display
+    updateQuestionDisplay(currentQuestionData.id);
+    
+    // Close modal
+    closeModal();
+    
+    // Show notification
+    showNotification(`Answer saved and marked as completed!`);
+}
+
+// Update question display after saving answer
+function updateQuestionDisplay(questionId) {
+    const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
+    if (!questionElement) return;
+    
+    // Get saved answer
+    const savedAnswer = studentAnswers.find(answer => answer.questionId === questionId);
+    
+    // Update button text
+    const answerBtn = questionElement.querySelector('.answer-btn');
+    if (answerBtn) {
+        answerBtn.innerHTML = `<i class="fas fa-edit"></i> ${savedAnswer ? 'Edit Answer' : 'Add Answer'}`;
+    }
+    
+    // Update done button
+    const doneBtn = questionElement.querySelector('.done-btn');
+    if (doneBtn) {
+        doneBtn.innerHTML = `<i class="fas fa-check"></i> ${savedAnswer && savedAnswer.completed ? 'Completed' : 'Mark as Done'}`;
+    }
+    
+    // Add/update answer preview
+    let answerPreview = questionElement.querySelector('.answer-preview');
+    if (savedAnswer && savedAnswer.answer) {
+        const truncatedAnswer = savedAnswer.answer.length > 200 
+            ? savedAnswer.answer.substring(0, 200) + '...' 
+            : savedAnswer.answer;
         
-        // Update the button
-        const doneBtn = questionElement.querySelector('.done-btn');
-        doneBtn.innerHTML = '<i class="fas fa-check"></i> Answered';
-        doneBtn.style.backgroundColor = '#7f8c8d';
-        doneBtn.onclick = null;
-        
-        // Save answer to studentAnswers array
-        const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId === questionId);
-        
-        const answerData = {
-            questionId: questionId,
-            category: category,
-            questionText: text,
-            answer: answerText,
-            difficulty: difficultyLevel,
-            date: getCurrentDate(),
-            time: getCurrentTime(),
-            timestamp: new Date().toISOString()
-        };
-        
-        if (existingAnswerIndex >= 0) {
-            // Update existing answer
-            studentAnswers[existingAnswerIndex] = answerData;
+        if (answerPreview) {
+            answerPreview.innerHTML = `<p><strong>Your Answer:</strong> ${truncatedAnswer}</p>`;
         } else {
-            // Add new answer
-            studentAnswers.push(answerData);
-            savedAnswersCount++;
+            answerPreview = document.createElement('div');
+            answerPreview.className = 'answer-preview';
+            answerPreview.innerHTML = `<p><strong>Your Answer:</strong> ${truncatedAnswer}</p>`;
+            
+            // Insert after question text
+            const questionText = questionElement.querySelector('.text');
+            if (questionText && questionText.nextSibling) {
+                questionElement.insertBefore(answerPreview, questionText.nextSibling);
+            }
         }
-        
-        // Save to localStorage
-        saveStudentData();
-        
-        // Update statistics
-        savedAnswersEl.textContent = savedAnswersCount;
-        
-        // Show notification
-        showNotification(`Answer saved successfully!`);
+    } else if (answerPreview) {
+        answerPreview.remove();
+    }
+    
+    // Update completed styling
+    if (savedAnswer && savedAnswer.completed) {
+        questionElement.classList.add('completed');
+        if (doneBtn) doneBtn.style.backgroundColor = '#7f8c8d';
+    } else {
+        questionElement.classList.remove('completed');
+        if (doneBtn) doneBtn.style.backgroundColor = '';
     }
 }
 
-// Save all answers
-function saveAllAnswers() {
-    // Collect all answers from textareas
-    const answerInputs = document.querySelectorAll('.answer-input');
-    let savedCount = 0;
+// Mark a question as done
+function markQuestionAsDone(questionId) {
+    // Find the answer
+    const answerIndex = studentAnswers.findIndex(answer => answer.questionId === questionId);
     
-    answerInputs.forEach(input => {
-        const answerText = input.value.trim();
-        if (answerText) {
-            // Extract question ID from input ID
-            const match = input.id.match(/answer-(\d+)-/);
-            if (match) {
-                const questionId = parseInt(match[1]);
-                
-                // Find the question data
-                const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
-                if (questionElement) {
-                    const category = questionElement.dataset.category;
-                    
-                    // Check if answer already exists
-                    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId === questionId);
-                    
-                    const answerData = {
-                        questionId: questionId,
-                        category: category,
-                        questionText: questionElement.querySelector('.text').textContent,
-                        answer: answerText,
-                        date: getCurrentDate(),
-                        time: getCurrentTime(),
-                        timestamp: new Date().toISOString()
-                    };
-                    
-                    if (existingAnswerIndex >= 0) {
-                        // Update existing answer
-                        studentAnswers[existingAnswerIndex] = answerData;
-                    } else {
-                        // Add new answer
-                        studentAnswers.push(answerData);
-                    }
-                    
-                    savedCount++;
-                }
-            }
-        }
-    });
-    
-    if (savedCount > 0) {
+    if (answerIndex >= 0) {
+        // Toggle completed status
+        studentAnswers[answerIndex].completed = !studentAnswers[answerIndex].completed;
+        
         // Save to localStorage
         saveStudentData();
         
-        // Update statistics
-        savedAnswersCount = studentAnswers.length;
-        savedAnswersEl.textContent = savedAnswersCount;
+        // Update question display
+        updateQuestionDisplay(questionId);
         
-        showNotification(`Saved ${savedCount} answers successfully!`);
+        // Show notification
+        const status = studentAnswers[answerIndex].completed ? 'marked as completed' : 'marked as incomplete';
+        showNotification(`Question ${status}!`);
     } else {
-        showNotification('No answers to save. Please write answers first.');
+        showNotification('Please save an answer first before marking as done');
     }
 }
 
@@ -641,9 +776,13 @@ function displayHistory() {
                 'creative': 'Creative Thinking'
             };
             
+            const statusBadge = answer.completed 
+                ? '<span style="color:#2ecc71; font-weight:600;">✓ Completed</span>' 
+                : '<span style="color:#f39c12;">In Progress</span>';
+            
             historyItem.innerHTML = `
                 <div class="history-item-header">
-                    <div class="history-category">${categoryNames[answer.category] || answer.category}</div>
+                    <div class="history-category">${categoryNames[answer.category] || answer.category} ${statusBadge}</div>
                     <div class="history-date">${answer.time}</div>
                 </div>
                 <div class="history-question">${answer.questionText}</div>
@@ -697,63 +836,6 @@ function downloadAnswers() {
     URL.revokeObjectURL(url);
     
     showNotification('Answers downloaded successfully!');
-}
-
-// Load answers from file
-function loadAnswersFile() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.accept = '.json';
-    
-    input.onchange = function(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const loadedData = JSON.parse(e.target.result);
-                
-                if (loadedData.answers && Array.isArray(loadedData.answers)) {
-                    // Merge loaded answers with existing ones
-                    loadedData.answers.forEach(loadedAnswer => {
-                        const existingIndex = studentAnswers.findIndex(
-                            answer => answer.questionId === loadedAnswer.questionId
-                        );
-                        
-                        if (existingIndex >= 0) {
-                            // Update existing answer
-                            studentAnswers[existingIndex] = loadedAnswer;
-                        } else {
-                            // Add new answer
-                            studentAnswers.push(loadedAnswer);
-                        }
-                    });
-                    
-                    // Update statistics
-                    savedAnswersCount = studentAnswers.length;
-                    savedAnswersEl.textContent = savedAnswersCount;
-                    
-                    // Save to localStorage
-                    saveStudentData();
-                    
-                    // Update display
-                    displayHistory();
-                    
-                    showNotification(`Loaded ${loadedData.answers.length} answers successfully!`);
-                } else {
-                    showNotification('Invalid file format');
-                }
-            } catch (error) {
-                console.error('Error loading file:', error);
-                showNotification('Error loading file. Please check the file format.');
-            }
-        };
-        
-        reader.readAsText(file);
-    };
-    
-    input.click();
 }
 
 // Update statistics
