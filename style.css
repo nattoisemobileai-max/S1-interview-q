@@ -592,3 +592,17 @@ footer p {
         justify-content: center;
     }
 }
+
+/* Add to style.css */
+.school-image {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.school-image img {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+}
