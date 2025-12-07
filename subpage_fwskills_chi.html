@@ -507,7 +507,7 @@
         // 加载主题数据
         async function loadTopics() {
             try {
-                const response = await fetch('topics.json');
+                const response = await fetch('fwskillchi_topics.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
