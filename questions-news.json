@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": 5001,
+      "category": "news",
+      "text": "What recent technological advancement do you think will have the biggest impact on education in the next 5 years?",
+      "difficulty": "medium"
+    },
+    {
+      "id": 5002,
+      "category": "news",
+      "text": "Discuss one current environmental issue in Hong Kong and suggest possible solutions.",
+      "difficulty": "hard"
+    },
+    {
+      "id": 5003,
+      "category": "news",
+      "text": "How has the COVID-19 pandemic changed the way we live and learn?",
+      "difficulty": "medium"
+    },
+    {
+      "id": 5004,
+      "category": "news",
+      "text": "What are the benefits and risks of artificial intelligence in our daily lives?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 5005,
+      "category": "news",
+      "text": "Discuss the importance of mental health awareness among students.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 5006,
+      "category": "news",
+      "text": "How can Hong Kong promote STEM education to prepare students for future careers?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 5007,
+      "category": "news",
+      "text": "What is your opinion on the role of social media in spreading news and information?",
+      "difficulty": "medium"
+    },
+    {
+      "id": 5008,
+      "category": "news",
+      "text": "Discuss the importance of cultural heritage preservation in modern society.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 5009,
+      "category": "news",
+      "text": "How can students contribute to building a more inclusive and diverse society?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 5010,
+      "category": "news",
+      "text": "What are the challenges and opportunities of online learning compared to traditional classroom learning?",
+      "difficulty": "medium"
+    }
+  ]
+}
