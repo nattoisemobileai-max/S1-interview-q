@@ -6,6 +6,260 @@
     <title>HK School Interview Practice - School Information</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 学校卡片样式 */
+        .school-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .school-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-top: 4px solid #3498db;
+        }
+        
+        .school-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+        }
+        
+        .school-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .school-card-header h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin: 0;
+            flex: 1;
+        }
+        
+        .banding-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            white-space: nowrap;
+        }
+        
+        .banding-1a {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+        
+        .banding-1b {
+            background: linear-gradient(135deg, #e67e22, #d35400);
+        }
+        
+        .banding-1c {
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: #333;
+        }
+        
+        .school-card-body {
+            margin-bottom: 15px;
+        }
+        
+        .school-card-body p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        
+        .view-details-btn {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        .view-details-btn:hover {
+            background: linear-gradient(135deg, #2980b9, #1c6ea4);
+        }
+        
+        .back-btn {
+            background: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-btn:hover {
+            background: #6c7b7d;
+        }
+        
+        /* 详情页样式 */
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .school-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .detail-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .detail-section {
+            margin: 25px 0;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-section:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-section h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* 面试题目样式 */
+        .interview-questions-section {
+            margin: 30px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            border-left: 5px solid #9b59b6;
+        }
+        
+        .interview-year {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+        
+        .interview-year-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .interview-year h5 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+        
+        .interview-months {
+            background: #9b59b6;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .question-category {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 4px solid #3498db;
+        }
+        
+        .question-category h6 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .question-list {
+            padding-left: 20px;
+        }
+        
+        .question-list li {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            border-left: 3px solid #2ecc71;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .question-list li::before {
+            content: "•";
+            color: #2ecc71;
+            font-weight: bold;
+            position: absolute;
+            left: 5px;
+        }
+        
+        .no-questions {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            background: white;
+            border-radius: 8px;
+            border: 2px dashed #ddd;
+        }
+        
+        /* 面试倒计时 */
+        .interview-countdown {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .interview-countdown h5 {
+            margin: 0 0 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .countdown-days {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .countdown-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
@@ -46,21 +300,48 @@
             <h1 class="page-title">
                 <i class="fas fa-school"></i> School Information
             </h1>
+            <p class="page-subtitle">香港中學面試準備 - 學校資料庫及歷年面試題目</p>
         </div>
         
         <div class="content-container">
-            <div class="card">
+            <!-- School List View -->
+            <div class="card" id="school-list-view">
                 <h2><i class="fas fa-university"></i> Hong Kong School Information Database</h2>
-                <p>This page displays detailed information about top Hong Kong secondary schools for interview preparation.</p>
+                <p>This page displays detailed information about top Hong Kong secondary schools for interview preparation. Each school includes previous interview questions for practice.</p>
+                
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="banding-filter">Filter by Banding:</label>
+                        <select id="banding-filter" onchange="filterSchools()">
+                            <option value="">All Bandings</option>
+                            <option value="1A">Band 1A</option>
+                            <option value="1B">Band 1B</option>
+                            <option value="1C">Band 1C</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="district-filter">Filter by District:</label>
+                        <select id="district-filter" onchange="filterSchools()">
+                            <option value="">All Districts</option>
+                        </select>
+                    </div>
+                </div>
                 
                 <div id="school-list" class="school-grid">
                     <!-- Schools will be loaded here by JavaScript -->
                 </div>
+                
+                <div id="no-schools-message" style="display: none; text-align: center; padding: 40px; color: #7f8c8d;">
+                    <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px;"></i>
+                    <h3>No schools found</h3>
+                    <p>Try adjusting your filters to see more results.</p>
+                </div>
             </div>
             
+            <!-- School Detail View -->
             <div class="card" id="school-detail-view" style="display: none;">
                 <button class="back-btn" onclick="showSchoolList()">
-                    <i class="fas fa-arrow-left"></i> Back to List
+                    <i class="fas fa-arrow-left"></i> Back to School List
                 </button>
                 <div id="school-detail-content">
                     <!-- School details will be loaded here -->
@@ -71,26 +352,89 @@
 
     <script>
         let schoolsData = [];
+        let filteredSchools = [];
         
         // Load schools data
         async function loadSchoolsData() {
             try {
                 const response = await fetch('schools.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 schoolsData = await response.json();
+                filteredSchools = [...schoolsData.schools];
+                
+                // Initialize district filter options
+                initializeFilters();
+                
+                // Display school list
                 displaySchoolList();
             } catch (error) {
                 console.error('Error loading schools data:', error);
                 document.getElementById('school-list').innerHTML = 
-                    '<div class="error-message">Failed to load school information.</div>';
+                    '<div class="error-message">Failed to load school information. Please check your internet connection.</div>';
             }
+        }
+        
+        // Initialize filter options
+        function initializeFilters() {
+            const districtFilter = document.getElementById('district-filter');
+            const districts = new Set();
+            
+            schoolsData.schools.forEach(school => {
+                districts.add(school.district);
+            });
+            
+            // Sort districts alphabetically
+            const sortedDistricts = Array.from(districts).sort();
+            
+            sortedDistricts.forEach(district => {
+                const option = document.createElement('option');
+                option.value = district;
+                option.textContent = district;
+                districtFilter.appendChild(option);
+            });
+        }
+        
+        // Filter schools based on selected filters
+        function filterSchools() {
+            const bandingFilter = document.getElementById('banding-filter').value;
+            const districtFilter = document.getElementById('district-filter').value;
+            
+            filteredSchools = schoolsData.schools.filter(school => {
+                let matches = true;
+                
+                if (bandingFilter && !school.banding.includes(bandingFilter)) {
+                    matches = false;
+                }
+                
+                if (districtFilter && school.district !== districtFilter) {
+                    matches = false;
+                }
+                
+                return matches;
+            });
+            
+            displaySchoolList();
         }
         
         // Display school list
         function displaySchoolList() {
             const schoolList = document.getElementById('school-list');
+            const noSchoolsMessage = document.getElementById('no-schools-message');
+            
             schoolList.innerHTML = '';
             
-            schoolsData.schools.forEach(school => {
+            if (filteredSchools.length === 0) {
+                noSchoolsMessage.style.display = 'block';
+                schoolList.style.display = 'none';
+                return;
+            }
+            
+            noSchoolsMessage.style.display = 'none';
+            schoolList.style.display = 'grid';
+            
+            filteredSchools.forEach(school => {
                 const schoolCard = document.createElement('div');
                 schoolCard.className = 'school-card';
                 schoolCard.innerHTML = `
@@ -99,121 +443,25 @@
                         <span class="banding-badge ${getBandingClass(school.banding)}">${school.banding}</span>
                     </div>
                     <div class="school-card-body">
-                        <p><strong>Chinese Name:</strong> ${school.chineseName}</p>
-                        <p><strong>Type:</strong> ${school.type}</p>
-                        <p><strong>District:</strong> ${school.district}</p>
-                        <p><strong>Language:</strong> ${school.language}</p>
-                        ${school.targetInterviewDate ? `<p><strong>Interview Date:</strong> ${formatDate(school.targetInterviewDate)}</p>` : ''}
+                        <p><strong>中文名稱:</strong> ${school.chineseName}</p>
+                        <p><strong>學校類型:</strong> ${school.type}</p>
+                        <p><strong>地區:</strong> ${school.district}</p>
+                        <p><strong>教學語言:</strong> ${school.language}</p>
+                        <p><strong>辦學宗旨:</strong> ${truncateText(school.mission, 50)}</p>
+                        ${school.targetInterviewDate ? `
+                            <div class="interview-countdown">
+                                <h5>面試倒計時</h5>
+                                <div class="countdown-days">${calculateDaysRemaining(school.targetInterviewDate)}</div>
+                                <div class="countdown-label">Days Remaining</div>
+                            </div>
+                        ` : ''}
                     </div>
                     <button class="view-details-btn" onclick="viewSchoolDetails(${school.id})">
-                        View Details
+                        <i class="fas fa-eye"></i> View Details & Interview Questions
                     </button>
                 `;
                 schoolList.appendChild(schoolCard);
             });
-            
-            // Add CSS for school cards
-            const style = document.createElement('style');
-            style.textContent = `
-                .school-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                    gap: 20px;
-                    margin-top: 20px;
-                }
-                
-                .school-card {
-                    background: white;
-                    border-radius: 12px;
-                    padding: 20px;
-                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                    transition: transform 0.3s;
-                }
-                
-                .school-card:hover {
-                    transform: translateY(-5px);
-                }
-                
-                .school-card-header {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    margin-bottom: 15px;
-                }
-                
-                .school-card-header h3 {
-                    font-size: 1.2rem;
-                    color: #2c3e50;
-                }
-                
-                .banding-badge {
-                    padding: 5px 10px;
-                    border-radius: 15px;
-                    font-size: 0.8rem;
-                    font-weight: bold;
-                    color: white;
-                }
-                
-                .banding-1a {
-                    background: linear-gradient(135deg, #e74c3c, #c0392b);
-                }
-                
-                .banding-1b {
-                    background: linear-gradient(135deg, #e67e22, #d35400);
-                }
-                
-                .banding-1c {
-                    background: linear-gradient(135deg, #f1c40f, #f39c12);
-                    color: #333;
-                }
-                
-                .school-card-body {
-                    margin-bottom: 15px;
-                }
-                
-                .school-card-body p {
-                    margin-bottom: 8px;
-                    font-size: 0.95rem;
-                }
-                
-                .view-details-btn {
-                    background: linear-gradient(135deg, #3498db, #2980b9);
-                    color: white;
-                    border: none;
-                    padding: 10px 15px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-weight: 600;
-                    width: 100%;
-                    transition: background 0.3s;
-                }
-                
-                .view-details-btn:hover {
-                    background: linear-gradient(135deg, #2980b9, #1c6ea4);
-                }
-                
-                .back-btn {
-                    background: #7f8c8d;
-                    color: white;
-                    border: none;
-                    padding: 10px 15px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    margin-bottom: 20px;
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                }
-                
-                .error-message {
-                    background: #f8d7da;
-                    color: #721c24;
-                    padding: 15px;
-                    border-radius: 8px;
-                    border: 1px solid #f5c6cb;
-                }
-            `;
-            document.head.appendChild(style);
         }
         
         // View school details
@@ -221,133 +469,159 @@
             const school = schoolsData.schools.find(s => s.id === schoolId);
             if (!school) return;
             
-            document.getElementById('school-list').style.display = 'none';
+            document.getElementById('school-list-view').style.display = 'none';
             document.getElementById('school-detail-view').style.display = 'block';
             
             const detailContent = document.getElementById('school-detail-content');
+            
+            // Generate interview questions HTML if available
+            let interviewQuestionsHTML = '';
+            if (school.previousInterviewQuestions) {
+                interviewQuestionsHTML = generateInterviewQuestionsHTML(school.previousInterviewQuestions);
+            } else {
+                interviewQuestionsHTML = `
+                    <div class="no-questions">
+                        <i class="fas fa-file-alt" style="font-size: 3rem; margin-bottom: 20px; color: #bdc3c7;"></i>
+                        <h4>No Interview Questions Available</h4>
+                        <p>We don't have previous interview questions for this school yet.</p>
+                    </div>
+                `;
+            }
+            
             detailContent.innerHTML = `
-                <h2>${school.name} <span class="banding-badge ${getBandingClass(school.banding)}">${school.banding}</span></h2>
-                <h3>${school.chineseName}</h3>
+                <div class="school-detail-header">
+                    <h2>${school.name} <span class="banding-badge ${getBandingClass(school.banding)}">${school.banding}</span></h2>
+                    <h3>${school.chineseName}</h3>
+                    <p class="school-motto"><i class="fas fa-quote-left"></i> ${school.schoolMotto} <i class="fas fa-quote-right"></i></p>
+                    ${school.chineseMotto ? `<p class="chinese-motto">${school.chineseMotto}</p>` : ''}
+                </div>
                 
                 <div class="school-detail-grid">
                     <div class="detail-item">
-                        <strong>Type:</strong> ${school.type}
+                        <strong>學校類型:</strong> ${school.type}
                     </div>
                     <div class="detail-item">
-                        <strong>Religion:</strong> ${school.religion}
+                        <strong>宗教背景:</strong> ${school.religion}
                     </div>
                     <div class="detail-item">
-                        <strong>Gender:</strong> ${school.gender}
+                        <strong>性別:</strong> ${school.gender}
                     </div>
                     <div class="detail-item">
-                        <strong>District:</strong> ${school.district}
+                        <strong>地區:</strong> ${school.district}
                     </div>
                     <div class="detail-item">
-                        <strong>Language:</strong> ${school.language}
+                        <strong>教學語言:</strong> ${school.language}
                     </div>
                     <div class="detail-item">
-                        <strong>Established:</strong> ${school.established}
+                        <strong>創校年份:</strong> ${school.established}
                     </div>
                 </div>
                 
-                ${school.schoolMotto ? `
                 <div class="detail-section">
-                    <h4><i class="fas fa-quote-left"></i> School Motto</h4>
-                    <p>${school.schoolMotto}</p>
-                    ${school.chineseMotto ? `<p>${school.chineseMotto}</p>` : ''}
-                </div>
-                ` : ''}
-                
-                <div class="detail-section">
-                    <h4><i class="fas fa-bullseye"></i> Mission</h4>
+                    <h4><i class="fas fa-bullseye"></i> 辦學宗旨 (Mission)</h4>
                     <p>${school.mission}</p>
+                </div>
+                
+                <div class="detail-section">
+                    <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
+                    <p>${school.specialty}</p>
                 </div>
                 
                 ${school.interviewFeatures ? `
                 <div class="detail-section">
-                    <h4><i class="fas fa-comments"></i> Interview Features</h4>
+                    <h4><i class="fas fa-comments"></i> 面試特色 (Interview Features)</h4>
                     <p>${school.interviewFeatures}</p>
                 </div>
                 ` : ''}
                 
-                ${school.specialty ? `
+                ${school.specificFeatures ? `
                 <div class="detail-section">
-                    <h4><i class="fas fa-star"></i> Specialties</h4>
-                    <p>${school.specialty}</p>
+                    <h4><i class="fas fa-info-circle"></i> 特別設施/計劃 (Specific Features)</h4>
+                    <p>${school.specificFeatures}</p>
                 </div>
                 ` : ''}
                 
                 <div class="detail-section">
-                    <h4><i class="fas fa-info-circle"></i> School Details</h4>
-                    <p><strong>Student Count:</strong> ${school.studentCount}</p>
-                    ${school.admissionProcess ? `<p><strong>Admission Process:</strong> ${school.admissionProcess}</p>` : ''}
-                    ${school.tuitionFee ? `<p><strong>Tuition Fee:</strong> ${school.tuitionFee}</p>` : ''}
+                    <h4><i class="fas fa-info-circle"></i> 學校詳細資料 (School Details)</h4>
+                    <p><strong>學生人數:</strong> ${school.studentCount}</p>
+                    ${school.admissionProcess ? `<p><strong>收生程序:</strong> ${school.admissionProcess}</p>` : ''}
+                    ${school.tuitionFee ? `<p><strong>學費:</strong> ${school.tuitionFee}</p>` : ''}
                 </div>
                 
                 ${school.targetInterviewDate ? `
                 <div class="detail-section">
-                    <h4><i class="fas fa-calendar-alt"></i> Target Interview Date</h4>
-                    <p><strong>Date:</strong> ${formatDate(school.targetInterviewDate)}</p>
-                    <p><strong>Days Remaining:</strong> ${calculateDaysRemaining(school.targetInterviewDate)}</p>
+                    <h4><i class="fas fa-calendar-alt"></i> 目標面試日期 (Target Interview Date)</h4>
+                    <p><strong>日期:</strong> ${formatDate(school.targetInterviewDate)}</p>
+                    <div class="interview-countdown">
+                        <h5>面試倒計時</h5>
+                        <div class="countdown-days">${calculateDaysRemaining(school.targetInterviewDate)}</div>
+                        <div class="countdown-label">Days Remaining</div>
+                    </div>
                 </div>
                 ` : ''}
                 
-                ${school.website ? `
                 <div class="detail-section">
-                    <h4><i class="fas fa-globe"></i> Contact Information</h4>
-                    <p><strong>Phone:</strong> ${school.phone}</p>
-                    <p><strong>Website:</strong> <a href="${school.website}" target="_blank">${school.website}</a></p>
+                    <h4><i class="fas fa-history"></i> 歷年面試題目 (Previous Interview Questions)</h4>
+                    <p>以下是根据歷年面試整理的真實題目，可用作面試練習參考。</p>
+                    ${interviewQuestionsHTML}
+                </div>
+                
+                ${school.website || school.phone ? `
+                <div class="detail-section">
+                    <h4><i class="fas fa-globe"></i> 聯絡資料 (Contact Information)</h4>
+                    ${school.phone ? `<p><strong>電話:</strong> ${school.phone}</p>` : ''}
+                    ${school.website ? `<p><strong>網址:</strong> <a href="${school.website}" target="_blank">${school.website}</a></p>` : ''}
                 </div>
                 ` : ''}
             `;
+        }
+        
+        // Generate HTML for interview questions
+        function generateInterviewQuestionsHTML(questionsData) {
+            let html = '';
             
-            // Add detail grid styles
-            const detailStyle = document.createElement('style');
-            detailStyle.textContent = `
-                .school-detail-grid {
-                    display: grid;
-                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                    gap: 15px;
-                    margin: 20px 0;
+            for (const [year, data] of Object.entries(questionsData)) {
+                html += `
+                    <div class="interview-year">
+                        <div class="interview-year-header">
+                            <h5>${year} 年度面試題目</h5>
+                            ${data.months ? `<span class="interview-months">${data.months.join(', ')}月</span>` : ''}
+                        </div>
+                `;
+                
+                if (data.questions && Object.keys(data.questions).length > 0) {
+                    for (const [category, questions] of Object.entries(data.questions)) {
+                        html += `
+                            <div class="question-category">
+                                <h6><i class="fas fa-question-circle"></i> ${category}</h6>
+                                <ul class="question-list">
+                                    ${questions.map(question => `<li>${question}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `;
+                    }
+                } else {
+                    html += `<p class="no-questions">No questions available for this year.</p>`;
                 }
                 
-                .detail-item {
-                    background: #f8f9fa;
-                    padding: 15px;
-                    border-radius: 8px;
-                    border-left: 4px solid #3498db;
-                }
-                
-                .detail-section {
-                    margin: 25px 0;
-                    padding-bottom: 25px;
-                    border-bottom: 1px solid #eee;
-                }
-                
-                .detail-section:last-child {
-                    border-bottom: none;
-                }
-                
-                .detail-section h4 {
-                    color: #2c3e50;
-                    margin-bottom: 10px;
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                }
-            `;
-            document.head.appendChild(detailStyle);
+                html += `</div>`;
+            }
+            
+            return html;
         }
         
         // Show school list
         function showSchoolList() {
-            document.getElementById('school-list').style.display = 'grid';
+            document.getElementById('school-list-view').style.display = 'block';
             document.getElementById('school-detail-view').style.display = 'none';
         }
         
         // Helper functions
         function getBandingClass(banding) {
-            return `banding-${banding.toLowerCase().replace(' ', '')}`;
+            if (banding.includes('1A')) return 'banding-1a';
+            if (banding.includes('1B')) return 'banding-1b';
+            if (banding.includes('1C')) return 'banding-1c';
+            return 'banding-1c';
         }
         
         function formatDate(dateString) {
@@ -355,7 +629,8 @@
             return date.toLocaleDateString('en-HK', {
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
+                weekday: 'long'
             });
         }
         
@@ -368,9 +643,14 @@
             const diffTime = targetDate - today;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
-            if (diffDays > 0) return `${diffDays} days remaining`;
-            if (diffDays === 0) return 'Today';
-            return `Passed ${Math.abs(diffDays)} days ago`;
+            if (diffDays > 0) return diffDays;
+            if (diffDays === 0) return '0 (Today)';
+            return 'Passed';
+        }
+        
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
         }
         
         // Load data when page loads
