@@ -1,94 +1,144 @@
 {
   "questions": [
-    {
-      "id": 6001,
-      "category": "creative",
-      "text": "[FW] 若你看見好朋友考試作弊，你會怎樣做？",
-      "difficulty": "medium"
-    },
-    {
-      "id": 6002,
-      "category": "creative",
-      "text": "[FW] 你發現老師罰錯了某同學，你會怎樣做？",
-      "difficulty": "hard"
-    },
-    {
-      "id": 6003,
-      "category": "creative",
-      "text": "[FW] 香港人口老化問題日漸嚴重，你認為可以怎樣處理？?",
-      "difficulty": "medium"
-    },
-    {
-      "id": 6004,
-      "category": "creative",
-      "text": "[FW] 你認為考試是否甄選學生的最好方法？",
-      "difficulty": "medium"
-    },
-    {
-      "id": 6005,
-      "category": "creative",
-      "text": "[FW] 假如你可以變成另一種動物或物件，你想變成甚麼？",
-      "difficulty": "hard"
-    },
-    {
-      "id": 6006,
-      "category": "creative",
-      "text": "[FW] 有甚麼方法可以防止動物被虐待？",
-      "difficulty": "hard"
-    },
-    {
-      "id": 6007,
-      "category": "creative",
-      "text": "[FW] 政府將重新發展啟德機場，你有甚麼建議？",
-      "difficulty": "easy"
-    },
-    {
-      "id": 6008,
-      "category": "creative",
-      "text": "[FW] 假如你是特首，你會怎樣改善香港人的生活？",
-      "difficulty": "hard"
-    },
-    {
-      "id": 6009,
-      "category": "creative",
-      "text": "[FW] 如果你是一位發明家，你會發明甚麼？",
-      "difficulty": "medium"
-    },
-    {
-      "id": 6010,
-      "category": "creative",
-      "text": "[FW] 介紹一位你崇拜 / 敬佩的人。?",
-      "difficulty": "easy"
-    },
-    {
-      "id": 6011,
+   {
+      "id": "CREAT-001",
       "category": "creative",
       "text": "[FW] 如果可以問多啦A 夢借法寶，學生借甚麼法寶?",
-      "difficulty": "difficult"
+      "difficulty": "difficult",
+      "modal_answer": ""
     },
     {
-      "id": 6012,
+      "id": "CREAT-002",
       "category": "creative",
       "text": "[FW] 如果有令人長生不老的藥，你會吃嗎?",
-      "difficulty": "difficult"
+      "difficulty": "difficult",
+      "modal_answer": ""
     },
     {
-      "id": 6013,
+      "id": "CREAT-003",
       "category": "creative",
       "text": "[FW] 如果你有力大窮的超能力，你會如何使用?",
-      "difficulty": "difficult"
+      "difficulty": "difficult",
+      "modal_answer": ""
     },
     {
-      "id": 6014,
+      "id": "CREAT-004",
       "category": "creative",
       "text": "[FW] 如果你有數之不盡的金錢，你會如何使用?",
-      "difficulty": "difficult"
+      "difficulty": "difficult",
+      "modal_answer": ""
     },
     {
-      "id": 6015,
+      "id": "CREAT-005",
       "category": "creative",
       "text": "[FW] 如果你過目不忘的能力，你會如何使用?",
-      "difficulty": "difficult"
+      "difficulty": "difficult",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-006",
+      "category": "creative",
+      "text": "[FW] 若你看見好朋友考試作弊，你會怎樣做？",
+      "difficulty": "medium",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-007",
+      "category": "creative",
+      "text": "[FW] 你發現老師罰錯了某同學，你會怎樣做？",
+      "difficulty": "hard",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-008",
+      "category": "creative",
+      "text": "[FW] 香港人口老化問題日漸嚴重，你認為可以怎樣處理？?",
+      "difficulty": "medium",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-009",
+      "category": "ethical_dilemma",
+      "text": "[FW] 假如有個神仙給你一瓶能預知未來的藥水，你會怎樣做？",
+      "difficulty": "hard",
+      "modal_answer": "我不會喝下它。因為如果預知了未來，無論是好是壞，都會剝奪我此刻努力、期待和體驗驚喜的樂趣。知道了成功，努力會失去意義；知道了失敗，可能會提前放棄或陷入焦慮。人生正是因為未知和不確定，才充滿挑戰和可能性。我會把藥水珍藏起來，作為一個提醒：與其預知未來，不如專注當下，用自己的行動去創造一個更好的未來。"
+    },
+    {
+      "id": "CREAT-010",
+      "category": "imagination",
+      "text": "[FW] 如果有人發明了下列藥物，你會選擇哪一樣？為甚麼？（縮小丸 / 永恆記憶丸 / 長生不老丹）",
+      "difficulty": "medium",
+      "modal_answer": "我會選擇「永恆記憶丸」。因為長生不老可能會看到所有親友離開，太孤獨；縮小丸雖然有趣，但用處不大。而永恆記憶丸可以讓我記住所有學過的知識、經歷過的美好瞬間，以及家人朋友的每一份關愛。這對學習和生活都有巨大的幫助，能讓寶貴的經歷永不褪色。"
+    },
+     {
+      "id": "CREAT-011",
+      "category": "school_suggestion",
+      "text": "[FW] 如果可以在學校增加一項設備，你會增加甚麼？為甚麼？",
+      "difficulty": "medium",
+      "modal_answer": "我會增加一個「創客空間」或「科技工坊」，裡面配備3D打印機、簡單的編程機器人、木工工具和各種手工材料。因為現在的學習很多都在書本和電腦上，這個空間可以讓我們動手將想法變成實物，結合科學、技術、工程和藝術，既能激發創造力，又能培養解決實際問題的能力，學習會變得更有趣和實用。"
+    },
+    {
+      "id": "CREAT-012",
+      "category": "creative",
+      "text": "[FW] 你認為考試是否甄選學生的最好方法？",
+      "difficulty": "medium",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-013",
+      "category": "creative",
+      "text": "[FW] 假如你可以變成另一種動物或物件，你想變成甚麼？",
+      "difficulty": "hard",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-014",
+      "category": "creative",
+      "text": "[FW] 有甚麼方法可以防止動物被虐待？",
+      "difficulty": "hard",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-015",
+      "category": "creative",
+      "text": "[FW] 政府將重新發展啟德機場，你有甚麼建議？",
+      "difficulty": "easy",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-016,
+      "category": "creative",
+      "text": "[FW] 假如你是特首，你會怎樣改善香港人的生活？",
+      "difficulty": "hard",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-017",
+      "category": "creative",
+      "text": "[NP] 如果你是一位發明家，你會發明甚麼？",
+      "difficulty": "medium",
+      "modal_answer": ""
+    },
+    {
+      "id": "CREAT-018",
+      "category": "social_issue",
+      "text": "[FW] 如果你是校長，你會對家長和同學提出哪三項解決「港孩現象」的方法？",
+      "difficulty": "hard",
+      "modal_answer": "我會提出：1. 對家長：推行「生活技能課程」，鼓勵家長放手讓孩子參與家務，如整理房間、準備簡單飯菜，培養責任感和獨立性。2. 對同學：設立「學長服務計劃」，高年級同學需定時幫助低年級或參與社區服務，學習付出和關愛。3. 對全校：舉辦「逆境體驗營」，通過團隊戶外活動，鍛煉同學的耐挫力和解決問題能力。"
+    },
+    {
+      "id": "CREAT-019",
+      "category": "imagination",
+      "text": "[FW] 如果你可以回到過去，你會回到哪個時代？",
+      "difficulty": "medium",
+      "modal_answer": "我想回到唐朝。因為唐朝是中國古代非常繁榮和開放的時代，文化藝術極其燦爛。我想親眼見識李白、杜甫如何吟詩，看看長安城的國際化市集，感受當時的服飾、音樂和舞蹈。我也想知道在那樣一個盛世，普通百姓的日常生活是怎樣的。這能讓我更直觀地理解我們的歷史和文化根源。"
+    },
+     {
+      "id": "CREAT-020",
+      "category": "imagination",
+      "text": "[FW] 如果可以邀請一個公眾人物來家裏共進晚餐，你會邀請誰？你會與他 / 她傾談甚麼？",
+      "difficulty": "medium",
+      "modal_answer": "我想邀請中國航天員王亞平阿姨。我會問她：在太空中看到地球是甚麼感覺？成為航天員需要經歷哪些難以想像的艱苦訓練？在漫長的訓練和任務中，是如何堅持下來的？我還想聽她分享從一個普通女孩到飛向星辰大海的夢想旅程。她的故事一定能給我巨大的鼓舞，讓我明白堅持和勇氣的意義。"
     }
   ]
 }
