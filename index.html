@@ -3,189 +3,241 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HK School Interview Practice - Duolingo Style</title>
+    <title>HK School Interview Practice - Main</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Bootstrap Modal CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><i class="fas fa-graduation-cap"></i> HK School Interview Practice</h1>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-graduation-cap"></i> HK Interview</h3>
+            <button class="toggle-btn" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-    </header>
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="index.html" class="active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="subpage_school.html">
+                        <i class="fas fa-school"></i>
+                        <span>School Information</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="subpage_fwskills_chi.html">
+                        <i class="fas fa-star"></i>
+                        <span>FW Skills 必備技巧</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#practice" onclick="scrollToSection('practice')">
+                        <i class="fas fa-brain"></i>
+                        <span>Practice Questions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#statistics" onclick="scrollToSection('statistics')">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Statistics</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#history" onclick="scrollToSection('history')">
+                        <i class="fas fa-history"></i>
+                        <span>History</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-    <div class="container">
-        <!-- Student Profile Header -->
-        <div class="student-profile-header">
-            <div class="student-info">
-                <div class="student-avatar">
-                    <i class="fas fa-user-graduate"></i>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="main-header">
+            <h1 class="page-title">
+                <i class="fas fa-graduation-cap"></i> HK School Interview Practice
+            </h1>
+        </div>
+        
+        <div class="content-container">
+            <!-- Student Profile Header -->
+            <div class="student-profile-header">
+                <div class="student-info">
+                    <div class="student-avatar">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="student-details">
+                        <h3 id="student-name">Interview Candidate: Jayden</h3>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="student-progress" style="width: 0%"></div>
+                        </div>
+                    </div>
                 </div>
-                <div class="student-details">
-                    <h3 id="student-name">Interview Candidate: Jayden</h3>
-                    <div class="progress-container">
-                        <div class="progress-bar" id="student-progress" style="width: 0%"></div>
+                <div class="student-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="student-level">Level 1</div>
+                        <div class="stat-label">Level</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value streak-counter">
+                            <i class="fas fa-fire"></i>
+                            <span id="streak-counter">0</span>
+                        </div>
+                        <div class="stat-label">Day Streak</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="saved-answers">0</div>
+                        <div class="stat-label">Answers Saved</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-xp">0</div>
+                        <div class="stat-label">Total XP</div>
                     </div>
                 </div>
             </div>
-            <div class="student-stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="student-level">Level 1</div>
-                    <div class="stat-label">Level</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value streak-counter">
-                        <i class="fas fa-fire"></i>
-                        <span id="streak-counter">0</span>
-                    </div>
-                    <div class="stat-label">Day Streak</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="saved-answers">0</div>
-                    <div class="stat-label">Answers Saved</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="total-xp">0</div>
-                    <div class="stat-label">Total XP</div>
-                </div>
-            </div>
-        </div>
 
-        <div class="main-content">
-            <div class="card question-generator">
-                <h2><i class="fas fa-brain"></i> Practice Questions</h2>
-                
-                <div class="category-section">
-                    <div class="category-buttons">
-                         <button class="category-btn must-btn" data-category="must">
-                            <i class="fas fa-language"></i> MUST
+            <div class="main-content-inner">
+                <div class="card question-generator">
+                    <h2 id="practice"><i class="fas fa-brain"></i> Practice Questions</h2>
+                    
+                    <div class="category-section">
+                        <div class="category-buttons">
+                            <button class="category-btn must-btn" data-category="must">
+                                <i class="fas fa-language"></i> MUST
+                            </button>
+                            <button class="category-btn chinese-btn" data-category="chinese">
+                                <i class="fas fa-language"></i> Chinese
+                            </button>
+                            <button class="category-btn english-btn" data-category="english">
+                                <i class="fas fa-globe"></i> English
+                            </button>
+                            <button class="category-btn math-btn" data-category="math">
+                                <i class="fas fa-calculator"></i> Mathematics
+                            </button>
+                            <button class="category-btn science-btn" data-category="science">
+                                <i class="fas fa-flask"></i> Science
+                            </button>
+                            <button class="category-btn news-btn" data-category="news">
+                                <i class="fas fa-newspaper"></i> Current News
+                            </button>
+                            <button class="category-btn creative-btn" data-category="creative">
+                                <i class="fas fa-lightbulb"></i> Creative Thinking
+                            </button>
+                            <button class="category-btn all-btn active" data-category="all">
+                                <i class="fas fa-layer-group"></i> All Categories
+                            </button>
+                        </div>
+                        
+                        <div class="questions-per-category">
+                            <label for="questions-count">Questions per category:</label>
+                            <div class="count-buttons">
+                                <button class="count-btn" data-count="1">1</button>
+                                <button class="count-btn" data-count="3">3</button>
+                                <button class="count-btn active" data-count="5">5</button>
+                                <button class="count-btn" data-count="10">10</button>
+                                <button class="count-btn all-count-btn" data-count="all">All</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button id="generate-btn" class="generate-btn">
+                            <i class="fas fa-magic"></i> Generate Questions
                         </button>
-                        <button class="category-btn chinese-btn" data-category="chinese">
-                            <i class="fas fa-language"></i> Chinese
+                        <button id="clear-btn" class="clear-btn">
+                            <i class="fas fa-trash-alt"></i> Clear All
                         </button>
-                        <button class="category-btn english-btn" data-category="english">
-                            <i class="fas fa-globe"></i> English
+                        <button id="save-all-btn" class="save-btn" onclick="saveAllAnswers()">
+                            <i class="fas fa-save"></i> Save All Answers
                         </button>
-                        <button class="category-btn math-btn" data-category="math">
-                            <i class="fas fa-calculator"></i> Mathematics
-                        </button>
-                        <button class="category-btn science-btn" data-category="science">
-                            <i class="fas fa-flask"></i> Science
-                        </button>
-                        <button class="category-btn news-btn" data-category="news">
-                            <i class="fas fa-newspaper"></i> Current News
-                        </button>
-                        <button class="category-btn creative-btn" data-category="creative">
-                            <i class="fas fa-lightbulb"></i> Creative Thinking
-                        </button>
-                        <button class="category-btn all-btn active" data-category="all">
-                            <i class="fas fa-layer-group"></i> All Categories
+                        <button id="view-history-btn" class="history-btn">
+                            <i class="fas fa-history"></i> View History
                         </button>
                     </div>
                     
-                    <div class="questions-per-category">
-                        <label for="questions-count">Questions per category:</label>
-                        <div class="count-buttons">
-                            <button class="count-btn" data-count="1">1</button>
-                            <button class="count-btn" data-count="3">3</button>
-                            <button class="count-btn active" data-count="5">5</button>
-                            <button class="count-btn" data-count="10">10</button>
-                            <button class="count-btn all-count-btn" data-count="all">All</button>
+                    <div class="generated-questions">
+                        <h3>Practice Questions <span id="questions-count-badge" class="badge">0</span></h3>
+                        <div id="questions-container">
+                            <div class="empty-state">
+                                <i class="fas fa-question-circle fa-3x"></i>
+                                <p>Select a category and click "Generate Questions" to start practicing!</p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="action-buttons">
-                    <button id="generate-btn" class="generate-btn">
-                        <i class="fas fa-magic"></i> Generate Questions
-                    </button>
-                    <button id="clear-btn" class="clear-btn">
-                        <i class="fas fa-trash-alt"></i> Clear All
-                    </button>
-                    <button id="save-all-btn" class="save-btn" onclick="saveAllAnswers()">
-                        <i class="fas fa-save"></i> Save All Answers
-                    </button>
-                    <button id="view-history-btn" class="history-btn">
-                        <i class="fas fa-history"></i> View History
-                    </button>
-                </div>
-                
-                <div class="generated-questions">
-                    <h3>Practice Questions <span id="questions-count-badge" class="badge">0</span></h3>
-                    <div id="questions-container">
+                <div class="card school-info">
+                    <h2><i class="fas fa-school"></i> School Information</h2>
+                    <div class="school-selector">
+                        <select id="school-select">
+                            <option value="">Select a school to view details</option>
+                        </select>
+                    </div>
+                    
+                    <div id="school-details" class="school-details">
                         <div class="empty-state">
-                            <i class="fas fa-question-circle fa-3x"></i>
-                            <p>Select a category and click "Generate Questions" to start practicing!</p>
+                            <i class="fas fa-university fa-3x"></i>
+                            <p>Select a school from the dropdown to view detailed information</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="card school-info">
-                <h2><i class="fas fa-school"></i> School Information</h2>
-                <div class="school-selector">
-                    <select id="school-select">
-                        <option value="">Select a school to view details</option>
-                    </select>
+            <div class="card statistics" id="statistics">
+                <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-schools">0</div>
+                        <div class="stat-label">Schools</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="total-questions">0</div>
+                        <div class="stat-label">Question Pool</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="generated-today">0</div>
+                        <div class="stat-label">Generated Today</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="completed-today">0</div>
+                        <div class="stat-label">Completed Today</div>
+                    </div>
                 </div>
-                
-                <div id="school-details" class="school-details">
+            </div>
+            
+            <div class="card history-log" id="history-log-card" style="display: none;">
+                <h2 id="history"><i class="fas fa-history"></i> Practice History</h2>
+                <div class="history-controls">
+                    <button id="close-history-btn" class="close-btn">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                    <button id="clear-history-btn" class="clear-btn">
+                        <i class="fas fa-trash"></i> Clear History
+                    </button>
+                    <button id="download-history-btn" class="download-btn">
+                        <i class="fas fa-download"></i> Download Answers
+                    </button>
+                    <button id="share-history-btn" class="share-btn">
+                        <i class="fas fa-share-alt"></i> Share Progress
+                    </button>
+                </div>
+                <div id="history-container" class="history-container">
                     <div class="empty-state">
-                        <i class="fas fa-university fa-3x"></i>
-                        <p>Select a school from the dropdown to view detailed information</p>
+                        <i class="fas fa-history fa-3x"></i>
+                        <p>No practice history yet. Complete some questions to see your history here.</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="card statistics">
-            <h2><i class="fas fa-chart-bar"></i> Statistics</h2>
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-value" id="total-schools">0</div>
-                    <div class="stat-label">Schools</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="total-questions">0</div>
-                    <div class="stat-label">Question Pool</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="generated-today">0</div>
-                    <div class="stat-label">Generated Today</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="completed-today">0</div>
-                    <div class="stat-label">Completed Today</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="card history-log" id="history-log-card" style="display: none;">
-            <h2><i class="fas fa-history"></i> Practice History</h2>
-            <div class="history-controls">
-                <button id="close-history-btn" class="close-btn">
-                    <i class="fas fa-times"></i> Close
-                </button>
-                <button id="clear-history-btn" class="clear-btn">
-                    <i class="fas fa-trash"></i> Clear History
-                </button>
-                <button id="download-history-btn" class="download-btn">
-                    <i class="fas fa-download"></i> Download Answers
-                </button>
-                <button id="share-history-btn" class="share-btn">
-                    <i class="fas fa-share-alt"></i> Share Progress
-                </button>
-            </div>
-            <div id="history-container" class="history-container">
-                <div class="empty-state">
-                    <i class="fas fa-history fa-3x"></i>
-                    <p>No practice history yet. Complete some questions to see your history here.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <!-- Answer Modal -->
     <div class="modal fade" id="answer-modal" tabindex="-1" aria-hidden="true">
@@ -230,27 +282,7 @@
         </div>
     </div>
 
-    <!-- Example Answer Toast -->
-    <div id="example-toast" class="example-toast">
-        <div class="example-toast-header">
-            <h5><i class="fas fa-lightbulb"></i> Example Answer</h5>
-            <button class="close-example-toast">&times;</button>
-        </div>
-        <div class="example-toast-body" id="example-toast-body"></div>
-        <div class="example-toast-footer">
-            <em>This is just an example. Your answer can be different!</em>
-        </div>
-    </div>
-
-    <footer>
-        <div class="container">
-            <p>HK School Interview Practice © 2024 | Designed with Duolingo-style learning experience</p>
-        </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Main Script -->
     <script src="script.js"></script>
 </body>
 </html>
