@@ -47,6 +47,10 @@
                     <div class="stat-value" id="saved-answers">0</div>
                     <div class="stat-label">Answers Saved</div>
                 </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="total-xp">0</div>
+                    <div class="stat-label">Total XP</div>
+                </div>
             </div>
         </div>
 
@@ -98,7 +102,7 @@
                     <button id="clear-btn" class="clear-btn">
                         <i class="fas fa-trash-alt"></i> Clear All
                     </button>
-                    <button id="save-answers-btn" class="save-btn" onclick="saveAllAnswers()">
+                    <button id="save-all-btn" class="save-btn" onclick="saveAllAnswers()">
                         <i class="fas fa-save"></i> Save All Answers
                     </button>
                     <button id="view-history-btn" class="history-btn">
@@ -204,6 +208,9 @@
                     <div class="answer-input-container">
                         <h6>Your Answer:</h6>
                         <textarea id="modal-answer-input" class="form-control" rows="8" placeholder="Type your answer here..."></textarea>
+                        <div class="character-count-modal">
+                            <span id="modal-character-count">0</span> characters
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -218,6 +225,18 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Example Answer Toast -->
+    <div id="example-toast" class="example-toast">
+        <div class="example-toast-header">
+            <h5><i class="fas fa-lightbulb"></i> Example Answer</h5>
+            <button class="close-example-toast">&times;</button>
+        </div>
+        <div class="example-toast-body" id="example-toast-body"></div>
+        <div class="example-toast-footer">
+            <em>This is just an example. Your answer can be different!</em>
         </div>
     </div>
 
