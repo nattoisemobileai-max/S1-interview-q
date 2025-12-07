@@ -1,30 +1,5 @@
 {
   "schools": [
-   {
-      "id": 5,
-      "name": "Hong Kong Federation of Youth Groups Lee Shau Kee College",
-      "chineseName": "香港青年會李兆基書院",
-      "banding": "Band 1B",
-      "type": "直資",
-      "religion": "無",
-      "gender": "男女校",
-      "district": "元朗區",
-      "language": "英文",
-      "schoolMotto": "Learning for life, serving with heart",
-      "chineseMotto": "活學用心、服務社群",
-      "mission": "培育具國際視野、創意思維及社會責任感的未來領袖",
-      "interviewFeatures": "設有個人面談、小組活動、創意解難測試。",
-      "specialty": "STEAM教育、多元智能發展、國際視野",
-      "website": "https://www.hkfyg.org.hk/lskc/",
-      "phone": "2479-9888",
-      "established": 2005,
-      "studentCount": 1200,
-      "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
-      "tuitionFee": "港幣約32,000元/年（設有獎學金及學費減免計劃）",
-      "specificFeatures": "設有STEAM創新實驗室、國際交流計劃、領袖訓練課程",
-      "image": "badge_hlc.jpg",
-      "targetInterviewDate": "2025-12-20"
-    },
     {
       "id": 1,
       "name": "Ying Wa College",
@@ -48,7 +23,20 @@
       "tuitionFee": "港幣25,300元/年（設有學費減免計劃）",
       "specificFeatures": "設有創新科技中心、與英華小學有「一條龍」辦學關係",
       "image": "badge_yingwa.jpg",
-      "targetInterviewDate": "2026-01-17"
+      "targetInterviewDate": "2026-01-17",
+      "previousInterviewQuestions": {
+        "2019": {
+          "months": ["12月", "2月"],
+          "questions": {
+            "中文個人": ["關於李時珍。", "你是否贊成學校成立電競學會？"],
+            "中文小組": ["Relieve Stress.", "看文章回答問題。", "Picture Description.", "Ask questions related to student's portfolio."],
+            "英文個人": ["有篇中文文章，學生閱讀文章後為文章定主題。", "基本自我介紹"],
+            "中國文化": ["如何鼓勵學生在校園減電的建議。", "若學校想設感恩主題週，如何安排及活動建議？", "是否可以以半日授課取代全日授課？"],
+            "注意事項": ["小組討論每組題目不同", "英華面試會看學生的態度，如體貌、離場推椅等"],
+            "其他": ["第二輪面試取消，直接根據第一次面試和學校成績、課外活動作收生。", "論模範生應有甚麼條件。", "看文章回答問題。", "給予一常識題，及後問對其看法及意見。"]
+          }
+        }
+      }
     },
     {
       "id": 2,
@@ -73,7 +61,17 @@
       "tuitionFee": "港幣約96,500元/年（本地課程）",
       "specificFeatures": "設有IB文憑課程，提供多元化課外活動",
       "image": "badge_spcc.jpg",
-      "targetInterviewDate": "2026-03-14"
+      "targetInterviewDate": "2026-03-14",
+      "previousInterviewQuestions": {
+        "2023": {
+          "months": ["1月"],
+          "questions": {
+            "英文個人": ["自我介紹及學術興趣", "閱讀理解及分析", "時事討論"],
+            "中文個人": ["個人成長經歷", "對學校文化的理解", "課外活動表現"],
+            "小組討論": ["科技對教育的影響", "環境保護議題", "團隊合作案例分析"]
+          }
+        }
+      }
     },
     {
       "id": 3,
@@ -97,7 +95,16 @@
       "admissionProcess": "資助中學，按教育局中學學位分配辦法收生",
       "specificFeatures": "重視社區服務和藝術發展，設有基督教德育課程",
       "image": "badge_scc.jpg",
-      "targetInterviewDate": "2026-03-16"
+      "targetInterviewDate": "2026-03-16",
+      "previousInterviewQuestions": {
+        "2022": {
+          "months": ["3月"],
+          "questions": {
+            "中文面試": ["個人信仰與價值觀", "社區服務經驗分享", "面對挑戰的態度"],
+            "小組討論": ["如何在校園推廣關愛文化", "青少年壓力管理", "時間分配策略"]
+          }
+        }
+      }
     },
     {
       "id": 4,
@@ -121,57 +128,121 @@
       "admissionProcess": "資助中學，按教育局中學學位分配辦法收生",
       "specificFeatures": "設有科技實驗室及多元體育設施，重視生涯規劃教育",
       "image": "badge_plktytc.jpg",
-      "targetInterviewDate": "2026-03-14"
+      "targetInterviewDate": "2026-03-14",
+      "previousInterviewQuestions": {
+        "2021": {
+          "months": ["2月"],
+          "questions": {
+            "個人面談": ["學習目標與計劃", "課外活動參與", "對學校的認識"],
+            "中文表達": ["閱讀理解與感想", "即席演講", "情境應對"]
+          }
+        }
+      }
     },
     {
-  "id": 6,
-  "name": "Lee Kau Pat Memorial College",
-  "chineseName": "李國寶中學",
-  "banding": "Band 1B",
-  "type": "直資",
-  "religion": "基督教",
-  "gender": "男女校",
-  "district": "觀塘區",
-  "language": "英文",
-  "schoolMotto": "Wisdom, Integrity, Perseverance, Compassion",
-  "chineseMotto": "明智、正直、堅毅、關愛",
-  "mission": "提供全人教育，培養學生的學術、品德和領導能力，並發展他們的潛能，貢獻社會",
-  "interviewFeatures": "設有個人面談、小組討論、中英文寫作測試",
-  "specialty": "STEM、音樂、體育、領袖培訓、國際視野",
-  "website": "https://www.lkp.edu.hk/",
-  "phone": "2342-3222",
-  "established": 2004,
-  "studentCount": 1000,
-  "admissionProcess": "直資學校，有獨立招生程序，2026/27學年提供100個中一外校生學額",
-  "tuitionFee": "港幣35,000元/年（設有學費減免計劃）",
-  "specificFeatures": "設有創新科技中心、語言中心、多元智能活動室，重視國際交流與STEM教育",
-  "image": "badge_lkp.jpg",
-  "targetInterviewDate": "2026-01-20"
-},
-{
-  "id": 7,
-  "name": "Wong Kam Fai Secondary School",
-  "chineseName": "王錦輝中學",
-  "banding": "Band 1B",
-  "type": "直資",
-  "religion": "基督教",
-  "gender": "男女校",
-  "district": "沙田區",
-  "language": "英文",
-  "schoolMotto": "Pursuit of Excellence, Cultivation of Virtue",
-  "chineseMotto": "追求卓越、培育美德",
-  "mission": "提供優質教育，培養學生在學術、品德、體藝和社會服務的全面發展，並發展國際視野",
-  "interviewFeatures": "設有個人面談、小組討論、創意解難測試",
-  "specialty": "STEAM教育、國際視野、藝術發展、領袖培訓",
-  "website": "https://www.wkf.edu.hk/",
-  "phone": "2691-7000",
-  "established": 2010,
-  "studentCount": 800,
-  "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
-  "tuitionFee": "港幣38,000元/年（設有獎學金及學費減免計劃）",
-  "specificFeatures": "設有創新實驗室、室內游泳池、黑盒劇場，與香港浸會大學有聯繫，提供多元國際交流機會",
-  "image": "badge_wkf.jpg",
-  "targetInterviewDate": "2026-01-25"
-}
+      "id": 5,
+      "name": "Hong Kong Federation of Youth Groups Lee Shau Kee College",
+      "chineseName": "香港青年會李兆基書院",
+      "banding": "Band 1B",
+      "type": "直資",
+      "religion": "無",
+      "gender": "男女校",
+      "district": "元朗區",
+      "language": "英文",
+      "schoolMotto": "Learning for life, serving with heart",
+      "chineseMotto": "活學用心、服務社群",
+      "mission": "培育具國際視野、創意思維及社會責任感的未來領袖",
+      "interviewFeatures": "設有個人面談、小組活動、創意解難測試。",
+      "specialty": "STEAM教育、多元智能發展、國際視野",
+      "website": "https://www.hkfyg.org.hk/lskc/",
+      "phone": "2479-9888",
+      "established": 2005,
+      "studentCount": 1200,
+      "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
+      "tuitionFee": "港幣約32,000元/年（設有獎學金及學費減免計劃）",
+      "specificFeatures": "設有STEAM創新實驗室、國際交流計劃、領袖訓練課程",
+      "image": "badge_hlc.jpg",
+      "targetInterviewDate": "2025-12-20",
+      "previousInterviewQuestions": {
+        "2020": {
+          "months": ["11月"],
+          "questions": {
+            "創意思維": ["設計一個環保校園方案", "解決社區問題的創新想法", "未來科技應用"],
+            "小組協作": ["團隊領導經驗", "衝突處理案例", "協作項目分享"],
+            "個人潛能": ["特殊才能展示", "學習成就分享", "未來發展規劃"]
+          }
+        }
+      }
+    },
+    {
+      "id": 6,
+      "name": "Lee Kau Pat Memorial College",
+      "chineseName": "李國寶中學",
+      "banding": "Band 1B",
+      "type": "直資",
+      "religion": "基督教",
+      "gender": "男女校",
+      "district": "觀塘區",
+      "language": "英文",
+      "schoolMotto": "Wisdom, Integrity, Perseverance, Compassion",
+      "chineseMotto": "明智、正直、堅毅、關愛",
+      "mission": "提供全人教育，培養學生的學術、品德和領導能力，並發展他們的潛能，貢獻社會",
+      "interviewFeatures": "設有個人面談、小組討論、中英文寫作測試",
+      "specialty": "STEM、音樂、體育、領袖培訓、國際視野",
+      "website": "https://www.lkp.edu.hk/",
+      "phone": "2342-3222",
+      "established": 2004,
+      "studentCount": 1000,
+      "admissionProcess": "直資學校，有獨立招生程序，2026/27學年提供100個中一外校生學額",
+      "tuitionFee": "港幣35,000元/年（設有學費減免計劃）",
+      "specificFeatures": "設有創新科技中心、語言中心、多元智能活動室，重視國際交流與STEM教育",
+      "image": "badge_lkp.jpg",
+      "targetInterviewDate": "2026-01-20",
+      "previousInterviewQuestions": {
+        "2022": {
+          "months": ["12月"],
+          "questions": {
+            "中英文寫作": ["我的志願", "科技與生活", "環保議題"],
+            "小組討論": ["領導力展現", "團隊合作案例", "時事分析"],
+            "個人面談": ["學術興趣與規劃", "課外活動成就", "對學校的期望"]
+          }
+        }
+      }
+    },
+    {
+      "id": 7,
+      "name": "Wong Kam Fai Secondary School",
+      "chineseName": "王錦輝中學",
+      "banding": "Band 1B",
+      "type": "直資",
+      "religion": "基督教",
+      "gender": "男女校",
+      "district": "沙田區",
+      "language": "英文",
+      "schoolMotto": "Pursuit of Excellence, Cultivation of Virtue",
+      "chineseMotto": "追求卓越、培育美德",
+      "mission": "提供優質教育，培養學生在學術、品德、體藝和社會服務的全面發展，並發展國際視野",
+      "interviewFeatures": "設有個人面談、小組討論、創意解難測試",
+      "specialty": "STEAM教育、國際視野、藝術發展、領袖培訓",
+      "website": "https://www.wkf.edu.hk/",
+      "phone": "2691-7000",
+      "established": 2010,
+      "studentCount": 800,
+      "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
+      "tuitionFee": "港幣38,000元/年（設有獎學金及學費減免計劃）",
+      "specificFeatures": "設有創新實驗室、室內游泳池、黑盒劇場，與香港浸會大學有聯繫，提供多元國際交流機會",
+      "image": "badge_wkf.jpg",
+      "targetInterviewDate": "2026-01-25",
+      "previousInterviewQuestions": {
+        "2021": {
+          "months": ["1月"],
+          "questions": {
+            "創意解難": ["設計未來校園", "解決學習困難方案", "創意表達"],
+            "國際視野": ["跨文化交流經驗", "全球議題看法", "國際學習計劃"],
+            "藝術發展": ["藝術才能展示", "美學鑑賞", "創意表達"]
+          }
+        }
+      }
+    }
   ]
 }
