@@ -8,7 +8,6 @@ let questionsData = {
     news: [],
     creative: []
 };
-let historyLog = [];
 let studentAnswers = [];
 let selectedCategories = ['all'];
 let questionsPerCategory = 'all';
@@ -18,7 +17,6 @@ let savedAnswersCount = 0;
 // DOM elements
 const questionsContainer = document.getElementById('questions-container');
 const schoolSelect = document.getElementById('school-select');
-const targetSchoolSelect = document.getElementById('target-school');
 const schoolDetails = document.getElementById('school-details');
 const generateBtn = document.getElementById('generate-btn');
 const clearBtn = document.getElementById('clear-btn');
@@ -32,8 +30,6 @@ const historyLogCard = document.getElementById('history-log-card');
 const historyContainer = document.getElementById('history-container');
 const categoryButtons = document.querySelectorAll('.category-btn');
 const countButtons = document.querySelectorAll('.count-btn');
-const studentNameInput = document.getElementById('student-name');
-const studentIdInput = document.getElementById('student-id');
 
 // Statistics elements
 const totalSchoolsEl = document.getElementById('total-schools');
@@ -79,8 +75,8 @@ async function loadData() {
             }
         }
         
-        // Initialize school dropdowns
-        populateSchoolDropdowns();
+        // Initialize school dropdown
+        populateSchoolDropdown();
         
         // Update statistics
         updateStatistics();
@@ -93,15 +89,6 @@ async function loadData() {
 
 // Load student data from localStorage
 function loadStudentData() {
-    // Load student info
-    const savedStudentName = localStorage.getItem('studentName');
-    const savedStudentId = localStorage.getItem('studentId');
-    const savedTargetSchool = localStorage.getItem('targetSchool');
-    
-    if (savedStudentName) studentNameInput.value = savedStudentName;
-    if (savedStudentId) studentIdInput.value = savedStudentId;
-    if (savedTargetSchool) targetSchoolSelect.value = savedTargetSchool;
-    
     // Load saved answers
     const savedAnswers = localStorage.getItem('studentAnswers');
     if (savedAnswers) {
@@ -113,46 +100,23 @@ function loadStudentData() {
             console.error('Error parsing saved answers:', e);
         }
     }
-    
-    // Load history
-    const savedHistory = localStorage.getItem('interviewQuestionHistory');
-    if (savedHistory) {
-        try {
-            historyLog = JSON.parse(savedHistory);
-        } catch (e) {
-            console.error('Error parsing history:', e);
-        }
-    }
 }
 
 // Save student data to localStorage
 function saveStudentData() {
-    localStorage.setItem('studentName', studentNameInput.value);
-    localStorage.setItem('studentId', studentIdInput.value);
-    localStorage.setItem('targetSchool', targetSchoolSelect.value);
-    
-    // Save answers
     localStorage.setItem('studentAnswers', JSON.stringify(studentAnswers));
 }
 
-// Populate school dropdowns
-function populateSchoolDropdowns() {
+// Populate school dropdown
+function populateSchoolDropdown() {
     // Clear existing options (except first placeholder)
     schoolSelect.innerHTML = '<option value="">Select a school to view details</option>';
-    targetSchoolSelect.innerHTML = '<option value="">Select target school</option>';
     
     schoolsData.schools.forEach(school => {
-        // For school details dropdown
-        const option1 = document.createElement('option');
-        option1.value = school.id;
-        option1.textContent = `${school.name} (${school.chineseName}) - ${school.banding}`;
-        schoolSelect.appendChild(option1);
-        
-        // For target school dropdown
-        const option2 = document.createElement('option');
-        option2.value = school.id;
-        option2.textContent = `${school.name} (${school.chineseName}) - ${school.banding}`;
-        targetSchoolSelect.appendChild(option2);
+        const option = document.createElement('option');
+        option.value = school.id;
+        option.textContent = `${school.name} (${school.chineseName}) - ${school.banding}`;
+        schoolSelect.appendChild(option);
     });
 }
 
@@ -268,26 +232,12 @@ function setupEventListeners() {
             schoolDetails.innerHTML = '<p class="placeholder">Select a school from the dropdown to view detailed information</p>';
         }
     });
-    
-    // Student info auto-save
-    studentNameInput.addEventListener('blur', saveStudentData);
-    studentIdInput.addEventListener('blur', saveStudentData);
-    targetSchoolSelect.addEventListener('change', saveStudentData);
 }
 
 // Generate questions based on selected categories
 function generateQuestions() {
     // Clear previous questions
     questionsContainer.innerHTML = '';
-    
-    // Save student info
-    saveStudentData();
-    
-    // Validate student info
-    if (!studentNameInput.value.trim() || !studentIdInput.value.trim()) {
-        showNotification('Please enter your name and student ID before generating questions');
-        return;
-    }
     
     // Determine which categories to use
     let categoriesToUse = [];
@@ -420,9 +370,6 @@ function markQuestionAsDone(questionId, category, text, difficultyLevel, answerI
             questionText: text,
             answer: answerText,
             difficulty: difficultyLevel,
-            studentName: studentNameInput.value.trim(),
-            studentId: studentIdInput.value.trim(),
-            targetSchool: targetSchoolSelect.value,
             date: getCurrentDate(),
             time: getCurrentTime(),
             timestamp: new Date().toISOString()
@@ -475,9 +422,6 @@ function saveAllAnswers() {
                         category: category,
                         questionText: questionElement.querySelector('.text').textContent,
                         answer: answerText,
-                        studentName: studentNameInput.value.trim(),
-                        studentId: studentIdInput.value.trim(),
-                        targetSchool: targetSchoolSelect.value,
                         date: getCurrentDate(),
                         time: getCurrentTime(),
                         timestamp: new Date().toISOString()
@@ -559,28 +503,18 @@ function displaySchoolDetails(schoolId) {
         `;
     }
     
-    // Create image HTML if image path exists
-    let imageHTML = '';
-    if (school.image) {
-        imageHTML = `
-            <div class="school-image">
-                <img src="${school.image}" alt="${school.name}" onerror="this.style.display='none'">
-            </div>
-        `;
-    }
-    
     schoolDetails.innerHTML = `
-        ${imageHTML}
-        
-        <div class="school-detail-item">
-            <h3>School Information</h3>
-            <div class="school-name-row">
-                <div class="school-name-english">
-                    <strong>English Name:</strong> ${school.name}
+        <div class="school-header-container">
+            <div class="school-header-image">
+                <img src="${school.image || 'img/default-school.jpg'}" alt="${school.name}" onerror="this.src='img/default-school.jpg'">
+            </div>
+            <div class="school-header-names">
+                <div class="school-english-name">
+                    ${school.name}
                     <span class="banding-badge ${bandingClass}">${school.banding}</span>
                 </div>
-                <div class="school-name-chinese">
-                    <strong>Chinese Name:</strong> ${school.chineseName}
+                <div class="school-chinese-name">
+                    ${school.chineseName}
                 </div>
             </div>
         </div>
@@ -717,7 +651,6 @@ function displayHistory() {
                 <div class="history-meta">
                     <span>Difficulty: ${difficultyStars}</span>
                     <span>Question ID: ${answer.questionId}</span>
-                    <span>Student: ${answer.studentName}</span>
                 </div>
             `;
             
@@ -746,9 +679,6 @@ function downloadAnswers() {
     }
     
     const studentData = {
-        studentName: studentNameInput.value.trim(),
-        studentId: studentIdInput.value.trim(),
-        targetSchool: targetSchoolSelect.value,
         generatedAt: new Date().toISOString(),
         totalAnswers: studentAnswers.length,
         answers: studentAnswers
@@ -760,7 +690,7 @@ function downloadAnswers() {
     
     const downloadLink = document.createElement('a');
     downloadLink.href = url;
-    downloadLink.download = `student-answers-${studentNameInput.value || 'student'}-${getCurrentDate()}.json`;
+    downloadLink.download = `student-answers-${getCurrentDate()}.json`;
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
