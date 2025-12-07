@@ -1,6 +1,8 @@
 /* style.css - Duolingo-style HK School Interview Practice with Sidebar */
 
-/* 1. Reset and Base Styles */
+/* ============================================
+   1. RESET AND BASE STYLES WITH SIDEBAR
+============================================ */
 :root {
     /* Duolingo Color Scheme */
     --duolingo-green: #58cc02;
@@ -40,7 +42,6 @@
     /* Sidebar Variables */
     --sidebar-width: 250px;
     --sidebar-collapsed: 60px;
-    --header-height: 80px;
     
     /* Shadows */
     --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -70,7 +71,9 @@ body {
     display: flex;
 }
 
-/* 2. Sidebar Navigation */
+/* ============================================
+   2. SIDEBAR NAVIGATION
+============================================ */
 .sidebar {
     width: var(--sidebar-width);
     background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
@@ -172,7 +175,9 @@ body {
     display: none;
 }
 
-/* 3. Main Content Area */
+/* ============================================
+   3. MAIN CONTENT AREA (ADJUSTED FOR SIDEBAR)
+============================================ */
 .main-content {
     flex: 1;
     margin-left: var(--sidebar-width);
@@ -186,43 +191,23 @@ body {
     margin-left: var(--sidebar-collapsed);
 }
 
-.main-header {
-    background: white;
-    height: var(--header-height);
-    display: flex;
-    align-items: center;
-    padding: 0 30px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+/* Hide the original header since we have sidebar */
+body > header {
+    display: none !important;
 }
 
-.page-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.page-title i {
-    color: var(--duolingo-blue);
-}
-
-.content-container {
-    padding: 30px;
-    flex: 1;
-}
-
-/* 4. Original Styles (with adjustments for sidebar) */
+/* ============================================
+   4. ORIGINAL STYLES FROM YOUR CSS (ADJUSTED)
+============================================ */
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
+    width: 100%;
 }
 
-header {
+/* Main header replacement */
+.main-header {
     background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
     color: white;
     padding: 30px 0;
@@ -231,19 +216,10 @@ header {
     margin-bottom: 30px;
     position: relative;
     overflow: hidden;
+    border-bottom: 4px solid var(--duolingo-green);
 }
 
-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--duolingo-green), var(--duolingo-blue), var(--duolingo-orange));
-}
-
-header h1 {
+.main-header h1 {
     font-size: 2.5rem;
     margin-bottom: 10px;
     display: flex;
@@ -252,7 +228,7 @@ header h1 {
     gap: 15px;
 }
 
-header h1 i {
+.main-header h1 i {
     color: var(--duolingo-green);
     animation: bounce 2s infinite;
 }
@@ -262,10 +238,1112 @@ header h1 i {
     50% { transform: translateY(-5px); }
 }
 
-/* Rest of your original styles remain the same... */
-/* [All the original CSS from the provided style.css should be placed here] */
+.main-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 800px;
+    margin: 0 auto;
+    font-weight: 300;
+}
 
-/* 5. Responsive Design with Sidebar */
+/* Student Profile Header */
+.student-profile-header {
+    background: white;
+    border-radius: var(--radius-large);
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+    border: 2px solid white;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.student-profile-header:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+
+.student-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+    min-width: 300px;
+}
+
+.student-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-blue));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    box-shadow: var(--shadow-light);
+    border: 3px solid white;
+    position: relative;
+    overflow: hidden;
+}
+
+.student-avatar::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(30deg);
+}
+
+.student-details h3 {
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.progress-container {
+    width: 200px;
+    height: 10px;
+    background-color: var(--medium-gray);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--duolingo-green), var(--duolingo-blue));
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.4),
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+}
+
+.student-stats {
+    display: flex;
+    gap: 25px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+    min-width: 80px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.streak-counter {
+    background: linear-gradient(135deg, #ff9f00, #ff6b00);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-circle);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 0 rgba(204, 107, 0, 0.4);
+}
+
+.streak-counter i {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Main Content Layout */
+.main-content-inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background: white;
+    border-radius: var(--radius-large);
+    box-shadow: var(--shadow-light);
+    padding: 30px;
+    flex: 1;
+    min-width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-medium);
+}
+
+.card h2 {
+    color: var(--text-primary);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--duolingo-blue);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.5rem;
+}
+
+.card h2 i {
+    color: var(--duolingo-blue);
+}
+
+.question-generator {
+    flex: 2;
+    min-width: 300px;
+}
+
+.school-info {
+    flex: 1;
+    min-width: 300px;
+}
+
+/* Category Section */
+.category-section {
+    margin-bottom: 25px;
+}
+
+.category-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.category-btn {
+    padding: 12px 24px;
+    background-color: white;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--radius-circle);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    color: var(--dark-gray);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+}
+
+.category-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-light);
+}
+
+.category-btn.active {
+    color: white;
+    border-color: transparent;
+    box-shadow: var(--shadow-button);
+}
+
+/* Category-specific colors */
+.must-btn.active {
+    background: linear-gradient(135deg, var(--category-must), #f39c12);
+}
+
+.chinese-btn.active {
+    background: linear-gradient(135deg, var(--category-chinese), #c0392b);
+}
+
+.english-btn.active {
+    background: linear-gradient(135deg, var(--category-english), #2980b9);
+}
+
+.math-btn.active {
+    background: linear-gradient(135deg, var(--category-math), #8e44ad);
+}
+
+.science-btn.active {
+    background: linear-gradient(135deg, var(--category-science), #27ae60);
+}
+
+.news-btn.active {
+    background: linear-gradient(135deg, var(--category-news), #d35400);
+}
+
+.creative-btn.active {
+    background: linear-gradient(135deg, var(--category-creative), #f39c12);
+}
+
+.all-btn.active {
+    background: linear-gradient(135deg, #2c3e50, #34495e);
+}
+
+/* Questions Per Category */
+.questions-per-category {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.questions-per-category label {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 1rem;
+}
+
+.count-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.count-btn {
+    padding: 10px 18px;
+    background-color: var(--light-gray);
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--radius-medium);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    color: var(--dark-gray);
+    min-width: 50px;
+}
+
+.count-btn:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.count-btn.active {
+    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-green));
+    color: white;
+    border-color: transparent;
+    box-shadow: var(--shadow-button);
+}
+
+.all-count-btn {
+    background-color: #2c3e50;
+    color: white;
+    border-color: #2c3e50;
+}
+
+.all-count-btn:hover {
+    background-color: #1a252f;
+}
+
+.all-count-btn.active {
+    background: linear-gradient(135deg, #2c3e50, #1a252f);
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: flex;
+    gap: 15px;
+    margin: 25px 0;
+    flex-wrap: wrap;
+}
+
+.generate-btn, .clear-btn, .history-btn, .save-btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radius-circle);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-button);
+    position: relative;
+    overflow: hidden;
+}
+
+.generate-btn {
+    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-green-dark));
+    color: white;
+    flex: 2;
+}
+
+.generate-btn:hover {
+    background: linear-gradient(135deg, #5cd304, #48a904);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 rgba(70, 163, 2, 0.4);
+}
+
+.generate-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(70, 163, 2, 0.4);
+}
+
+.clear-btn {
+    background: linear-gradient(135deg, var(--duolingo-red), var(--duolingo-red-dark));
+    color: white;
+    flex: 1;
+}
+
+.clear-btn:hover {
+    background: linear-gradient(135deg, #ff5c5c, #e63939);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 rgba(230, 57, 57, 0.4);
+}
+
+.history-btn {
+    background: linear-gradient(135deg, var(--duolingo-purple), var(--duolingo-purple-dark));
+    color: white;
+    flex: 1;
+}
+
+.history-btn:hover {
+    background: linear-gradient(135deg, #a66bbe, #9754b3);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 rgba(142, 68, 173, 0.4);
+}
+
+.save-btn {
+    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-blue-dark));
+    color: white;
+    flex: 1;
+}
+
+.save-btn:hover {
+    background: linear-gradient(135deg, #20b7ff, #0fa4f0);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 0 rgba(13, 156, 229, 0.4);
+}
+
+/* Generated Questions Section */
+.generated-questions {
+    margin-top: 25px;
+}
+
+.generated-questions h3 {
+    margin-bottom: 15px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.3rem;
+}
+
+#questions-count-badge {
+    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-green));
+    color: white;
+    padding: 5px 15px;
+    border-radius: var(--radius-circle);
+    font-size: 0.9rem;
+    font-weight: 700;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+#questions-container {
+    min-height: 200px;
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: var(--light-gray);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--medium-gray);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+}
+
+.empty-state i {
+    margin-bottom: 15px;
+    color: var(--duolingo-blue);
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-style: italic;
+    font-size: 1.1rem;
+}
+
+/* Question Item Styles */
+.question-item {
+    background: white;
+    padding: 25px;
+    margin-bottom: 20px;
+    border-radius: var(--radius-large);
+    border-left: 5px solid var(--duolingo-blue);
+    box-shadow: var(--shadow-light);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.question-item.completed {
+    border-left-color: var(--duolingo-green);
+    background: linear-gradient(135deg, #f8fff8, #f0f9f0);
+}
+
+.question-item.completed::before {
+    content: '✓ Completed';
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    background: var(--duolingo-green);
+    color: white;
+    padding: 5px 40px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.question-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.question-header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: var(--radius-circle);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+.category-badge.must {
+    background: linear-gradient(135deg, var(--category-must), #f39c12);
+    color: white;
+}
+
+.category-badge.chinese {
+    background: linear-gradient(135deg, var(--category-chinese), #c0392b);
+    color: white;
+}
+
+.category-badge.english {
+    background: linear-gradient(135deg, var(--category-english), #2980b9);
+    color: white;
+}
+
+.category-badge.math {
+    background: linear-gradient(135deg, var(--category-math), #8e44ad);
+    color: white;
+}
+
+.category-badge.science {
+    background: linear-gradient(135deg, var(--category-science), #27ae60);
+    color: white;
+}
+
+.category-badge.news {
+    background: linear-gradient(135deg, var(--category-news), #d35400);
+    color: white;
+}
+
+.category-badge.creative {
+    background: linear-gradient(135deg, var(--category-creative), #f39c12);
+    color: #333;
+}
+
+.question-id {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-family: monospace;
+    background-color: var(--light-gray);
+    padding: 5px 10px;
+    border-radius: var(--radius-small);
+    border: 1px solid var(--medium-gray);
+}
+
+.difficulty-badge {
+    padding: 6px 12px;
+    border-radius: var(--radius-circle);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.difficulty-easy {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: var(--difficulty-easy);
+    border: 2px solid var(--difficulty-easy);
+}
+
+.difficulty-medium {
+    background-color: rgba(230, 126, 34, 0.1);
+    color: var(--difficulty-medium);
+    border: 2px solid var(--difficulty-medium);
+}
+
+.difficulty-hard {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--difficulty-hard);
+    border: 2px solid var(--difficulty-hard);
+}
+
+.done-btn {
+    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-green-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-medium);
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    box-shadow: 0 3px 0 rgba(70, 163, 2, 0.4);
+}
+
+.done-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgba(70, 163, 2, 0.4);
+}
+
+.done-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 0 rgba(70, 163, 2, 0.4);
+}
+
+.done-btn.completed {
+    background: linear-gradient(135deg, #7f8c8d, #5d6d7e);
+    box-shadow: 0 3px 0 rgba(93, 109, 126, 0.4);
+    cursor: default;
+}
+
+.done-btn.completed:hover {
+    transform: none;
+    box-shadow: 0 3px 0 rgba(93, 109, 126, 0.4);
+}
+
+.question-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+/* Answer Preview */
+.answer-preview {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: var(--radius-medium);
+    padding: 15px;
+    margin: 15px 0;
+    border-left: 4px solid var(--duolingo-blue);
+    position: relative;
+}
+
+.answer-preview p {
+    margin-bottom: 10px;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+.answer-preview strong {
+    color: var(--duolingo-blue);
+}
+
+.edit-answer-btn {
+    background: linear-gradient(135deg, var(--duolingo-purple), var(--duolingo-purple-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-medium);
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    box-shadow: 0 3px 0 rgba(142, 68, 173, 0.4);
+}
+
+.edit-answer-btn:hover {
+    background: linear-gradient(135deg, #a66bbe, #9754b3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 0 rgba(142, 68, 173, 0.4);
+}
+
+/* Answer Section */
+.answer-section {
+    margin-top: 20px;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border-radius: var(--radius-large);
+    border: 2px solid var(--medium-gray);
+}
+
+.answer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.answer-label {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.answer-label i {
+    color: var(--duolingo-blue);
+}
+
+.character-count {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 4px 12px;
+    background-color: white;
+    border-radius: var(--radius-circle);
+    border: 1px solid var(--medium-gray);
+}
+
+.student-answer-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid var(--medium-gray);
+    border-radius: var(--radius-medium);
+    font-size: 1rem;
+    min-height: 120px;
+    resize: vertical;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.student-answer-input:focus {
+    border-color: var(--duolingo-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(28, 176, 246, 0.1);
+}
+
+/* Answer Action Buttons */
+.answer-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.answer-save-btn, .answer-modal-btn, .hint-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-circle);
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-button);
+    position: relative;
+    overflow: hidden;
+    min-width: 120px;
+}
+
+.answer-save-btn:hover, .answer-modal-btn:hover, .hint-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+}
+
+.answer-save-btn:active, .answer-modal-btn:active, .hint-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+.answer-save-btn {
+    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-green-dark));
+    color: white;
+    border-bottom: 4px solid #389a02;
+}
+
+.answer-save-btn:hover {
+    background: linear-gradient(135deg, #5cd304, #48a904);
+    border-bottom: 4px solid #3a9d04;
+}
+
+.answer-modal-btn {
+    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-blue-dark));
+    color: white;
+    border-bottom: 4px solid #0a8bcb;
+}
+
+.answer-modal-btn:hover {
+    background: linear-gradient(135deg, #20b7ff, #0fa4f0);
+    border-bottom: 4px solid #0c94e0;
+}
+
+.hint-btn {
+    background: linear-gradient(135deg, var(--duolingo-orange), var(--duolingo-orange-dark));
+    color: white;
+    border-bottom: 4px solid #cc7400;
+}
+
+.hint-btn:hover {
+    background: linear-gradient(135deg, #ffa500, #f09000);
+    border-bottom: 4px solid #d67c00;
+}
+
+@keyframes saveSuccess {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.answer-save-btn.saved {
+    background: linear-gradient(135deg, #4caf50, #388e3c);
+    border-bottom: 4px solid #2e7d32;
+    animation: saveSuccess 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.5s ease;
+}
+
+/* Question Footer */
+.question-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid var(--medium-gray);
+}
+
+.xp-badge {
+    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-blue));
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-circle);
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.time-estimate {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-style: italic;
+    padding: 5px 10px;
+    background-color: var(--light-gray);
+    border-radius: var(--radius-small);
+}
+
+/* School Information Styles */
+.school-selector {
+    margin-bottom: 20px;
+}
+
+#school-select {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--medium-gray);
+    font-size: 1rem;
+    background-color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#school-select:focus {
+    border-color: var(--duolingo-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(28, 176, 246, 0.1);
+}
+
+.school-details {
+    min-height: 400px;
+    padding: 20px;
+    background-color: var(--light-gray);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--medium-gray);
+}
+
+/* Statistics Card */
+.statistics .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.stats-grid .stat-item {
+    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-green));
+    color: white;
+    padding: 25px;
+    border-radius: var(--radius-large);
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s ease;
+}
+
+.stats-grid .stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stats-grid .stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: white;
+    -webkit-text-fill-color: white;
+}
+
+.stats-grid .stat-label {
+    font-size: 1rem;
+    opacity: 0.9;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* History Log */
+.history-log {
+    margin-top: 20px;
+    display: none;
+}
+
+.history-log.show {
+    display: block;
+    animation: slideIn 0.5s ease;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.history-controls {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.close-btn, .download-btn, .load-btn, .share-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: var(--radius-circle);
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: var(--shadow-button);
+}
+
+.close-btn {
+    background: linear-gradient(135deg, #7f8c8d, #5d6d7e);
+    color: white;
+}
+
+.close-btn:hover {
+    background: linear-gradient(135deg, #5d6d7e, #4a5767);
+    transform: translateY(-3px);
+}
+
+.download-btn {
+    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-blue-dark));
+    color: white;
+}
+
+.download-btn:hover {
+    background: linear-gradient(135deg, #20b7ff, #0fa4f0);
+    transform: translateY(-3px);
+}
+
+.load-btn {
+    background: linear-gradient(135deg, var(--duolingo-purple), var(--duolingo-purple-dark));
+    color: white;
+}
+
+.load-btn:hover {
+    background: linear-gradient(135deg, #a66bbe, #9754b3);
+    transform: translateY(-3px);
+}
+
+.share-btn {
+    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-green-dark));
+    color: white;
+}
+
+.share-btn:hover {
+    background: linear-gradient(135deg, #5cd304, #48a904);
+    transform: translateY(-3px);
+}
+
+.history-container {
+    min-height: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 20px;
+    background-color: var(--light-gray);
+    border-radius: var(--radius-medium);
+    border: 2px solid var(--medium-gray);
+}
+
+.history-item {
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: var(--radius-medium);
+    border-left: 4px solid var(--duolingo-purple);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.history-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.history-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.history-date {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.history-question {
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.history-answer {
+    margin-top: 10px;
+    padding: 15px;
+    background-color: var(--light-gray);
+    border-radius: var(--radius-small);
+    border-left: 3px solid var(--duolingo-blue);
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.history-meta {
+    display: flex;
+    gap: 15px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+/* Footer */
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 50px;
+    border-top: 4px solid var(--duolingo-green);
+}
+
+footer p {
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   5. RESPONSIVE DESIGN
+============================================ */
 @media (max-width: 992px) {
     .sidebar {
         transform: translateX(-100%);
@@ -293,36 +1371,171 @@ header h1 i {
         font-size: 1.2rem;
         cursor: pointer;
     }
+    
+    .main-content-inner {
+        flex-direction: column;
+    }
+    
+    .student-profile-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .student-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .progress-container {
+        width: 100%;
+        max-width: 300px;
+        margin: 10px auto;
+    }
+    
+    .student-stats {
+        justify-content: center;
+    }
 }
 
 @media (max-width: 768px) {
-    .content-container {
-        padding: 15px;
+    .main-header h1 {
+        font-size: 2rem;
+        flex-direction: column;
+        gap: 10px;
     }
     
-    .main-header {
+    .category-buttons {
+        justify-content: center;
+    }
+    
+    .category-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .action-buttons button {
+        width: 100%;
+    }
+    
+    .question-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .question-header-right {
+        width: 100%;
+    }
+    
+    .done-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .answer-actions {
+        flex-direction: column;
+    }
+    
+    .answer-save-btn, .answer-modal-btn, .hint-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .history-controls {
+        flex-direction: column;
+    }
+    
+    .history-controls button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
         padding: 0 15px;
     }
     
-    header h1 {
-        font-size: 2rem;
+    .card {
+        padding: 20px;
     }
+    
+    .student-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+    
+    .student-details h3 {
+        font-size: 1.2rem;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    
+    .streak-counter {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================
+   6. UTILITY CLASSES
+============================================ */
+.hidden {
+    display: none !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
 }
 
 /* Scrollbar Styling */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
     background: var(--light-gray);
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
     background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-green));
-    border-radius: 4px;
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-blue));
+}
+
+/* Selection Color */
+::selection {
+    background-color: rgba(28, 176, 246, 0.3);
+    color: var(--text-primary);
+}
+
+/* Focus Styles for Accessibility */
+button:focus, 
+input:focus, 
+textarea:focus, 
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(28, 176, 246, 0.3);
 }
