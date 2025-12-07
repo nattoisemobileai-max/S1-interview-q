@@ -21,11 +21,11 @@
                 <h2><i class="fas fa-question-circle"></i> Interview Question Generator</h2>
                 <div class="category-section">
                     <div class="category-buttons">
-                        <button class="category-btn" data-category="general">General Questions</button>
-                        <button class="category-btn" data-category="academic">Academic</button>
-                        <button class="category-btn" data-category="personal">Personal</button>
-                        <button class="category-btn" data-category="school">School Specific</button>
-                        <button class="category-btn" data-category="current">Current Affairs</button>
+                        <button class="category-btn" data-category="chinese">Chinese</button>
+                        <button class="category-btn" data-category="english">English</button>
+                        <button class="category-btn" data-category="math">Mathematics</button>
+                        <button class="category-btn" data-category="science">Science</button>
+                        <button class="category-btn" data-category="news">Current News</button>
                         <button class="category-btn" data-category="creative">Creative Thinking</button>
                         <button class="category-btn all-btn active" data-category="all">All Categories</button>
                     </div>
@@ -33,9 +33,9 @@
                     <div class="questions-per-category">
                         <label for="questions-count">Questions per category:</label>
                         <div class="count-buttons">
-                            <button class="count-btn" data-count="4">4</button>
-                            <button class="count-btn" data-count="8">8</button>
-                            <button class="count-btn" data-count="10">10</button>
+                            <button class="count-btn" data-count="1">1</button>
+                            <button class="count-btn" data-count="2">2</button>
+                            <button class="count-btn" data-count="3">3</button>
                             <button class="count-btn active" data-count="5">5</button>
                             <button class="count-btn all-count-btn active" data-count="all">All</button>
                         </div>
@@ -49,9 +49,32 @@
                     <button id="clear-btn" class="clear-btn">
                         <i class="fas fa-trash-alt"></i> Clear All
                     </button>
+                    <button id="save-answers-btn" class="save-btn">
+                        <i class="fas fa-save"></i> Save Answers
+                    </button>
                     <button id="view-history-btn" class="history-btn">
                         <i class="fas fa-history"></i> View History
                     </button>
+                </div>
+                
+                <div class="student-info-section">
+                    <h3><i class="fas fa-user-graduate"></i> Student Information</h3>
+                    <div class="student-inputs">
+                        <div class="input-group">
+                            <label for="student-name">Student Name:</label>
+                            <input type="text" id="student-name" placeholder="Enter your name">
+                        </div>
+                        <div class="input-group">
+                            <label for="student-id">Student ID:</label>
+                            <input type="text" id="student-id" placeholder="Enter student ID">
+                        </div>
+                        <div class="input-group">
+                            <label for="target-school">Target School:</label>
+                            <select id="target-school">
+                                <option value="">Select target school</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 
                 <div class="generated-questions">
@@ -90,14 +113,14 @@
                     <div class="stat-label">Generated Today</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="completed-today">0</div>
-                    <div class="stat-label">Completed Today</div>
+                    <div class="stat-value" id="saved-answers">0</div>
+                    <div class="stat-label">Saved Answers</div>
                 </div>
             </div>
         </div>
         
         <div class="card history-log" id="history-log-card" style="display: none;">
-            <h2><i class="fas fa-history"></i> Practice History</h2>
+            <h2><i class="fas fa-history"></i> Practice History & Saved Answers</h2>
             <div class="history-controls">
                 <button id="close-history-btn" class="close-btn">
                     <i class="fas fa-times"></i> Close
@@ -106,7 +129,10 @@
                     <i class="fas fa-trash"></i> Clear History
                 </button>
                 <button id="download-history-btn" class="download-btn">
-                    <i class="fas fa-download"></i> Download
+                    <i class="fas fa-download"></i> Download Answers
+                </button>
+                <button id="load-answers-btn" class="load-btn">
+                    <i class="fas fa-upload"></i> Load Answers
                 </button>
             </div>
             <div id="history-container" class="history-container">
