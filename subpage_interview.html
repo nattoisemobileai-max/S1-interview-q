@@ -8,6 +8,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Bootstrap Modal CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Additional styles for interview page */
+        .view-more-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--duolingo-purple), var(--duolingo-purple-dark));
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius-circle);
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+            box-shadow: var(--shadow-button);
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .view-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 rgba(142, 68, 173, 0.4);
+            color: white;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-3 {
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar Navigation -->
@@ -147,7 +178,7 @@
                         <button id="clear-btn" class="clear-btn">
                             <i class="fas fa-trash-alt"></i> Clear All
                         </button>
-                        <button id="save-all-btn" class="save-btn" onclick="saveAllAnswers()">
+                        <button id="save-all-btn" class="save-btn">
                             <i class="fas fa-save"></i> Save All Answers
                         </button>
                         <button id="view-history-btn" class="history-btn">
@@ -165,6 +196,8 @@
                         </div>
                     </div>
                 </div>
+                
+              
             </div>
             
             <div class="card statistics" id="statistics">
@@ -279,12 +312,649 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Main Script -->
-    <script src="script.js"></script>
-    <!-- Sidebar Script -->
+    
+    <!-- Interview Generator Script (Enhanced with proper initialization) -->
     <script>
-        // Sidebar toggle functionality
+        // Enhanced script.js with proper initialization for interview page
+        
+        // Global variables
+        let schoolsData = [];
+        let questionsData = {
+            must: [],
+            chinese: [],
+            english: [],
+            math: [],
+            science: [],
+            news: [],
+            creative: []
+        };
+        let studentAnswers = [];
+        let selectedCategories = ['all'];
+        let questionsPerCategory = 5;
+        let generatedCount = 0;
+        let savedAnswersCount = 0;
+        let currentQuestionData = null;
+        let studentXP = 0;
+
+        // DOM elements - Get them after DOM is loaded
+        let questionsContainer, schoolSelect, schoolDetails, generateBtn, clearBtn, viewHistoryBtn;
+        let closeHistoryBtn, clearHistoryBtn, downloadHistoryBtn, historyLogCard, historyContainer;
+        let categoryButtons, countButtons, saveAllBtn;
+
+        // Modal elements
+        let answerModal, modalCancelBtn, modalSaveBtn, modalSaveDoneBtn;
+        let modalAnswerInput, modalCategory, modalQuestionText, modalQuestionId, modalCharacterCount;
+
+        // Student profile elements
+        let studentNameEl, studentProgressEl, studentLevelEl, streakCounterEl, savedAnswersEl, totalXPEl;
+
+        // Statistics elements
+        let totalSchoolsEl, totalQuestionsEl, generatedTodayEl, completedTodayEl, questionsCountBadge;
+
+        // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
+            // Initialize DOM elements
+            initializeDOMElements();
+            
+            // Set up the application
+            loadData();
+            loadStudentData();
+            setupEventListeners();
+            updateStatistics();
+            setDefaultSelections();
+            initializeStudentProfile();
+            
+            // Initialize sidebar
+            initializeSidebar();
+        });
+
+        // Initialize DOM elements
+        function initializeDOMElements() {
+            // Main elements
+            questionsContainer = document.getElementById('questions-container');
+            schoolSelect = document.getElementById('school-select');
+            schoolDetails = document.getElementById('school-details');
+            generateBtn = document.getElementById('generate-btn');
+            clearBtn = document.getElementById('clear-btn');
+            viewHistoryBtn = document.getElementById('view-history-btn');
+            closeHistoryBtn = document.getElementById('close-history-btn');
+            clearHistoryBtn = document.getElementById('clear-history-btn');
+            downloadHistoryBtn = document.getElementById('download-history-btn');
+            historyLogCard = document.getElementById('history-log-card');
+            historyContainer = document.getElementById('history-container');
+            categoryButtons = document.querySelectorAll('.category-btn');
+            countButtons = document.querySelectorAll('.count-btn');
+            saveAllBtn = document.getElementById('save-all-btn');
+
+            // Modal elements
+            answerModal = document.getElementById('answer-modal');
+            modalCancelBtn = document.getElementById('modal-cancel-btn');
+            modalSaveBtn = document.getElementById('modal-save-btn');
+            modalSaveDoneBtn = document.getElementById('modal-save-done-btn');
+            modalAnswerInput = document.getElementById('modal-answer-input');
+            modalCategory = document.getElementById('modal-category');
+            modalQuestionText = document.getElementById('modal-question-text');
+            modalQuestionId = document.getElementById('modal-question-id');
+            modalCharacterCount = document.getElementById('modal-character-count');
+
+            // Student profile elements
+            studentNameEl = document.getElementById('student-name');
+            studentProgressEl = document.getElementById('student-progress');
+            studentLevelEl = document.getElementById('student-level');
+            streakCounterEl = document.getElementById('streak-counter');
+            savedAnswersEl = document.getElementById('saved-answers');
+            totalXPEl = document.getElementById('total-xp');
+
+            // Statistics elements
+            totalSchoolsEl = document.getElementById('total-schools');
+            totalQuestionsEl = document.getElementById('total-questions');
+            generatedTodayEl = document.getElementById('generated-today');
+            completedTodayEl = document.getElementById('completed-today');
+            questionsCountBadge = document.getElementById('questions-count-badge');
+        }
+
+        // Load data from JSON files
+        async function loadData() {
+            try {
+                // Load schools data
+                const schoolsResponse = await fetch('schools.json');
+                schoolsData = await schoolsResponse.json();
+                
+                // Load all question files
+                const questionFiles = [
+                    { key: 'must', file: 'questions-must.json' },
+                    { key: 'chinese', file: 'questions-chi.json' },
+                    { key: 'english', file: 'questions-eng.json' },
+                    { key: 'math', file: 'questions-math.json' },
+                    { key: 'science', file: 'questions-science.json' },
+                    { key: 'news', file: 'questions-news.json' },
+                    { key: 'creative', file: 'questions-creative.json' }
+                ];
+                
+                for (const { key, file } of questionFiles) {
+                    try {
+                        const response = await fetch(file);
+                        const data = await response.json();
+                        questionsData[key] = data.questions || [];
+                    } catch (error) {
+                        console.error(`Error loading ${file}:`, error);
+                        questionsData[key] = [];
+                    }
+                }
+                
+                // Initialize school dropdown
+                populateSchoolDropdown();
+                
+                // Update statistics
+                updateStatistics();
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                showError('Failed to load data. Please check if JSON files are available.');
+            }
+        }
+
+        // Load student data from localStorage
+        function loadStudentData() {
+            // Load saved answers
+            const savedAnswers = localStorage.getItem('studentAnswers');
+            if (savedAnswers) {
+                try {
+                    studentAnswers = JSON.parse(savedAnswers);
+                    savedAnswersCount = studentAnswers.length;
+                    if (savedAnswersEl) savedAnswersEl.textContent = savedAnswersCount;
+                } catch (e) {
+                    console.error('Error parsing saved answers:', e);
+                }
+            }
+            
+            // Load student XP
+            const xp = localStorage.getItem('studentXP');
+            if (xp) {
+                studentXP = parseInt(xp);
+                if (totalXPEl) totalXPEl.textContent = studentXP;
+            }
+        }
+
+        // Save student data to localStorage
+        function saveStudentData() {
+            localStorage.setItem('studentAnswers', JSON.stringify(studentAnswers));
+            localStorage.setItem('studentXP', studentXP.toString());
+        }
+
+        // Initialize student profile
+        function initializeStudentProfile() {
+            const studentName = localStorage.getItem('studentName') || 'Interview Candidate';
+            const studentStreak = localStorage.getItem('studentStreak') || '0';
+            const studentLevel = localStorage.getItem('studentLevel') || '1';
+            const studentProgress = localStorage.getItem('studentProgress') || '0';
+            
+            if (studentNameEl) studentNameEl.textContent = studentName;
+            if (streakCounterEl) streakCounterEl.textContent = studentStreak;
+            if (studentLevelEl) studentLevelEl.textContent = `Level ${studentLevel}`;
+            
+            // Update progress bar width
+            const progressBar = studentProgressEl;
+            if (progressBar) {
+                progressBar.style.width = `${studentProgress}%`;
+            }
+            
+            // Update completed today count
+            updateCompletedToday();
+        }
+
+        // Populate school dropdown
+        function populateSchoolDropdown() {
+            if (!schoolSelect) return;
+            
+            schoolSelect.innerHTML = '<option value="">Select a school to view details</option>';
+            
+            if (schoolsData && schoolsData.schools) {
+                schoolsData.schools.forEach(school => {
+                    const option = document.createElement('option');
+                    option.value = school.id;
+                    option.textContent = `${school.name} (${school.chineseName}) - ${school.banding}`;
+                    schoolSelect.appendChild(option);
+                });
+            }
+        }
+
+        // Set default selections
+        function setDefaultSelections() {
+            const allCategoriesBtn = document.querySelector('.category-btn.all-btn');
+            if (allCategoriesBtn) allCategoriesBtn.classList.add('active');
+            selectedCategories = ['all'];
+            
+            const countBtn5 = document.querySelector('.count-btn[data-count="5"]');
+            if (countBtn5) countBtn5.classList.add('active');
+            questionsPerCategory = 5;
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category buttons
+            if (categoryButtons) {
+                categoryButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const category = this.dataset.category;
+                        
+                        // Remove active class from all category buttons
+                        categoryButtons.forEach(b => b.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Set selected category
+                        if (category === 'all') {
+                            selectedCategories = ['all'];
+                        } else {
+                            selectedCategories = [category];
+                        }
+                    });
+                });
+            }
+            
+            // Count buttons
+            if (countButtons) {
+                countButtons.forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const count = this.dataset.count;
+                        
+                        // Remove active class from all count buttons
+                        countButtons.forEach(b => b.classList.remove('active'));
+                        
+                        // Add active class to clicked button
+                        this.classList.add('active');
+                        
+                        // Set questions per category
+                        if (count === 'all') {
+                            questionsPerCategory = 'all';
+                        } else {
+                            questionsPerCategory = parseInt(count);
+                        }
+                    });
+                });
+            }
+            
+            // Generate button
+            if (generateBtn) {
+                generateBtn.addEventListener('click', generateQuestions);
+            }
+            
+            // Clear button
+            if (clearBtn) {
+                clearBtn.addEventListener('click', clearQuestions);
+            }
+            
+            // View history button
+            if (viewHistoryBtn) {
+                viewHistoryBtn.addEventListener('click', showHistory);
+            }
+            
+            // Close history button
+            if (closeHistoryBtn) {
+                closeHistoryBtn.addEventListener('click', hideHistory);
+            }
+            
+            // Clear history button
+            if (clearHistoryBtn) {
+                clearHistoryBtn.addEventListener('click', clearHistory);
+            }
+            
+            // Download history button
+            if (downloadHistoryBtn) {
+                downloadHistoryBtn.addEventListener('click', downloadAnswers);
+            }
+            
+            // Save all button
+            if (saveAllBtn) {
+                saveAllBtn.addEventListener('click', saveAllAnswers);
+            }
+            
+            // School select dropdown
+            if (schoolSelect) {
+                schoolSelect.addEventListener('change', function() {
+                    const schoolId = parseInt(this.value);
+                    if (schoolId) {
+                        displaySchoolDetails(schoolId);
+                    } else {
+                        if (schoolDetails) {
+                            schoolDetails.innerHTML = '<div class="empty-state"><i class="fas fa-university fa-3x"></i><p>Select a school from the dropdown to view detailed information</p></div>';
+                        }
+                    }
+                });
+            }
+            
+            // Modal event listeners
+            if (modalCancelBtn) {
+                modalCancelBtn.addEventListener('click', closeModal);
+            }
+            
+            if (modalSaveBtn) {
+                modalSaveBtn.addEventListener('click', saveAnswer);
+            }
+            
+            if (modalSaveDoneBtn) {
+                modalSaveDoneBtn.addEventListener('click', saveAnswerAndMarkDone);
+            }
+            
+            // Modal answer input character count
+            if (modalAnswerInput) {
+                modalAnswerInput.addEventListener('input', function() {
+                    if (modalCharacterCount) {
+                        modalCharacterCount.textContent = this.value.length;
+                    }
+                });
+            }
+        }
+
+        // Generate questions based on selected categories
+        function generateQuestions() {
+            if (!questionsContainer) return;
+            
+            // Clear previous questions
+            questionsContainer.innerHTML = '';
+            
+            // Determine which categories to use
+            let categoriesToUse = [];
+            if (selectedCategories.includes('all')) {
+                // Get all categories that have questions
+                categoriesToUse = Object.keys(questionsData).filter(key => questionsData[key].length > 0);
+            } else {
+                categoriesToUse = selectedCategories.filter(cat => questionsData[cat] && questionsData[cat].length > 0);
+            }
+            
+            if (categoriesToUse.length === 0) {
+                showNotification('No questions available for selected categories');
+                return;
+            }
+            
+            let allSelectedQuestions = [];
+            
+            // Generate questions for each selected category
+            categoriesToUse.forEach(category => {
+                const categoryQuestions = questionsData[category];
+                
+                // Determine how many questions to take
+                let questionsToTake = questionsPerCategory;
+                if (questionsPerCategory === 'all') {
+                    questionsToTake = categoryQuestions.length;
+                } else {
+                    questionsToTake = Math.min(questionsPerCategory, categoryQuestions.length);
+                }
+                
+                // Shuffle questions and take the required number
+                const shuffled = shuffleArray([...categoryQuestions]);
+                const selectedQuestions = shuffled.slice(0, questionsToTake);
+                
+                // Add to all selected questions
+                allSelectedQuestions = allSelectedQuestions.concat(selectedQuestions);
+            });
+            
+            // Display questions
+            allSelectedQuestions.forEach(question => {
+                displayQuestion(question);
+            });
+            
+            // Update generated count
+            generatedCount += allSelectedQuestions.length;
+            if (generatedTodayEl) generatedTodayEl.textContent = generatedCount;
+            if (questionsCountBadge) questionsCountBadge.textContent = allSelectedQuestions.length;
+            
+            // Update streak
+            updateStreak();
+            
+            // Scroll to questions
+            questionsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            showNotification(`Generated ${allSelectedQuestions.length} questions successfully!`);
+        }
+
+        // Display a single question
+        function displayQuestion(question) {
+            if (!questionsContainer) return;
+            
+            const questionEl = document.createElement('div');
+            questionEl.className = 'question-item';
+            questionEl.dataset.id = question.id;
+            questionEl.dataset.category = question.category;
+            
+            // Get category display name
+            const categoryNames = {
+                'must': 'MUST 必考',
+                'chinese': 'Chinese 中文',
+                'english': 'English 英文',
+                'math': 'Mathematics 數學',
+                'science': 'Science 科學',
+                'news': 'Current News 時事',
+                'creative': 'Creative Thinking 創意思維'
+            };
+            
+            // Check if this question has a saved answer
+            const savedAnswer = studentAnswers.find(answer => {
+                if (question.category === 'chinese') {
+                    return answer.questionId === question.id;
+                } else {
+                    return answer.questionId == question.id;
+                }
+            });
+            const isCompleted = savedAnswer && savedAnswer.completed;
+            
+            if (isCompleted) {
+                questionEl.classList.add('completed');
+            }
+            
+            // Calculate XP for this question
+            const xpValue = question.difficulty === 'hard' ? 30 : question.difficulty === 'medium' ? 20 : 10;
+            
+            // Check if example answer exists
+            const hasExampleAnswer = question.modal_answer;
+            
+            questionEl.innerHTML = `
+                <div class="question-item-header">
+                    <div class="question-header-left">
+                        <div class="category-badge ${question.category}">${categoryNames[question.category] || question.category}</div>
+                        <div class="question-id">ID: ${question.id}</div>
+                        <div class="difficulty-badge difficulty-${question.difficulty}">${question.difficulty}</div>
+                    </div>
+                    <div class="question-header-right">
+                        <button class="done-btn ${isCompleted ? 'completed' : ''}" onclick="markQuestionAsDone('${question.id}')">
+                            <i class="fas fa-check"></i> ${isCompleted ? 'Completed' : 'Mark as Done'}
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="question-text">${question.text}</div>
+                
+                ${savedAnswer ? `
+                <div class="answer-preview">
+                    <p><strong>Your Answer:</strong> ${savedAnswer.answer.length > 150 ? savedAnswer.answer.substring(0, 150) + '...' : savedAnswer.answer}</p>
+                    <button class="edit-answer-btn" onclick="openAnswerModal('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}')">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                </div>
+                ` : ''}
+                
+                <div class="answer-section">
+                    <div class="answer-header">
+                        <div class="answer-label">
+                            <i class="fas fa-pencil-alt"></i>
+                            Your Answer
+                        </div>
+                        <div class="character-count" data-question-id="${question.id}">
+                            ${savedAnswer ? savedAnswer.answer.length : 0} characters
+                        </div>
+                    </div>
+                    
+                    <textarea class="student-answer-input" 
+                              placeholder="Type your answer here..." 
+                              rows="3" 
+                              data-question-id="${question.id}"
+                              oninput="updateCharacterCount(this)">${savedAnswer ? savedAnswer.answer : ''}</textarea>
+                    
+                    <div class="answer-actions">
+                        <button class="answer-save-btn ${savedAnswer ? 'saved' : ''}" 
+                                onclick="saveQuickAnswer('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}', this)">
+                            <i class="fas fa-save"></i> ${savedAnswer ? 'Answer Saved' : 'Save Answer'}
+                        </button>
+                        <button class="answer-modal-btn" onclick="openAnswerModal('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}')">
+                            <i class="fas fa-expand-alt"></i> Full Editor
+                        </button>
+                        ${hasExampleAnswer ? `
+                        <button class="hint-btn" onclick="toggleExampleAnswer(this, '${question.id}')">
+                            <i class="fas fa-lightbulb"></i> Show Example
+                        </button>
+                        ` : ''}
+                    </div>
+                </div>
+                
+                <div class="question-footer">
+                    <div class="xp-badge">+${xpValue} XP</div>
+                    <div class="time-estimate">${question.difficulty === 'hard' ? '5-7 min' : question.difficulty === 'medium' ? '3-5 min' : '1-3 min'}</div>
+                </div>
+            `;
+            
+            questionsContainer.appendChild(questionEl);
+            
+            // If answer is already saved, hide the save button
+            if (savedAnswer) {
+                const saveBtn = questionEl.querySelector('.answer-save-btn');
+                if (saveBtn) {
+                    saveBtn.disabled = true;
+                    saveBtn.style.opacity = '0.6';
+                    saveBtn.style.cursor = 'default';
+                }
+            }
+        }
+
+        // Clear all generated questions
+        function clearQuestions() {
+            if (!questionsContainer) return;
+            
+            questionsContainer.innerHTML = `
+                <div class="empty-state">
+                    <i class="fas fa-question-circle fa-3x"></i>
+                    <p>Select a category and click "Generate Questions" to start practicing!</p>
+                </div>
+            `;
+            if (questionsCountBadge) questionsCountBadge.textContent = '0';
+            showNotification('All questions cleared');
+        }
+
+        // Show history log
+        function showHistory() {
+            if (historyLogCard) {
+                historyLogCard.style.display = 'block';
+                historyLogCard.classList.add('show');
+                displayHistory();
+            }
+        }
+
+        // Hide history log
+        function hideHistory() {
+            if (historyLogCard) {
+                historyLogCard.style.display = 'none';
+                historyLogCard.classList.remove('show');
+            }
+        }
+
+        // Clear history
+        function clearHistory() {
+            if (confirm('Are you sure you want to clear all saved answers? This action cannot be undone.')) {
+                studentAnswers = [];
+                savedAnswersCount = 0;
+                studentXP = 0;
+                localStorage.removeItem('studentAnswers');
+                localStorage.removeItem('studentXP');
+                if (savedAnswersEl) savedAnswersEl.textContent = '0';
+                if (totalXPEl) totalXPEl.textContent = '0';
+                updateProgress();
+                if (historyContainer) displayHistory();
+                showNotification('All saved answers and XP cleared');
+            }
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            if (totalSchoolsEl && schoolsData.schools) {
+                totalSchoolsEl.textContent = schoolsData.schools.length;
+            }
+            
+            // Calculate total questions
+            let totalQuestions = 0;
+            Object.keys(questionsData).forEach(category => {
+                totalQuestions += questionsData[category].length;
+            });
+            if (totalQuestionsEl) totalQuestionsEl.textContent = totalQuestions;
+            
+            if (generatedTodayEl) generatedTodayEl.textContent = generatedCount;
+            if (savedAnswersEl) savedAnswersEl.textContent = savedAnswersCount;
+            
+            // Update completed today
+            updateCompletedToday();
+        }
+
+        // Utility function to shuffle an array
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Remove existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            });
+            
+            const notificationEl = document.createElement('div');
+            notificationEl.className = 'notification';
+            notificationEl.innerHTML = `<i class="fas fa-bell"></i> ${message}`;
+            document.body.appendChild(notificationEl);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                if (notificationEl.parentNode) {
+                    notificationEl.parentNode.removeChild(notificationEl);
+                }
+            }, 3000);
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorEl = document.createElement('div');
+            errorEl.className = 'error-message';
+            errorEl.style.cssText = `
+                background-color: #f8d7da;
+                color: #721c24;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 15px 0;
+                border: 1px solid #f5c6cb;
+            `;
+            errorEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${message}`;
+            
+            const container = document.querySelector('.container');
+            if (container) {
+                container.prepend(errorEl);
+            }
+            
+            // Remove error after 5 seconds
+            setTimeout(() => {
+                if (errorEl.parentNode) {
+                    errorEl.parentNode.removeChild(errorEl);
+                }
+            }, 5000);
+        }
+
+        // Initialize sidebar
+        function initializeSidebar() {
             const sidebarToggle = document.getElementById('sidebar-toggle');
             const sidebar = document.querySelector('.sidebar');
             
@@ -316,7 +986,7 @@
                     background: var(--duolingo-blue);
                     color: white;
                     border: none;
-                    border-radius: 8px;
+                    border-radius: var(--radius-small);
                     padding: 10px;
                     font-size: 1.2rem;
                     cursor: pointer;
@@ -324,50 +994,800 @@
                 document.body.appendChild(mobileMenuBtn);
                 
                 mobileMenuBtn.addEventListener('click', function() {
-                    sidebar.classList.toggle('show');
+                    if (sidebar) sidebar.classList.toggle('show');
                 });
                 
                 // Close sidebar when clicking outside on mobile
                 document.addEventListener('click', function(event) {
                     if (window.innerWidth <= 992 && 
-                        !sidebar.contains(event.target) && 
+                        sidebar && !sidebar.contains(event.target) && 
                         !mobileMenuBtn.contains(event.target)) {
                         sidebar.classList.remove('show');
                     }
                 });
             }
+        }
+
+        // Make functions available globally
+        window.openAnswerModal = function(questionId, category, text, difficulty) {
+            // Find the question to get modal_answer
+            const question = findQuestionById(questionId, category);
             
-            // Add view more button style
-            const viewMoreStyle = document.createElement('style');
-            viewMoreStyle.textContent = `
-                .view-more-btn {
-                    display: inline-block;
-                    background: linear-gradient(135deg, var(--duolingo-purple), var(--duolingo-purple-dark));
-                    color: white;
-                    padding: 10px 20px;
-                    border-radius: var(--radius-circle);
-                    text-decoration: none;
-                    font-weight: 600;
-                    transition: transform 0.3s ease;
-                    box-shadow: var(--shadow-button);
+            // Store current question data
+            currentQuestionData = {
+                id: questionId,
+                category: category,
+                text: text,
+                difficulty: difficulty,
+                modal_answer: question ? question.modal_answer : null
+            };
+            
+            // Get category display name
+            const categoryNames = {
+                'must': 'MUST 必考',
+                'chinese': 'Chinese 中文',
+                'english': 'English 英文',
+                'math': 'Mathematics 數學',
+                'science': 'Science 科學',
+                'news': 'Current News 時事',
+                'creative': 'Creative Thinking 創意思維'
+            };
+            
+            // Update modal content
+            if (modalCategory) modalCategory.textContent = categoryNames[category] || category;
+            if (modalQuestionText) modalQuestionText.textContent = text;
+            if (modalQuestionId) modalQuestionId.textContent = questionId;
+            
+            // Check for existing answer
+            const savedAnswer = studentAnswers.find(answer => answer.questionId == questionId);
+            if (modalAnswerInput) {
+                modalAnswerInput.value = savedAnswer ? savedAnswer.answer : '';
+            }
+            
+            // Update character count
+            if (modalCharacterCount) modalCharacterCount.textContent = modalAnswerInput ? modalAnswerInput.value.length : 0;
+            
+            // Show modal using Bootstrap
+            if (answerModal) {
+                const modal = new bootstrap.Modal(answerModal);
+                modal.show();
+            }
+            
+            // Focus on textarea
+            setTimeout(() => {
+                if (modalAnswerInput) modalAnswerInput.focus();
+            }, 500);
+        };
+
+        window.findQuestionById = function(questionId, category) {
+            const questions = questionsData[category];
+            if (!questions) return null;
+            
+            return questions.find(q => q.id == questionId || q.id === questionId);
+        };
+
+        window.saveQuickAnswer = function(questionId, category, text, difficulty, saveButton) {
+            const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
+            if (!questionElement) return;
+            
+            const textarea = questionElement.querySelector(`.student-answer-input[data-question-id="${questionId}"]`);
+            if (!textarea) return;
+            
+            const answerText = textarea.value.trim();
+            
+            if (!answerText) {
+                showNotification('Please write an answer before saving');
+                if (saveButton) {
+                    saveButton.classList.add('shake');
+                    setTimeout(() => saveButton.classList.remove('shake'), 500);
+                }
+                return;
+            }
+            
+            const difficultyLevel = difficulty === 'hard' ? 3 : difficulty === 'medium' ? 2 : 1;
+            const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == questionId);
+            
+            const answerData = {
+                questionId: questionId,
+                category: category,
+                questionText: text,
+                answer: answerText,
+                difficulty: difficultyLevel,
+                completed: existingAnswerIndex >= 0 ? studentAnswers[existingAnswerIndex].completed : false,
+                date: getCurrentDate(),
+                time: getCurrentTime(),
+                timestamp: new Date().toISOString()
+            };
+            
+            if (existingAnswerIndex >= 0) {
+                // Update existing answer
+                studentAnswers[existingAnswerIndex] = answerData;
+            } else {
+                // Add new answer
+                studentAnswers.push(answerData);
+                savedAnswersCount++;
+            }
+            
+            // Add XP
+            addXP(difficultyLevel * 10);
+            
+            // Save to localStorage
+            saveStudentData();
+            
+            // Update statistics
+            if (savedAnswersEl) savedAnswersEl.textContent = savedAnswersCount;
+            
+            // Hide the save button
+            if (saveButton) {
+                saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+                saveButton.classList.add('saved');
+                saveButton.disabled = true;
+                saveButton.style.opacity = '0.6';
+                saveButton.style.cursor = 'default';
+                
+                // Change button color to gray
+                saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+                saveButton.style.borderBottom = '4px solid #4a5767';
+            }
+            
+            // Update answer preview
+            updateQuestionDisplay(questionId);
+            
+            // Update streak and progress
+            updateStreak();
+            updateProgress();
+            
+            showNotification(`Answer saved successfully! +${difficultyLevel * 10} XP`);
+        };
+
+        window.updateCharacterCount = function(textarea) {
+            const count = textarea.value.length;
+            const countElement = textarea.parentElement.querySelector('.character-count');
+            if (countElement) {
+                countElement.textContent = `${count} characters`;
+                
+                // Change color based on length
+                if (count < 10) {
+                    countElement.style.color = '#e74c3c';
+                } else if (count < 50) {
+                    countElement.style.color = '#e67e22';
+                } else {
+                    countElement.style.color = '#27ae60';
+                }
+            }
+        };
+
+        window.closeModal = function() {
+            if (answerModal) {
+                const modal = bootstrap.Modal.getInstance(answerModal);
+                if (modal) modal.hide();
+            }
+        };
+
+        window.saveAnswer = function() {
+            if (!currentQuestionData || !modalAnswerInput) return;
+            
+            const answerText = modalAnswerInput.value.trim();
+            if (!answerText) {
+                showNotification('Please write an answer before saving');
+                return;
+            }
+            
+            const difficultyLevel = currentQuestionData.difficulty === 'hard' ? 3 : currentQuestionData.difficulty === 'medium' ? 2 : 1;
+            const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == currentQuestionData.id);
+            
+            const answerData = {
+                questionId: currentQuestionData.id,
+                category: currentQuestionData.category,
+                questionText: currentQuestionData.text,
+                answer: answerText,
+                difficulty: difficultyLevel,
+                completed: existingAnswerIndex >= 0 ? studentAnswers[existingAnswerIndex].completed : false,
+                date: getCurrentDate(),
+                time: getCurrentTime(),
+                timestamp: new Date().toISOString()
+            };
+            
+            if (existingAnswerIndex >= 0) {
+                // Update existing answer
+                studentAnswers[existingAnswerIndex] = answerData;
+            } else {
+                // Add new answer
+                studentAnswers.push(answerData);
+                savedAnswersCount++;
+            }
+            
+            // Add XP
+            addXP(difficultyLevel * 10);
+            
+            // Save to localStorage
+            saveStudentData();
+            
+            // Update statistics
+            if (savedAnswersEl) savedAnswersEl.textContent = savedAnswersCount;
+            
+            // Hide the save button in the question item
+            const saveButton = document.querySelector(`.question-item[data-id="${currentQuestionData.id}"] .answer-save-btn`);
+            if (saveButton) {
+                saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+                saveButton.classList.add('saved');
+                saveButton.disabled = true;
+                saveButton.style.opacity = '0.6';
+                saveButton.style.cursor = 'default';
+                saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+                saveButton.style.borderBottom = '4px solid #4a5767';
+            }
+            
+            // Update question display
+            updateQuestionDisplay(currentQuestionData.id);
+            
+            // Update streak and progress
+            updateStreak();
+            updateProgress();
+            
+            // Close modal
+            closeModal();
+            
+            showNotification(`Answer saved successfully! +${difficultyLevel * 10} XP`);
+        };
+
+        window.saveAnswerAndMarkDone = function() {
+            if (!currentQuestionData || !modalAnswerInput) return;
+            
+            const answerText = modalAnswerInput.value.trim();
+            if (!answerText) {
+                showNotification('Please write an answer before saving');
+                return;
+            }
+            
+            const difficultyLevel = currentQuestionData.difficulty === 'hard' ? 3 : currentQuestionData.difficulty === 'medium' ? 2 : 1;
+            const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == currentQuestionData.id);
+            
+            const answerData = {
+                questionId: currentQuestionData.id,
+                category: currentQuestionData.category,
+                questionText: currentQuestionData.text,
+                answer: answerText,
+                difficulty: difficultyLevel,
+                completed: true,
+                date: getCurrentDate(),
+                time: getCurrentTime(),
+                timestamp: new Date().toISOString()
+            };
+            
+            if (existingAnswerIndex >= 0) {
+                // Update existing answer
+                studentAnswers[existingAnswerIndex] = answerData;
+            } else {
+                // Add new answer
+                studentAnswers.push(answerData);
+                savedAnswersCount++;
+            }
+            
+            // Add XP for completion
+            addXP(difficultyLevel * 15);
+            
+            // Save to localStorage
+            saveStudentData();
+            
+            // Update statistics
+            if (savedAnswersEl) savedAnswersEl.textContent = savedAnswersCount;
+            
+            // Hide the save button in the question item
+            const saveButton = document.querySelector(`.question-item[data-id="${currentQuestionData.id}"] .answer-save-btn`);
+            if (saveButton) {
+                saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+                saveButton.classList.add('saved');
+                saveButton.disabled = true;
+                saveButton.style.opacity = '0.6';
+                saveButton.style.cursor = 'default';
+                saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+                saveButton.style.borderBottom = '4px solid #4a5767';
+            }
+            
+            // Update question display
+            updateQuestionDisplay(currentQuestionData.id);
+            
+            // Update streak and progress
+            updateStreak();
+            updateProgress();
+            
+            // Close modal
+            closeModal();
+            
+            showNotification(`Answer saved and marked as completed! +${difficultyLevel * 15} XP`);
+        };
+
+        window.saveAllAnswers = function() {
+            const textareas = document.querySelectorAll('.student-answer-input');
+            let savedCount = 0;
+            
+            textareas.forEach(textarea => {
+                const questionId = textarea.dataset.questionId;
+                const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
+                
+                if (!questionElement) return;
+                
+                const category = questionElement.dataset.category;
+                const questionText = questionElement.querySelector('.question-text').textContent;
+                const difficulty = questionElement.querySelector('.difficulty-badge').className.includes('hard') ? 'hard' : 
+                                questionElement.querySelector('.difficulty-badge').className.includes('medium') ? 'medium' : 'easy';
+                const saveButton = questionElement.querySelector('.answer-save-btn');
+                
+                const answerText = textarea.value.trim();
+                
+                if (answerText && saveButton && !saveButton.classList.contains('saved')) {
+                    const difficultyLevel = difficulty === 'hard' ? 3 : difficulty === 'medium' ? 2 : 1;
+                    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == questionId);
+                    
+                    const answerData = {
+                        questionId: questionId,
+                        category: category,
+                        questionText: questionText,
+                        answer: answerText,
+                        difficulty: difficultyLevel,
+                        completed: existingAnswerIndex >= 0 ? studentAnswers[existingAnswerIndex].completed : false,
+                        date: getCurrentDate(),
+                        time: getCurrentTime(),
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    if (existingAnswerIndex >= 0) {
+                        studentAnswers[existingAnswerIndex] = answerData;
+                    } else {
+                        studentAnswers.push(answerData);
+                        savedAnswersCount++;
+                    }
+                    
+                    addXP(difficultyLevel * 10);
+                    
+                    // Hide the save button
+                    saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+                    saveButton.classList.add('saved');
+                    saveButton.disabled = true;
+                    saveButton.style.opacity = '0.6';
+                    saveButton.style.cursor = 'default';
+                    saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+                    saveButton.style.borderBottom = '4px solid #4a5767';
+                    
+                    savedCount++;
+                }
+            });
+            
+            if (savedCount > 0) {
+                saveStudentData();
+                if (savedAnswersEl) savedAnswersEl.textContent = savedAnswersCount;
+                updateProgress();
+                showNotification(`Saved ${savedCount} answers! +${savedCount * 10} XP`);
+            } else {
+                showNotification('No new answers to save');
+            }
+        };
+
+        window.markQuestionAsDone = function(questionId) {
+            // Find the answer
+            const answerIndex = studentAnswers.findIndex(answer => answer.questionId == questionId);
+            
+            if (answerIndex >= 0) {
+                // Toggle completed status
+                const wasCompleted = studentAnswers[answerIndex].completed;
+                studentAnswers[answerIndex].completed = !wasCompleted;
+                
+                // Add/remove XP
+                if (!wasCompleted) {
+                    addXP(studentAnswers[answerIndex].difficulty * 5); // Bonus XP for completion
                 }
                 
-                .view-more-btn:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 0 rgba(142, 68, 173, 0.4);
-                    color: white;
+                // Save to localStorage
+                saveStudentData();
+                
+                // Update question display
+                updateQuestionDisplay(questionId);
+                
+                // Update progress
+                updateProgress();
+                
+                // Show notification
+                const status = studentAnswers[answerIndex].completed ? 'marked as completed' : 'marked as incomplete';
+                showNotification(`Question ${status}! ${!wasCompleted ? `+${studentAnswers[answerIndex].difficulty * 5} XP` : ''}`);
+            } else {
+                showNotification('Please save an answer first before marking as done');
+            }
+        };
+
+        window.toggleExampleAnswer = function(button, questionId) {
+            const exampleFrame = document.getElementById(`example-answer-${questionId}`);
+            if (!exampleFrame) return;
+            
+            if (exampleFrame.style.display === 'none' || exampleFrame.style.display === '') {
+                // Show the example answer
+                exampleFrame.style.display = 'block';
+                
+                // Update button text if button exists
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Example';
+                    button.classList.add('active');
                 }
                 
-                .text-center {
-                    text-align: center;
+                // Scroll to the example answer frame
+                setTimeout(() => {
+                    exampleFrame.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            } else {
+                // Hide the example answer
+                exampleFrame.style.display = 'none';
+                
+                // Update button text if button exists
+                if (button) {
+                    button.innerHTML = '<i class="fas fa-lightbulb"></i> Show Example';
+                    button.classList.remove('active');
+                }
+            }
+        };
+
+        // Helper functions
+        function addXP(amount) {
+            studentXP += amount;
+            if (totalXPEl) totalXPEl.textContent = studentXP;
+            localStorage.setItem('studentXP', studentXP.toString());
+        }
+
+        function updateStreak() {
+            let streak = parseInt(localStorage.getItem('studentStreak') || '0');
+            const lastPracticeDate = localStorage.getItem('lastPracticeDate');
+            const today = getCurrentDate();
+            
+            if (lastPracticeDate !== today) {
+                streak++;
+                localStorage.setItem('studentStreak', streak.toString());
+                localStorage.setItem('lastPracticeDate', today);
+                if (streakCounterEl) streakCounterEl.textContent = streak;
+                
+                // Show streak animation
+                if (streak > 1) {
+                    showNotification(`🔥 ${streak}-day streak! Keep it up!`);
+                }
+            }
+        }
+
+        function updateProgress() {
+            const totalAnswers = studentAnswers.length;
+            const completedAnswers = studentAnswers.filter(answer => answer.completed).length;
+            
+            // Calculate progress percentage (max 100%)
+            const progress = Math.min(100, Math.round((completedAnswers / Math.max(1, totalAnswers)) * 100));
+            
+            // Calculate level based on XP
+            const level = Math.floor(studentXP / 1000) + 1;
+            
+            localStorage.setItem('studentProgress', progress.toString());
+            localStorage.setItem('studentLevel', level.toString());
+            
+            if (studentLevelEl) studentLevelEl.textContent = `Level ${level}`;
+            
+            // Update progress bar width
+            const progressBar = studentProgressEl;
+            if (progressBar) {
+                progressBar.style.width = `${progress}%`;
+            }
+        }
+
+        function updateCompletedToday() {
+            const today = getCurrentDate();
+            const completedToday = studentAnswers.filter(answer => 
+                answer.completed && answer.date === today
+            ).length;
+            
+            if (completedTodayEl) completedTodayEl.textContent = completedToday;
+        }
+
+        function updateQuestionDisplay(questionId) {
+            const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
+            if (!questionElement) return;
+            
+            // Get saved answer
+            const savedAnswer = studentAnswers.find(answer => answer.questionId == questionId);
+            
+            if (savedAnswer) {
+                // Update answer preview
+                let answerPreview = questionElement.querySelector('.answer-preview');
+                if (!answerPreview) {
+                    answerPreview = document.createElement('div');
+                    answerPreview.className = 'answer-preview';
+                    const questionText = questionElement.querySelector('.question-text');
+                    questionText.parentNode.insertBefore(answerPreview, questionText.nextSibling);
                 }
                 
-                .mt-3 {
-                    margin-top: 15px;
+                answerPreview.innerHTML = `
+                    <p><strong>Your Answer:</strong> ${savedAnswer.answer.length > 150 ? savedAnswer.answer.substring(0, 150) + '...' : savedAnswer.answer}</p>
+                    <button class="edit-answer-btn" onclick="openAnswerModal('${questionId}', '${savedAnswer.category}', '${savedAnswer.questionText.replace(/'/g, "\\'")}', '${savedAnswer.difficulty === 3 ? 'hard' : savedAnswer.difficulty === 2 ? 'medium' : 'easy'}')">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                `;
+                
+                // Update done button
+                const doneBtn = questionElement.querySelector('.done-btn');
+                if (doneBtn) {
+                    if (savedAnswer.completed) {
+                        doneBtn.classList.add('completed');
+                        doneBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                        doneBtn.style.backgroundColor = '#2ecc71';
+                    } else {
+                        doneBtn.classList.remove('completed');
+                        doneBtn.innerHTML = '<i class="fas fa-check"></i> Mark as Done';
+                        doneBtn.style.backgroundColor = '';
+                    }
                 }
+                
+                // Update textarea value
+                const textarea = questionElement.querySelector('.student-answer-input');
+                if (textarea) {
+                    textarea.value = savedAnswer.answer;
+                    updateCharacterCount(textarea);
+                }
+                
+                // Update completed styling
+                if (savedAnswer.completed) {
+                    questionElement.classList.add('completed');
+                } else {
+                    questionElement.classList.remove('completed');
+                }
+            }
+            
+            updateCompletedToday();
+        }
+
+        function getCurrentDate() {
+            const now = new Date();
+            return now.toISOString().split('T')[0]; // YYYY-MM-DD format
+        }
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function displayHistory() {
+            if (!historyContainer) return;
+            
+            if (studentAnswers.length === 0) {
+                historyContainer.innerHTML = '<div class="empty-state"><i class="fas fa-history fa-3x"></i><p>No practice history yet. Complete some questions to see your history here.</p></div>';
+                return;
+            }
+            
+            historyContainer.innerHTML = '';
+            
+            // Group answers by date
+            const answersByDate = {};
+            studentAnswers.forEach(answer => {
+                if (!answersByDate[answer.date]) {
+                    answersByDate[answer.date] = [];
+                }
+                answersByDate[answer.date].push(answer);
+            });
+            
+            // Display answers grouped by date (most recent first)
+            const sortedDates = Object.keys(answersByDate).sort((a, b) => new Date(b) - new Date(a));
+            
+            sortedDates.forEach(date => {
+                const dateHeader = document.createElement('h3');
+                dateHeader.textContent = date;
+                dateHeader.style.marginTop = '20px';
+                dateHeader.style.marginBottom = '10px';
+                dateHeader.style.color = '#2c3e50';
+                historyContainer.appendChild(dateHeader);
+                
+                answersByDate[date].forEach(answer => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    
+                    const difficultyStars = '★'.repeat(answer.difficulty) + '☆'.repeat(3 - answer.difficulty);
+                    const categoryNames = {
+                        'must': 'MUST',
+                        'chinese': 'Chinese',
+                        'english': 'English',
+                        'math': 'Mathematics',
+                        'science': 'Science',
+                        'news': 'Current News',
+                        'creative': 'Creative Thinking'
+                    };
+                    
+                    const statusBadge = answer.completed 
+                        ? '<span style="color:#2ecc71; font-weight:600;">✓ Completed</span>' 
+                        : '<span style="color:#f39c12;">In Progress</span>';
+                    
+                    historyItem.innerHTML = `
+                        <div class="history-item-header">
+                            <div class="history-category">${categoryNames[answer.category] || answer.category} ${statusBadge}</div>
+                            <div class="history-date">${answer.time}</div>
+                        </div>
+                        <div class="history-question">${answer.questionText}</div>
+                        <div class="history-answer"><strong>Your Answer:</strong> ${answer.answer}</div>
+                        <div class="history-meta">
+                            <span>Difficulty: ${difficultyStars}</span>
+                            <span>Question ID: ${answer.questionId}</span>
+                            <span>XP: +${answer.completed ? answer.difficulty * 15 : answer.difficulty * 10}</span>
+                        </div>
+                    `;
+                    
+                    historyContainer.appendChild(historyItem);
+                });
+            });
+        }
+
+        function downloadAnswers() {
+            if (studentAnswers.length === 0) {
+                showNotification('No answers to download');
+                return;
+            }
+            
+            const studentData = {
+                studentName: studentNameEl ? studentNameEl.textContent : 'Interview Candidate',
+                level: studentLevelEl ? studentLevelEl.textContent : 'Level 1',
+                totalXP: studentXP,
+                generatedAt: new Date().toISOString(),
+                totalAnswers: studentAnswers.length,
+                answers: studentAnswers
+            };
+            
+            const dataStr = JSON.stringify(studentData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const downloadLink = document.createElement('a');
+            downloadLink.href = url;
+            downloadLink.download = `student-answers-${getCurrentDate()}.json`;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+            URL.revokeObjectURL(url);
+            
+            showNotification('Answers downloaded successfully!');
+        }
+
+        function displaySchoolDetails(schoolId) {
+            if (!schoolDetails) return;
+            
+            const school = schoolsData.schools.find(s => s.id === schoolId);
+            
+            if (!school) {
+                schoolDetails.innerHTML = '<div class="empty-state"><i class="fas fa-university fa-3x"></i><p>School information not found</p></div>';
+                return;
+            }
+            
+            // Get banding class
+            const bandingClass = `banding-${school.banding.toLowerCase().replace(' ', '')}`;
+            
+            // Format target interview date if it exists
+            let targetDateHTML = '';
+            if (school.targetInterviewDate) {
+                const date = new Date(school.targetInterviewDate);
+                const formattedDate = date.toLocaleDateString('en-HK', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                    weekday: 'long'
+                });
+                const daysRemaining = calculateDaysRemaining(school.targetInterviewDate);
+                
+                // Determine color class based on urgency
+                let dateClass = 'date-normal';
+                if (daysRemaining.includes('today')) {
+                    dateClass = 'date-urgent';
+                } else if (daysRemaining.includes('passed')) {
+                    dateClass = 'date-past';
+                } else {
+                    const daysMatch = daysRemaining.match(/\d+/);
+                    if (daysMatch) {
+                        const daysNum = parseInt(daysMatch[0]);
+                        if (daysNum <= 7) dateClass = 'date-urgent';
+                        else if (daysNum <= 30) dateClass = 'date-near';
+                    }
+                }
+                
+                targetDateHTML = `
+                    <div class="school-detail-item">
+                        <h3><i class="fas fa-calendar-alt"></i> Target Interview Date</h3>
+                        <p><strong>Scheduled Date:</strong> ${formattedDate}</p>
+                        <p><strong>Status:</strong> <span class="date-badge ${dateClass}">${daysRemaining}</span></p>
+                    </div>
+                `;
+            }
+            
+            schoolDetails.innerHTML = `
+                <div class="school-header-container">
+                    <div class="school-header-image">
+                        <img src="${school.image || 'img/default-school.jpg'}" alt="${school.name}" onerror="this.src='img/default-school.jpg'">
+                    </div>
+                    <div class="school-header-names">
+                        <div class="school-english-name">
+                            ${school.name}
+                            <span class="banding-badge ${bandingClass}">${school.banding}</span>
+                        </div>
+                        <div class="school-chinese-name">
+                            ${school.chineseName}
+                        </div>
+                    </div>
+                </div>
+                
+                ${targetDateHTML}
+                
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                    <div class="basic-info-grid">
+                        <div><strong>Type:</strong> ${school.type}</div>
+                        <div><strong>Religion:</strong> ${school.religion}</div>
+                        <div><strong>Gender:</strong> ${school.gender}</div>
+                        <div><strong>District:</strong> ${school.district}</div>
+                        <div><strong>Medium of Instruction:</strong> ${school.language}</div>
+                    </div>
+                </div>
+                
+                ${school.schoolMotto || school.chineseMotto ? `
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-quote-left"></i> School Motto / 校訓</h3>
+                    ${school.schoolMotto ? `<p><strong>English:</strong> "${school.schoolMotto}"</p>` : ''}
+                    ${school.chineseMotto ? `<p><strong>Chinese:</strong> "${school.chineseMotto}"</p>` : ''}
+                </div>
+                ` : ''}
+                
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-bullseye"></i> Mission Statement</h3>
+                    <p>${school.mission}</p>
+                </div>
+                
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-comments"></i> Interview Features</h3>
+                    <p>${school.interviewFeatures}</p>
+                </div>
+                
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-star"></i> Specialties</h3>
+                    <p>${school.specialty}</p>
+                </div>
+                
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-school"></i> School Details</h3>
+                    <p><strong>Established:</strong> ${school.established}</p>
+                    <p><strong>Student Count:</strong> ${school.studentCount}</p>
+                    ${school.admissionProcess ? `<p><strong>Admission Process:</strong> ${school.admissionProcess}</p>` : ''}
+                    ${school.tuitionFee ? `<p><strong>Tuition Fee:</strong> ${school.tuitionFee}</p>` : ''}
+                </div>
+                
+                ${school.specificFeatures ? `
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-feather-alt"></i> Specific Features</h3>
+                    <p>${school.specificFeatures}</p>
+                </div>
+                ` : ''}
+                
+                <div class="school-detail-item">
+                    <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+                    <p><strong>Phone:</strong> ${school.phone}</p>
+                    <p><strong>Website:</strong> <a href="${school.website}" target="_blank">${school.website}</a></p>
+                </div>
             `;
-            document.head.appendChild(viewMoreStyle);
-        });
+        }
+
+        function calculateDaysRemaining(targetDateStr) {
+            const targetDate = new Date(targetDateStr);
+            const today = new Date();
+            
+            // Reset hours to compare only dates
+            targetDate.setHours(0, 0, 0, 0);
+            today.setHours(0, 0, 0, 0);
+            
+            const diffTime = targetDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays > 0) {
+                return `${diffDays} days remaining`;
+            } else if (diffDays === 0) {
+                return "Interview is today!";
+            } else {
+                return `Interview passed ${Math.abs(diffDays)} days ago`;
+            }
+        }
     </script>
 </body>
 </html>
