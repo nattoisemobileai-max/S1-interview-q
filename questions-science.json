@@ -9,7 +9,7 @@
     {
       "id": 4002,
       "category": "science",
-      "text": "What is photosynthesis and why is it important for life on Earth?",
+      "text": "Why does an apple turn brown?",
       "difficulty": "easy"
     },
     {
@@ -33,31 +33,13 @@
     {
       "id": 4006,
       "category": "science",
-      "text": "What causes the seasons on Earth?",
+      "text": "[SPCC] 哪一個氣球比較熱? 為什麼當陽光照射A氣球的黑色部分時，A氣球會爆，而B 氣球不會?",
       "difficulty": "medium"
     },
     {
       "id": 4007,
       "category": "science",
-      "text": "Describe the structure of an atom and name its three main subatomic particles.",
-      "difficulty": "hard"
-    },
-    {
-      "id": 4008,
-      "category": "science",
-      "text": "What is the difference between series and parallel circuits? Draw a simple diagram for each.",
-      "difficulty": "hard"
-    },
-    {
-      "id": 4009,
-      "category": "science",
-      "text": "Explain how vaccines work to protect us from diseases.",
-      "difficulty": "hard"
-    },
-    {
-      "id": 4010,
-      "category": "science",
-      "text": "What is climate change and what are its main causes?",
+      "text": "[SPCC] 如果需要燃點火柴，你會選擇A鏡還是B鏡? ",
       "difficulty": "hard"
     }
   ]
