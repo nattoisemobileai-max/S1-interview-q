@@ -1,4 +1,4 @@
-// Enhanced script.js with Duolingo-style features and complete functionality
+// Enhanced script.js with updated features
 
 // Global variables
 let schoolsData = [];
@@ -36,7 +36,6 @@ const saveAllBtn = document.getElementById('save-all-btn');
 
 // Modal elements
 const answerModal = document.getElementById('answer-modal');
-const modalCloseBtn = document.querySelector('.modal-close');
 const modalCancelBtn = document.getElementById('modal-cancel-btn');
 const modalSaveBtn = document.getElementById('modal-save-btn');
 const modalSaveDoneBtn = document.getElementById('modal-save-done-btn');
@@ -44,7 +43,6 @@ const modalAnswerInput = document.getElementById('modal-answer-input');
 const modalCategory = document.getElementById('modal-category');
 const modalQuestionText = document.getElementById('modal-question-text');
 const modalQuestionId = document.getElementById('modal-question-id');
-const modalExampleAnswer = document.getElementById('modal-example-answer');
 const modalCharacterCount = document.getElementById('modal-character-count');
 
 // Student profile elements
@@ -61,11 +59,6 @@ const totalQuestionsEl = document.getElementById('total-questions');
 const generatedTodayEl = document.getElementById('generated-today');
 const completedTodayEl = document.getElementById('completed-today');
 const questionsCountBadge = document.getElementById('questions-count-badge');
-
-// Example toast element
-const exampleToast = document.getElementById('example-toast');
-const exampleToastBody = document.getElementById('example-toast-body');
-const closeExampleToastBtn = document.querySelector('.close-example-toast');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -166,7 +159,6 @@ function initializeStudentProfile() {
 
 // Populate school dropdown
 function populateSchoolDropdown() {
-    // Clear existing options (except first placeholder)
     schoolSelect.innerHTML = '<option value="">Select a school to view details</option>';
     
     schoolsData.schools.forEach(school => {
@@ -179,12 +171,10 @@ function populateSchoolDropdown() {
 
 // Set default selections
 function setDefaultSelections() {
-    // All categories button is active by default
     const allCategoriesBtn = document.querySelector('.category-btn.all-btn');
     if (allCategoriesBtn) allCategoriesBtn.classList.add('active');
     selectedCategories = ['all'];
     
-    // 5 count button is active by default
     const countBtn5 = document.querySelector('.count-btn[data-count="5"]');
     if (countBtn5) countBtn5.classList.add('active');
     questionsPerCategory = 5;
@@ -269,18 +259,6 @@ function setupEventListeners() {
     modalAnswerInput.addEventListener('input', function() {
         modalCharacterCount.textContent = this.value.length;
     });
-    
-    // Close modal when clicking outside (handled by Bootstrap)
-    
-    // Example toast close button
-    closeExampleToastBtn.addEventListener('click', hideExampleToast);
-    
-    // Close example toast when clicking outside
-    exampleToast.addEventListener('click', function(e) {
-        if (e.target === this) {
-            hideExampleToast();
-        }
-    });
 }
 
 // Generate questions based on selected categories
@@ -343,7 +321,7 @@ function generateQuestions() {
     showNotification(`Generated ${allSelectedQuestions.length} questions successfully!`);
 }
 
-// Display a single question with Duolingo-style interface
+// Display a single question with updated features
 function displayQuestion(question) {
     const questionEl = document.createElement('div');
     questionEl.className = 'question-item';
@@ -376,6 +354,9 @@ function displayQuestion(question) {
     
     // Calculate XP for this question
     const xpValue = question.difficulty === 'hard' ? 30 : question.difficulty === 'medium' ? 20 : 10;
+    
+    // Check if example answer exists
+    const hasExampleAnswer = question.modal_answer;
     
     questionEl.innerHTML = `
         <div class="question-item-header">
@@ -420,19 +401,38 @@ function displayQuestion(question) {
                       oninput="updateCharacterCount(this)">${savedAnswer ? savedAnswer.answer : ''}</textarea>
             
             <div class="answer-actions">
-                <button class="answer-save-btn" onclick="saveQuickAnswer('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}')">
-                    <i class="fas fa-save"></i> Save Answer
+                <button class="answer-save-btn ${savedAnswer ? 'saved' : ''}" 
+                        onclick="saveQuickAnswer('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}', this)">
+                    <i class="fas fa-save"></i> ${savedAnswer ? 'Answer Saved' : 'Save Answer'}
                 </button>
                 <button class="answer-modal-btn" onclick="openAnswerModal('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}')">
                     <i class="fas fa-expand-alt"></i> Full Editor
                 </button>
-                ${question.modal_answer ? `
-                <button class="hint-btn" onclick="showExampleAnswer('${question.id}')">
-                    <i class="fas fa-lightbulb"></i> Example Answer
+                ${hasExampleAnswer ? `
+                <button class="hint-btn" onclick="toggleExampleAnswer(this, '${question.id}')">
+                    <i class="fas fa-lightbulb"></i> Show Example
                 </button>
                 ` : ''}
             </div>
         </div>
+        
+        ${hasExampleAnswer ? `
+        <div class="example-answer-frame" id="example-answer-${question.id}" style="display: none;">
+            <div class="example-answer-header">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Example Answer</span>
+                <button class="close-example-btn" onclick="toggleExampleAnswer(null, '${question.id}')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="example-answer-content">
+                ${question.modal_answer}
+            </div>
+            <div class="example-answer-footer">
+                <em>This is just an example. Your answer can be different!</em>
+            </div>
+        </div>
+        ` : ''}
         
         <div class="question-footer">
             <div class="xp-badge">+${xpValue} XP</div>
@@ -441,6 +441,47 @@ function displayQuestion(question) {
     `;
     
     questionsContainer.appendChild(questionEl);
+    
+    // If answer is already saved, hide the save button
+    if (savedAnswer) {
+        const saveBtn = questionEl.querySelector('.answer-save-btn');
+        if (saveBtn) {
+            saveBtn.disabled = true;
+            saveBtn.style.opacity = '0.6';
+            saveBtn.style.cursor = 'default';
+        }
+    }
+}
+
+// Toggle example answer frame
+function toggleExampleAnswer(button, questionId) {
+    const exampleFrame = document.getElementById(`example-answer-${questionId}`);
+    if (!exampleFrame) return;
+    
+    if (exampleFrame.style.display === 'none' || exampleFrame.style.display === '') {
+        // Show the example answer
+        exampleFrame.style.display = 'block';
+        
+        // Update button text if button exists
+        if (button) {
+            button.innerHTML = '<i class="fas fa-eye-slash"></i> Hide Example';
+            button.classList.add('active');
+        }
+        
+        // Scroll to the example answer frame
+        setTimeout(() => {
+            exampleFrame.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    } else {
+        // Hide the example answer
+        exampleFrame.style.display = 'none';
+        
+        // Update button text if button exists
+        if (button) {
+            button.innerHTML = '<i class="fas fa-lightbulb"></i> Show Example';
+            button.classList.remove('active');
+        }
+    }
 }
 
 // Open answer modal
@@ -472,17 +513,6 @@ function openAnswerModal(questionId, category, text, difficulty) {
     modalQuestionText.textContent = text;
     modalQuestionId.textContent = questionId;
     
-    // Update example answer if available
-    if (currentQuestionData.modal_answer) {
-        modalExampleAnswer.innerHTML = `
-            <h6><i class="fas fa-lightbulb"></i> Example Answer:</h6>
-            <div class="example-answer-content">${currentQuestionData.modal_answer}</div>
-        `;
-        modalExampleAnswer.style.display = 'block';
-    } else {
-        modalExampleAnswer.style.display = 'none';
-    }
-    
     // Check for existing answer
     const savedAnswer = studentAnswers.find(answer => answer.questionId == questionId);
     if (savedAnswer) {
@@ -510,59 +540,21 @@ function findQuestionById(questionId, category) {
     return questions.find(q => q.id == questionId || q.id === questionId);
 }
 
-// Show example answer in toast
-function showExampleAnswer(questionId) {
-    // Find the question
-    let question = null;
-    for (const category in questionsData) {
-        question = questionsData[category].find(q => q.id == questionId || q.id === questionId);
-        if (question) break;
-    }
-    
-    if (!question || !question.modal_answer) {
-        showNotification('No example answer available for this question');
-        return;
-    }
-    
-    // Update toast content
-    exampleToastBody.innerHTML = `
-        <div class="question-preview">
-            <strong>Question:</strong> ${question.text}
-        </div>
-        <div class="answer-preview">
-            <strong>Example Answer:</strong><br>
-            ${question.modal_answer}
-        </div>
-    `;
-    
-    // Show toast
-    exampleToast.classList.add('show');
-    
-    // Auto-hide after 15 seconds
-    setTimeout(hideExampleToast, 15000);
-}
-
-// Hide example toast
-function hideExampleToast() {
-    exampleToast.classList.remove('show');
-}
-
 // Save answer from quick input
-function saveQuickAnswer(questionId, category, text, difficulty) {
-    const textarea = document.querySelector(`.student-answer-input[data-question-id="${questionId}"]`);
-    if (!textarea) {
-        console.error('Textarea not found for question:', questionId);
-        return;
-    }
+function saveQuickAnswer(questionId, category, text, difficulty, saveButton) {
+    const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
+    if (!questionElement) return;
+    
+    const textarea = questionElement.querySelector(`.student-answer-input[data-question-id="${questionId}"]`);
+    if (!textarea) return;
     
     const answerText = textarea.value.trim();
-    const saveBtn = textarea.parentElement.querySelector('.answer-save-btn');
     
     if (!answerText) {
         showNotification('Please write an answer before saving');
-        if (saveBtn) {
-            saveBtn.classList.add('shake');
-            setTimeout(() => saveBtn.classList.remove('shake'), 500);
+        if (saveButton) {
+            saveButton.classList.add('shake');
+            setTimeout(() => saveButton.classList.remove('shake'), 500);
         }
         return;
     }
@@ -600,30 +592,25 @@ function saveQuickAnswer(questionId, category, text, difficulty) {
     // Update statistics
     savedAnswersEl.textContent = savedAnswersCount;
     
-    // Update question display
+    // Hide the save button
+    if (saveButton) {
+        saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+        saveButton.classList.add('saved');
+        saveButton.disabled = true;
+        saveButton.style.opacity = '0.6';
+        saveButton.style.cursor = 'default';
+        
+        // Change button color to gray
+        saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+        saveButton.style.borderBottom = '4px solid #4a5767';
+    }
+    
+    // Update answer preview
     updateQuestionDisplay(questionId);
     
     // Update streak and progress
     updateStreak();
     updateProgress();
-    
-    // Show success animation
-    if (saveBtn) {
-        saveBtn.classList.add('saved');
-        const originalHTML = saveBtn.innerHTML;
-        saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
-        saveBtn.style.cursor = 'default';
-        
-        // Disable button temporarily
-        saveBtn.disabled = true;
-        
-        setTimeout(() => {
-            saveBtn.classList.remove('saved');
-            saveBtn.innerHTML = originalHTML;
-            saveBtn.disabled = false;
-            saveBtn.style.cursor = 'pointer';
-        }, 2000);
-    }
     
     showNotification(`Answer saved successfully! +${difficultyLevel * 10} XP`);
 }
@@ -695,6 +682,18 @@ function saveAnswer() {
     // Update statistics
     savedAnswersEl.textContent = savedAnswersCount;
     
+    // Hide the save button in the question item
+    const saveButton = document.querySelector(`.question-item[data-id="${currentQuestionData.id}"] .answer-save-btn`);
+    if (saveButton) {
+        saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+        saveButton.classList.add('saved');
+        saveButton.disabled = true;
+        saveButton.style.opacity = '0.6';
+        saveButton.style.cursor = 'default';
+        saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+        saveButton.style.borderBottom = '4px solid #4a5767';
+    }
+    
     // Update question display
     updateQuestionDisplay(currentQuestionData.id);
     
@@ -705,7 +704,6 @@ function saveAnswer() {
     // Close modal
     closeModal();
     
-    // Show notification
     showNotification(`Answer saved successfully! +${difficultyLevel * 10} XP`);
 }
 
@@ -752,6 +750,18 @@ function saveAnswerAndMarkDone() {
     // Update statistics
     savedAnswersEl.textContent = savedAnswersCount;
     
+    // Hide the save button in the question item
+    const saveButton = document.querySelector(`.question-item[data-id="${currentQuestionData.id}"] .answer-save-btn`);
+    if (saveButton) {
+        saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+        saveButton.classList.add('saved');
+        saveButton.disabled = true;
+        saveButton.style.opacity = '0.6';
+        saveButton.style.cursor = 'default';
+        saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+        saveButton.style.borderBottom = '4px solid #4a5767';
+    }
+    
     // Update question display
     updateQuestionDisplay(currentQuestionData.id);
     
@@ -762,7 +772,6 @@ function saveAnswerAndMarkDone() {
     // Close modal
     closeModal();
     
-    // Show notification
     showNotification(`Answer saved and marked as completed! +${difficultyLevel * 15} XP`);
 }
 
@@ -781,10 +790,11 @@ function saveAllAnswers() {
         const questionText = questionElement.querySelector('.question-text').textContent;
         const difficulty = questionElement.querySelector('.difficulty-badge').className.includes('hard') ? 'hard' : 
                           questionElement.querySelector('.difficulty-badge').className.includes('medium') ? 'medium' : 'easy';
+        const saveButton = questionElement.querySelector('.answer-save-btn');
         
         const answerText = textarea.value.trim();
         
-        if (answerText) {
+        if (answerText && saveButton && !saveButton.classList.contains('saved')) {
             const difficultyLevel = difficulty === 'hard' ? 3 : difficulty === 'medium' ? 2 : 1;
             const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == questionId);
             
@@ -808,6 +818,16 @@ function saveAllAnswers() {
             }
             
             addXP(difficultyLevel * 10);
+            
+            // Hide the save button
+            saveButton.innerHTML = '<i class="fas fa-check"></i> Answer Saved';
+            saveButton.classList.add('saved');
+            saveButton.disabled = true;
+            saveButton.style.opacity = '0.6';
+            saveButton.style.cursor = 'default';
+            saveButton.style.background = 'linear-gradient(135deg, #7f8c8d, #5d6d7e)';
+            saveButton.style.borderBottom = '4px solid #4a5767';
+            
             savedCount++;
         }
     });
@@ -818,7 +838,7 @@ function saveAllAnswers() {
         updateProgress();
         showNotification(`Saved ${savedCount} answers! +${savedCount * 10} XP`);
     } else {
-        showNotification('No answers to save');
+        showNotification('No new answers to save');
     }
 }
 
