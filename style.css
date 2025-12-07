@@ -1539,3 +1539,39 @@ select:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(28, 176, 246, 0.3);
 }
+/* ============================================
+   7. MOBILE MENU BUTTON
+============================================ */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: var(--duolingo-blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-small);
+    padding: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: var(--shadow-medium);
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0 !important;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+}
