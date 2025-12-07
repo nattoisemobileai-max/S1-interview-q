@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": 1001,
+      "category": "chinese",
+      "text": "請用不少於200字描述你印象最深刻的一次旅行經歷。",
+      "difficulty": "medium"
+    },
+    {
+      "id": 1002,
+      "category": "chinese",
+      "text": "《論語》中說：「學而時習之，不亦說乎？」請解釋這句話的意思，並談談你的看法。",
+      "difficulty": "hard"
+    },
+    {
+      "id": 1003,
+      "category": "chinese",
+      "text": "請介紹一本你最喜歡的中文書籍，並說明為什麼推薦這本書。",
+      "difficulty": "easy"
+    },
+    {
+      "id": 1004,
+      "category": "chinese",
+      "text": "「環保」是當今社會的重要議題，請就「如何在校園實踐環保」提出三項具體建議。",
+      "difficulty": "medium"
+    },
+    {
+      "id": 1005,
+      "category": "chinese",
+      "text": "請以「我的夢想」為題，寫一篇短文。",
+      "difficulty": "easy"
+    },
+    {
+      "id": 1006,
+      "category": "chinese",
+      "text": "解釋「塞翁失馬，焉知非福」這個成語的含義，並舉一個生活中的例子說明。",
+      "difficulty": "medium"
+    },
+    {
+      "id": 1007,
+      "category": "chinese",
+      "text": "比較李白和杜甫兩位詩人的詩歌風格，你更欣賞哪一位？為什麼？",
+      "difficulty": "hard"
+    },
+    {
+      "id": 1008,
+      "category": "chinese",
+      "text": "請分析《西遊記》中孫悟空這個角色的性格特點。",
+      "difficulty": "medium"
+    },
+    {
+      "id": 1009,
+      "category": "chinese",
+      "text": "如果你有機會與古代的一位文學家對話，你會選擇誰？你想問他什麼問題？",
+      "difficulty": "hard"
+    },
+    {
+      "id": 1010,
+      "category": "chinese",
+      "text": "請以「感恩」為主題，寫一首四句的短詩。",
+      "difficulty": "medium"
+    }
+  ]
+}
