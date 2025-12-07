@@ -68,7 +68,21 @@
       "category": "心算計算",
       "text": "[[學而思-SPCC(P9)]  計算15內的質數之和。以下算式對嗎？1+2+3+5+7+11+13=?",
       "difficulty": "medium",
-      "modal_answer": "算式 \(1+2+3+5+7+11+13\) 不完全正確，因為質數定義是不小於 2 且只有 1 和其本身因數，所以 1 不是質數；15 內的質數是 2, 3, 5, 7, 11, 13，正確的質數和應是 \(2+3+5+7+11+13=41\)。 質數定義 質數 (Prime Number) 必須是 大於 1 的整數。它只能被 1 和它本身整除，例如 2、3、5、7、11。 "
+      "modal_answer": "算式 (1+2+3+5+7+11+13) 不完全正確，因為質數定義是不小於 2 且只有 1 和其本身因數，所以 1 不是質數；15 內的質數是 2, 3, 5, 7, 11, 13，正確的質數和應是 \(2+3+5+7+11+13=41\)。 質數定義 質數 (Prime Number) 必須是 大於 1 的整數。它只能被 1 和它本身整除，例如 2、3、5、7、11。 "
+    },
+    {
+      "id": "MATH-0011",
+      "category": "心算計算",
+      "text": "[[學而思-德望(P17)]  178 - (16X4)= ?",
+      "difficulty": "medium",
+      "modal_answer": 114"
+    },
+    {
+      "id": "MATH-0012",
+      "category": "心算計算",
+      "text": "[[學而思-德望(P17)]  An apple weighs 3g, an orange weighs 8g, the basket is now 56g. How many apples and oranges are there? Show your work.",
+      "difficulty": "medium",
+      "modal_answer": There are three possible combinations of apples and oranges: 16 apples and 1 orange, 8 apples and 4 oranges, or 0 apples and 7 oranges. "
     }
   ]
 }
