@@ -1,5 +1,30 @@
 {
   "schools": [
+   {
+      "id": 5,
+      "name": "Hong Kong Federation of Youth Groups Lee Shau Kee College",
+      "chineseName": "香港青年會李兆基書院",
+      "banding": "Band 1B",
+      "type": "直資",
+      "religion": "無",
+      "gender": "男女校",
+      "district": "元朗區",
+      "language": "英文",
+      "schoolMotto": "Learning for life, serving with heart",
+      "chineseMotto": "活學用心、服務社群",
+      "mission": "培育具國際視野、創意思維及社會責任感的未來領袖",
+      "interviewFeatures": "設有個人面談、小組活動、創意解難測試。",
+      "specialty": "STEAM教育、多元智能發展、國際視野",
+      "website": "https://www.hkfyg.org.hk/lskc/",
+      "phone": "2479-9888",
+      "established": 2005,
+      "studentCount": 1200,
+      "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
+      "tuitionFee": "港幣約32,000元/年（設有獎學金及學費減免計劃）",
+      "specificFeatures": "設有STEAM創新實驗室、國際交流計劃、領袖訓練課程",
+      "image": "badge_hlc.jpg",
+      "targetInterviewDate": "2025-12-20"
+    },
     {
       "id": 1,
       "name": "Ying Wa College",
@@ -97,31 +122,6 @@
       "specificFeatures": "設有科技實驗室及多元體育設施，重視生涯規劃教育",
       "image": "badge_plktytc.jpg",
       "targetInterviewDate": "2026-03-14"
-    },
-    {
-      "id": 5,
-      "name": "Hong Kong Federation of Youth Groups Lee Shau Kee College",
-      "chineseName": "香港青年會李兆基書院",
-      "banding": "Band 1B",
-      "type": "直資",
-      "religion": "無",
-      "gender": "男女校",
-      "district": "元朗區",
-      "language": "英文",
-      "schoolMotto": "Learning for life, serving with heart",
-      "chineseMotto": "活學用心、服務社群",
-      "mission": "培育具國際視野、創意思維及社會責任感的未來領袖",
-      "interviewFeatures": "設有個人面談、小組活動、創意解難測試。",
-      "specialty": "STEAM教育、多元智能發展、國際視野",
-      "website": "https://www.hkfyg.org.hk/lskc/",
-      "phone": "2479-9888",
-      "established": 2005,
-      "studentCount": 1200,
-      "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
-      "tuitionFee": "港幣約32,000元/年（設有獎學金及學費減免計劃）",
-      "specificFeatures": "設有STEAM創新實驗室、國際交流計劃、領袖訓練課程",
-      "image": "badge_hlc.jpg",
-      "targetInterviewDate": "2025-12-20"
     }
   ]
 }
