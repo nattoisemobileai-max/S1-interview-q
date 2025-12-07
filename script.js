@@ -94,7 +94,7 @@ async function loadData() {
                 const data = await response.json();
                 questionsData[key] = data.questions || [];
             } catch (error) {
-                console.error(`Error loading ${file}:`, error);
+                console.error('Error loading ${file}:', error);
                 questionsData[key] = [];
             }
         }
