@@ -1,523 +1,88 @@
-/* Enhanced style.css with Duolingo-style features */
-
-/* Duolingo-style color scheme */
-:root {
-    --duolingo-green: #58cc02;
-    --duolingo-dark-green: #1cb0f6;
-    --duolingo-blue: #1cb0f6;
-    --duolingo-purple: #9b59b6;
-    --duolingo-orange: #ff9f00;
-    --duolingo-red: #ff4b4b;
-    --duolingo-light-gray: #f6f6f6;
-    --duolingo-dark-gray: #4a4a4a;
-}
-
-/* Student Profile Header */
-.student-profile-header {
-    background: white;
-    border-radius: 12px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.student-info {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.student-avatar {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-blue));
+/* Duolingo-style Buttons */
+.answer-save-btn, .answer-modal-btn, .hint-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 14px;
+    transition: all 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.student-details h3 {
-    color: var(--duolingo-dark-gray);
-    margin-bottom: 5px;
-    font-size: 1.3rem;
-}
-
-.student-stats {
-    display: flex;
-    gap: 20px;
-}
-
-.stat-item {
-    text-align: center;
-}
-
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--duolingo-green);
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-}
-
-/* Progress Bar */
-.progress-container {
-    width: 200px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-top: 5px;
-}
-
-.progress-bar {
-    height: 8px;
-    background: linear-gradient(90deg, var(--duolingo-green), var(--duolingo-blue));
-    border-radius: 10px;
-    transition: width 0.3s ease;
-}
-
-/* Category Buttons with Duolingo Style */
-.category-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-.category-btn {
-    padding: 12px 20px;
-    background-color: white;
-    border: 2px solid #e0e0e0;
-    border-radius: 25px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 600;
-    color: var(--duolingo-dark-gray);
-    display: flex;
-    align-items: center;
     gap: 8px;
-}
-
-.category-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.category-btn.active {
-    background-color: var(--duolingo-green);
-    color: white;
-    border-color: var(--duolingo-green);
-}
-
-/* Category-specific colors */
-.category-btn.chinese-btn {
-    border-color: #e74c3c;
-    color: #e74c3c;
-}
-
-.category-btn.chinese-btn.active {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.category-btn.english-btn {
-    border-color: #3498db;
-    color: #3498db;
-}
-
-.category-btn.english-btn.active {
-    background-color: #3498db;
-    color: white;
-}
-
-.category-btn.math-btn {
-    border-color: #9b59b6;
-    color: #9b59b6;
-}
-
-.category-btn.math-btn.active {
-    background-color: #9b59b6;
-    color: white;
-}
-
-.category-btn.science-btn {
-    border-color: #2ecc71;
-    color: #2ecc71;
-}
-
-.category-btn.science-btn.active {
-    background-color: #2ecc71;
-    color: white;
-}
-
-.category-btn.news-btn {
-    border-color: #e67e22;
-    color: #e67e22;
-}
-
-.category-btn.news-btn.active {
-    background-color: #e67e22;
-    color: white;
-}
-
-.category-btn.creative-btn {
-    border-color: #f1c40f;
-    color: #f1c40f;
-}
-
-.category-btn.creative-btn.active {
-    background-color: #f1c40f;
-    color: #333;
-}
-
-/* Question Item Enhancements */
-.question-item {
-    background: white;
-    padding: 25px;
-    margin-bottom: 20px;
-    border-radius: 15px;
-    border-left: 5px solid var(--duolingo-blue);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.question-item.completed {
-    border-left-color: var(--duolingo-green);
-    background-color: #f8fff8;
-}
-
-.question-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.question-header-left {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-.category-badge {
-    display: inline-block;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
 }
 
-.category-badge.chinese {
-    background-color: #ffeaea;
-    color: #e74c3c;
+.answer-save-btn:hover, .answer-modal-btn:hover, .hint-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
 }
 
-.category-badge.english {
-    background-color: #e8f4fc;
-    color: #3498db;
+.answer-save-btn:active, .answer-modal-btn:active, .hint-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
 }
 
-.category-badge.math {
-    background-color: #f3e8ff;
-    color: #9b59b6;
-}
-
-.category-badge.science {
-    background-color: #e8f8ef;
-    color: #27ae60;
-}
-
-.category-badge.news {
-    background-color: #fef5e7;
-    color: #e67e22;
-}
-
-.category-badge.creative {
-    background-color: #fef9e7;
-    color: #f39c12;
-}
-
-.difficulty-badge {
-    padding: 6px 12px;
-    border-radius: 15px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.difficulty-easy {
-    background-color: #d5f4e6;
-    color: #27ae60;
-}
-
-.difficulty-medium {
-    background-color: #fff3cd;
-    color: #e67e22;
-}
-
-.difficulty-hard {
-    background-color: #f8d7da;
-    color: #e74c3c;
-}
-
-/* Answer Section */
-.answer-section {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    border: 2px solid #e9ecef;
-}
-
-.answer-label {
-    font-weight: 600;
-    color: var(--duolingo-dark-gray);
-    margin-bottom: 10px;
-    font-size: 1.1rem;
-}
-
-.student-answer-input {
-    width: 100%;
-    padding: 15px;
-    border: 2px solid #ddd;
-    border-radius: 10px;
-    font-size: 1rem;
-    min-height: 120px;
-    resize: vertical;
-    font-family: inherit;
-    transition: border-color 0.3s ease;
-    margin-bottom: 15px;
-}
-
-.student-answer-input:focus {
-    border-color: var(--duolingo-blue);
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(28, 176, 246, 0.1);
-}
-
-.answer-actions {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.answer-save-btn, .answer-modal-btn, .hint-btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
+/* Save Button - Duolingo Green */
 .answer-save-btn {
-    background-color: var(--duolingo-green);
+    background: linear-gradient(135deg, #58cc02 0%, #46a302 100%);
     color: white;
+    border-bottom: 4px solid #389a02;
 }
 
 .answer-save-btn:hover {
-    background-color: #4bb703;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #5cd304 0%, #48a904 100%);
+    border-bottom: 4px solid #3a9d04;
 }
 
+.answer-save-btn:active {
+    border-bottom: 2px solid #389a02;
+}
+
+/* Full Editor Button - Duolingo Blue */
 .answer-modal-btn {
-    background-color: var(--duolingo-blue);
+    background: linear-gradient(135deg, #1cb0f6 0%, #0d9ce5 100%);
     color: white;
+    border-bottom: 4px solid #0a8bcb;
 }
 
 .answer-modal-btn:hover {
-    background-color: #0aa0e0;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #20b7ff 0%, #0fa4f0 100%);
+    border-bottom: 4px solid #0c94e0;
 }
 
+.answer-modal-btn:active {
+    border-bottom: 2px solid #0a8bcb;
+}
+
+/* Hint Button - Duolingo Orange */
 .hint-btn {
-    background-color: #f1c40f;
-    color: #333;
+    background: linear-gradient(135deg, #ff9f00 0%, #e68a00 100%);
+    color: white;
+    border-bottom: 4px solid #cc7400;
 }
 
 .hint-btn:hover {
-    background-color: #d4ac0d;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #ffa500 0%, #f09000 100%);
+    border-bottom: 4px solid #d67c00;
 }
 
-/* Question Footer */
-.question-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
+.hint-btn:active {
+    border-bottom: 2px solid #cc7400;
 }
 
-.xp-badge {
-    background: linear-gradient(135deg, var(--duolingo-green), var(--duolingo-blue));
-    color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 5px;
+/* Button Icons */
+.answer-save-btn i, .answer-modal-btn i, .hint-btn i {
+    font-size: 16px;
 }
 
-.time-estimate {
-    color: #7f8c8d;
-    font-size: 0.9rem;
-    font-style: italic;
-}
-
-/* Modal Enhancements */
-.modal-content {
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-green));
-    color: white;
-    border-radius: 15px 15px 0 0;
-    padding: 20px;
-    border: none;
-}
-
-.modal-body {
-    padding: 25px;
-}
-
-.modal-footer {
-    border-top: 1px solid #eee;
-    padding: 20px;
-}
-
-#modal-example-answer {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    border-left: 4px solid var(--duolingo-blue);
-}
-
-.example-answer-content {
-    margin-top: 10px;
-    padding: 15px;
-    background-color: white;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-    font-style: italic;
-    line-height: 1.6;
-}
-
-/* Modal Answer Toast */
-.modal-answer-toast {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 400px;
-    max-width: 90vw;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    z-index: 2000;
-    animation: slideInUp 0.3s ease;
-    border: 2px solid var(--duolingo-blue);
-}
-
-.modal-answer-header {
-    background: linear-gradient(135deg, var(--duolingo-blue), var(--duolingo-green));
-    color: white;
-    padding: 15px 20px;
-    border-radius: 13px 13px 0 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-answer-content {
-    padding: 20px;
-    max-height: 300px;
-    overflow-y: auto;
-    line-height: 1.6;
-}
-
-.modal-answer-note {
-    padding: 10px 20px;
-    background-color: #fff8e1;
-    border-top: 1px solid #ffe082;
-    font-size: 0.9rem;
-    color: #e67e22;
-    text-align: center;
-    border-radius: 0 0 13px 13px;
-}
-
-.close-toast {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    padding: 0;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: background-color 0.3s ease;
-}
-
-.close-toast:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Streak Counter */
-.streak-counter {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: linear-gradient(135deg, #ff9f00, #ff6b00);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: bold;
-}
-
-.streak-counter i {
-    animation: pulse 2s infinite;
-}
-
-/* Animations */
-@keyframes slideInUp {
-    from {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
-@keyframes pulse {
+/* Button Animation for Saved State */
+@keyframes saveSuccess {
     0% {
         transform: scale(1);
     }
@@ -529,46 +94,137 @@
     }
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .student-profile-header {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
+.answer-save-btn.saved {
+    background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
+    border-bottom: 4px solid #2e7d32;
+    animation: saveSuccess 0.3s ease;
+}
+
+/* Ripple Effect for Buttons */
+.answer-save-btn::after, .answer-modal-btn::after, .hint-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.5);
+    opacity: 0;
+    border-radius: 100%;
+    transform: scale(1, 1) translate(-50%);
+    transform-origin: 50% 50%;
+}
+
+.answer-save-btn:focus:not(:active)::after, 
+.answer-modal-btn:focus:not(:active)::after,
+.hint-btn:focus:not(:active)::after {
+    animation: ripple 1s ease-out;
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0, 0);
+        opacity: 0.5;
     }
-    
-    .student-stats {
-        justify-content: center;
-    }
-    
-    .question-item-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .modal-answer-toast {
-        width: 90vw;
-        right: 5vw;
-        left: 5vw;
+    100% {
+        transform: scale(20, 20);
+        opacity: 0;
     }
 }
 
-@media (max-width: 480px) {
-    .category-buttons {
-        justify-content: center;
-    }
-    
-    .category-btn {
-        padding: 10px 15px;
-        font-size: 0.9rem;
-    }
-    
+/* Button Group Layout */
+.answer-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+/* Small screen adjustments */
+@media (max-width: 768px) {
     .answer-actions {
         flex-direction: column;
     }
     
     .answer-save-btn, .answer-modal-btn, .hint-btn {
         width: 100%;
-        justify-content: center;
+        padding: 14px 20px;
     }
+}
+
+/* Focus States */
+.answer-save-btn:focus, .answer-modal-btn:focus, .hint-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(88, 204, 2, 0.3), 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.answer-modal-btn:focus {
+    box-shadow: 0 0 0 3px rgba(28, 176, 246, 0.3), 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.hint-btn:focus {
+    box-shadow: 0 0 0 3px rgba(255, 159, 0, 0.3), 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Disabled State */
+.answer-save-btn:disabled, .answer-modal-btn:disabled, .hint-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1) !important;
+}
+
+.answer-save-btn:disabled:hover, .answer-modal-btn:disabled:hover, .hint-btn:disabled:hover {
+    transform: none;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Edit Answer Button in Preview */
+.edit-answer-btn {
+    background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.edit-answer-btn:hover {
+    background: linear-gradient(135deg, #a66bbe 0%, #9754b3 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.edit-answer-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Answer Preview Section */
+.answer-preview {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px 0;
+    position: relative;
+}
+
+.answer-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, #58cc02 0%, #1cb0f6 100%);
+    border-radius: 12px 0 0 12px;
 }
