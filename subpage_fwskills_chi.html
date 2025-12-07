@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HK School Interview Practice - FW Skills 必備技巧</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-graduation-cap"></i> HK Interview</h3>
+            <button class="toggle-btn" id="sidebar-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="sidebar-menu">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="subpage_school.html">
+                        <i class="fas fa-school"></i>
+                        <span>School Information</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="subpage_fwskills_chi.html" class="active">
+                        <i class="fas fa-star"></i>
+                        <span>FW Skills 必備技巧</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="main-header">
+            <h1 class="page-title">
+                <i class="fas fa-star"></i> FW Skills 必備技巧
+            </h1>
+        </div>
+        
+        <div class="content-container">
+            <div class="card">
+                <h2><i class="fas fa-user-check"></i> 面試必備技巧 (Essential Interview Skills)</h2>
+                <p>以下是面試時需要注意的重要技巧和禮儀，這些技巧來自FW Study的教學重點。</p>
+                
+                <div id="fw-skills-list" class="skills-grid">
+                    <!-- Skills will be loaded here by JavaScript -->
+                </div>
+                
+                <div class="tips-section">
+                    <h3><i class="fas fa-lightbulb"></i> 面試小貼士 (Interview Tips)</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-comments"></i>
+                            </div>
+                            <h4>說話技巧</h4>
+                            <ul>
+                                <li>說話清晰，音量適中</li>
+                                <li>保持眼神接觸</li>
+                                <li>使用完整句子回答</li>
+                                <li>避免使用「嗯」、「啊」等語氣詞</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4>身體語言</h4>
+                            <ul>
+                                <li>坐姿端正，保持微笑</li>
+                                <li>手部自然擺放</li>
+                                <li>避免過多小動作</li>
+                                <li>保持自信姿態</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h4>準備技巧</h4>
+                            <ul>
+                                <li>預先練習常見問題</li>
+                                <li>準備個人故事</li>
+                                <li>了解申請學校</li>
+                                <li>提前到達面試地點</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <h4>心態調整</h4>
+                            <ul>
+                                <li>保持放鬆，不要緊張</li>
+                                <li>視面試為對話機會</li>
+                                <li>誠實回答問題</li>
+                                <li>展現真實自我</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="practice-exercises">
+                    <h3><i class="fas fa-dumbbell"></i> 練習活動 (Practice Exercises)</h3>
+                    <div class="exercises">
+                        <div class="exercise">
+                            <h4>眼神接觸練習</h4>
+                            <p>與家人或朋友對話時，刻意保持眼神接觸，練習自然的交流。</p>
+                        </div>
+                        <div class="exercise">
+                            <h4>個人故事準備</h4>
+                            <p>準備2-3個個人經歷故事，每個故事包含：情境、行動、結果和感受。</p>
+                        </div>
+                        <div class="exercise">
+                            <h4>模擬面試</h4>
+                            <p>請家人協助進行模擬面試，練習在不同情境下的反應。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Load FW skills data
+        async function loadFWSkills() {
+            try {
+                const response = await fetch('fwstudy-manners.json');
+                const data = await response.json();
+                displayFWSkills(data);
+            } catch (error) {
+                console.error('Error loading FW skills:', error);
+                // Use default data if file not found
+                const defaultSkills = [
+                    { id: "MANNERS-001", text: "[FW] 雙手放後/手勢 - 面試時保持良好姿勢，雙手自然擺放" },
+                    { id: "MANNERS-002", text: "[FW] 眼神接觸 - 與面試官保持適當的眼神交流" },
+                    { id: "MANNERS-003", text: "[FW] 親身故事 --> 有一次, 要有感受 - 分享個人經歷時要有真實感受" },
+                    { id: "MANNERS-004", text: "[FW] 表現自己 - 自信地展示自己的優點和特長" }
+                ];
+                displayFWSkills({ fwstudy: defaultSkills });
+            }
+        }
+        
+        // Display FW skills
+        function displayFWSkills(data) {
+            const skillsList = document.getElementById('fw-skills-list');
+            skillsList.innerHTML = '';
+            
+            if (data.fwstudy && data.fwstudy.length > 0) {
+                data.fwstudy.forEach(skill => {
+                    const skillCard = document.createElement('div');
+                    skillCard.className = 'skill-card';
+                    skillCard.innerHTML = `
+                        <div class="skill-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="skill-content">
+                            <h4>${skill.text}</h4>
+                            <div class="skill-details">
+                                ${getSkillExplanation(skill.text)}
+                            </div>
+                        </div>
+                    `;
+                    skillsList.appendChild(skillCard);
+                });
+            }
+            
+            // Add CSS for skills display
+            const style = document.createElement('style');
+            style.textContent = `
+                .skills-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+                    gap: 20px;
+                    margin: 30px 0;
+                }
+                
+                @media (max-width: 768px) {
+                    .skills-grid {
+                        grid-template-columns: 1fr;
+                    }
+                }
+                
+                .skill-card {
+                    background: white;
+                    border-radius: 12px;
+                    padding: 25px;
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                    border-left: 5px solid #3498db;
+                    display: flex;
+                    gap: 20px;
+                    transition: transform 0.3s;
+                }
+                
+                .skill-card:hover {
+                    transform: translateY(-3px);
+                }
+                
+                .skill-icon {
+                    color: #3498db;
+                    font-size: 1.5rem;
+                    display: flex;
+                    align-items: center;
+                }
+                
+                .skill-content {
+                    flex: 1;
+                }
+                
+                .skill-content h4 {
+                    color: #2c3e50;
+                    margin-bottom: 10px;
+                    font-size: 1.1rem;
+                }
+                
+                .skill-details {
+                    color: #555;
+                    line-height: 1.6;
+                }
+                
+                .tips-section {
+                    margin: 40px 0;
+                    padding: 30px 0;
+                    border-top: 2px solid #eee;
+                }
+                
+                .tips-grid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                    gap: 20px;
+                    margin-top: 20px;
+                }
+                
+                .tip-card {
+                    background: white;
+                    border-radius: 12px;
+                    padding: 20px;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+                    border-top: 4px solid #2ecc71;
+                }
+                
+                .tip-icon {
+                    color: #2ecc71;
+                    font-size: 1.5rem;
+                    margin-bottom: 15px;
+                }
+                
+                .tip-card h4 {
+                    color: #2c3e50;
+                    margin-bottom: 10px;
+                }
+                
+                .tip-card ul {
+                    padding-left: 20px;
+                    color: #555;
+                }
+                
+                .tip-card li {
+                    margin-bottom: 5px;
+                }
+                
+                .practice-exercises {
+                    margin: 40px 0;
+                    padding: 30px;
+                    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                    border-radius: 12px;
+                }
+                
+                .exercises {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+                    gap: 20px;
+                    margin-top: 20px;
+                }
+                
+                .exercise {
+                    background: white;
+                    padding: 20px;
+                    border-radius: 8px;
+                    border-left: 4px solid #f1c40f;
+                }
+                
+                .exercise h4 {
+                    color: #2c3e50;
+                    margin-bottom: 10px;
+                }
+                
+                .exercise p {
+                    color: #666;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Get detailed explanation for each skill
+        function getSkillExplanation(skillText) {
+            const explanations = {
+                "雙手放後/手勢": "面試時保持良好姿勢非常重要。雙手可以自然放在膝蓋上或交疊放在桌面，避免過多手勢。這展現出自信和專業的形象。",
+                "眼神接觸": "適當的眼神接觸顯示尊重和自信。與每位面試官輪流進行眼神交流，但不要一直盯著對方。",
+                "親身故事": "準備真實的個人經歷故事，每個故事應該包含：具體情境、你的行動、達到的結果以及你的感受。這讓回答更有說服力。",
+                "表現自己": "自信地展示你的優點和成就，但不要過度誇張。使用具體例子來支持你的說法。"
+            };
+            
+            for (const [key, explanation] of Object.entries(explanations)) {
+                if (skillText.includes(key)) {
+                    return `<p><strong>解釋：</strong> ${explanation}</p>`;
+                }
+            }
+            
+            return "<p><strong>重要面試技巧：</strong> 掌握這個技巧能讓你在面試中脫穎而出。</p>";
+        }
+        
+        // Load data when page loads
+        document.addEventListener('DOMContentLoaded', loadFWSkills);
+        
+        // Sidebar toggle
+        document.getElementById('sidebar-toggle').addEventListener('click', function() {
+            document.querySelector('.sidebar').classList.toggle('collapsed');
+        });
+    </script>
+</body>
+</html>
