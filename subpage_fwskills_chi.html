@@ -58,6 +58,105 @@
             line-height: 1.6;
         }
         
+        /* 主题目录样式 */
+        .topics-section {
+            margin: 40px 0;
+            padding: 30px 0;
+            border-top: 2px solid #eee;
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .topic-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-top: 4px solid #9b59b6;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        
+        .topic-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .lesson-number {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .pages {
+            background: #f8f9fa;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .topic-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            min-height: 60px;
+        }
+        
+        .subtopics {
+            margin-top: 20px;
+        }
+        
+        .subtopic {
+            background: #f8f9fa;
+            border-left: 3px solid #3498db;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .subtopic-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+        
+        .subtopic-title {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .subtopic-pages {
+            color: #7f8c8d;
+            font-size: 0.85rem;
+        }
+        
+        .subtopic-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
         /* 小貼士區域 */
         .tips-section {
             margin: 40px 0;
@@ -146,6 +245,34 @@
             margin: 20px 0;
             color: #e74c3c;
         }
+        
+        /* 頁面標題 */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .page-title i {
+            color: #3498db;
+        }
+        
+        /* 內容容器 */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 卡片樣式 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
     </style>
 </head>
 <body>
@@ -177,6 +304,12 @@
                         <span>FW Skills 必備技巧</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#topics" id="topics-link">
+                        <i class="fas fa-book"></i>
+                        <span>面試教材目錄</span>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -190,6 +323,7 @@
         </div>
         
         <div class="content-container">
+            <!-- FW Skills Section -->
             <div class="card">
                 <h2><i class="fas fa-user-check"></i> 面試必備技巧 (Essential Interview Skills)</h2>
                 <p>以下是面試時需要注意的重要技巧和禮儀，這些技巧來自FW Study的教學重點。</p>
@@ -198,6 +332,18 @@
                 <div id="fw-skills-list" class="skills-grid">
                     <div class="loading">
                         <i class="fas fa-spinner fa-spin"></i> 正在加載技能數據...
+                    </div>
+                </div>
+                
+                <!-- 面試主題目錄 -->
+                <div id="topics-section" class="topics-section">
+                    <h3><i class="fas fa-book"></i> 面試教材目錄 (Interview Curriculum)</h3>
+                    <p>以下是根据教材整理的面試學習主題，涵蓋7個課程單元，幫助學生系統性準備面試。</p>
+                    
+                    <div id="topics-container">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-spin"></i> 正在加載教材目錄...
+                        </div>
                     </div>
                 </div>
                 
@@ -304,6 +450,29 @@
             ]
         };
         
+        // 备用主题数据
+        const fallbackTopics = {
+            "topics": [
+                {
+                    "lesson": 1,
+                    "title": "必學禮儀問答",
+                    "pages": "P.1 - 20",
+                    "subtopics": [
+                        {
+                            "title": "一、面試禮儀",
+                            "pages": "P.1 - 5",
+                            "description": "學習面試基本禮儀"
+                        },
+                        {
+                            "title": "二、個人問答三元素",
+                            "pages": "P.6 - 14",
+                            "description": "掌握個人問答的三個核心要素"
+                        }
+                    ]
+                }
+            ]
+        };
+        
         // 加载FW技能数据
         async function loadFWSkills() {
             try {
@@ -332,6 +501,37 @@
                 console.error('Error loading FW skills:', error);
                 // 使用备用数据
                 displayFWSkills(fallbackSkills);
+            }
+        }
+        
+        // 加载主题数据
+        async function loadTopics() {
+            try {
+                const response = await fetch('topics.json');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                // 尝试解析JSON
+                let data;
+                try {
+                    data = await response.json();
+                } catch (parseError) {
+                    console.warn('JSON解析失败，使用备用主题数据:', parseError);
+                    data = fallbackTopics;
+                }
+                
+                // 验证数据结构
+                if (!data.topics || !Array.isArray(data.topics)) {
+                    console.warn('主题数据格式不正确，使用备用数据');
+                    data = fallbackTopics;
+                }
+                
+                displayTopics(data);
+            } catch (error) {
+                console.error('Error loading topics:', error);
+                // 使用备用数据
+                displayTopics(fallbackTopics);
             }
         }
         
@@ -370,6 +570,63 @@
             }
         }
         
+        // 显示主题
+        function displayTopics(data) {
+            const topicsContainer = document.getElementById('topics-container');
+            
+            // 清空加载状态
+            topicsContainer.innerHTML = '';
+            
+            if (data.topics && data.topics.length > 0) {
+                const topicsGrid = document.createElement('div');
+                topicsGrid.className = 'topics-grid';
+                
+                data.topics.forEach(topic => {
+                    const topicCard = document.createElement('div');
+                    topicCard.className = 'topic-card';
+                    
+                    // 生成子主题HTML
+                    let subtopicsHTML = '';
+                    if (topic.subtopics && topic.subtopics.length > 0) {
+                        topic.subtopics.forEach(subtopic => {
+                            subtopicsHTML += `
+                                <div class="subtopic">
+                                    <div class="subtopic-header">
+                                        <div class="subtopic-title">${escapeHtml(subtopic.title)}</div>
+                                        <div class="subtopic-pages">${escapeHtml(subtopic.pages)}</div>
+                                    </div>
+                                    <div class="subtopic-description">${escapeHtml(subtopic.description)}</div>
+                                </div>
+                            `;
+                        });
+                    }
+                    
+                    topicCard.innerHTML = `
+                        <div class="topic-header">
+                            <div class="lesson-number">${topic.lesson}</div>
+                            <div class="pages">${escapeHtml(topic.pages)}</div>
+                        </div>
+                        <div class="topic-title">Lesson ${topic.lesson}: ${escapeHtml(topic.title)}</div>
+                        <div class="subtopics">
+                            ${subtopicsHTML}
+                        </div>
+                    `;
+                    
+                    topicsGrid.appendChild(topicCard);
+                });
+                
+                topicsContainer.appendChild(topicsGrid);
+            } else {
+                // 如果没有数据
+                topicsContainer.innerHTML = `
+                    <div class="error-message">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        未能加載教材目錄，請檢查網絡連接或數據文件。
+                    </div>
+                `;
+            }
+        }
+        
         // 获取每个技能的详细解释
         function getSkillExplanation(skillText) {
             const explanations = {
@@ -400,9 +657,20 @@
             // 加载技能数据
             loadFWSkills();
             
+            // 加载主题数据
+            loadTopics();
+            
             // 侧边栏切换
             document.getElementById('sidebar-toggle').addEventListener('click', function() {
                 document.querySelector('.sidebar').classList.toggle('collapsed');
+            });
+            
+            // 导航到主题部分
+            document.getElementById('topics-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('topics-section').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
             });
         });
     </script>
