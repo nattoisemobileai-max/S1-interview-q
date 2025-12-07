@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-HK">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,68 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 主布局样式 */
+        .content-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 两栏布局 */
+        .two-column-layout {
+            display: flex;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        /* 左侧栏 - 学校信息 */
+        .left-column {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .left-column.collapsed {
+            display: none;
+        }
+        
+        .school-info-toggle {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        
+        .school-info-toggle:hover {
+            background: linear-gradient(135deg, #2980b9, #1c6ea4);
+            transform: translateY(-2px);
+        }
+        
+        /* 右侧栏 - 面试题目 */
+        .right-column {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        @media (max-width: 992px) {
+            .two-column-layout {
+                flex-direction: column;
+            }
+            
+            .left-column, .right-column {
+                width: 100%;
+            }
+        }
+        
         /* 学校卡片样式 */
         .school-grid {
             display: grid;
@@ -91,57 +153,73 @@
             background: linear-gradient(135deg, #2980b9, #1c6ea4);
         }
         
-        .back-btn {
-            background: #7f8c8d;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-bottom: 20px;
-            display: inline-flex;
+        /* 学校详情样式 */
+        .school-detail-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+        }
+        
+        .school-detail-header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .school-detail-header h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 15px;
         }
         
-        .back-btn:hover {
-            background: #6c7b7d;
+        .school-detail-header h3 {
+            color: #3498db;
+            margin-bottom: 15px;
         }
         
-        /* 详情页样式 */
-        .error-message {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #f5c6cb;
+        .school-motto {
+            font-style: italic;
+            color: #7f8c8d;
+            margin: 10px 0;
+            padding-left: 20px;
+            border-left: 3px solid #3498db;
         }
         
-        .school-detail-grid {
+        .chinese-motto {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .school-info-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
-            margin: 20px 0;
+            margin: 25px 0;
         }
         
-        .detail-item {
+        .info-item {
             background: #f8f9fa;
             padding: 15px;
             border-radius: 8px;
             border-left: 4px solid #3498db;
         }
         
-        .detail-section {
+        .info-section {
             margin: 25px 0;
             padding-bottom: 25px;
             border-bottom: 1px solid #eee;
         }
         
-        .detail-section:last-child {
+        .info-section:last-child {
             border-bottom: none;
         }
         
-        .detail-section h4 {
+        .info-section h4 {
             color: #2c3e50;
             margin-bottom: 15px;
             display: flex;
@@ -150,18 +228,54 @@
         }
         
         /* 面试题目样式 */
-        .interview-questions-section {
-            margin: 30px 0;
-            padding: 25px;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        .interview-questions-card {
+            background: white;
             border-radius: 12px;
-            border-left: 5px solid #9b59b6;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            height: 100%;
+            position: sticky;
+            top: 20px;
         }
         
-        .interview-year {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ddd;
+        .interview-header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .interview-header h2 {
+            color: #2c3e50;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .question-toggle {
+            background: #ecf0f1;
+            color: #2c3e50;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .question-toggle:hover {
+            background: #d5dbdb;
+        }
+        
+        .interview-year-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #9b59b6;
         }
         
         .interview-year-header {
@@ -169,12 +283,17 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #ddd;
         }
         
-        .interview-year h5 {
+        .interview-year-header h5 {
             color: #2c3e50;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .interview-months {
@@ -182,25 +301,24 @@
             color: white;
             padding: 5px 10px;
             border-radius: 15px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .question-category {
             background: white;
             border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-left: 4px solid #3498db;
         }
         
         .question-category h6 {
             color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-size: 1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .question-list {
@@ -209,7 +327,7 @@
         
         .question-list li {
             margin-bottom: 10px;
-            padding: 10px;
+            padding: 8px;
             background: #f8f9fa;
             border-radius: 6px;
             border-left: 3px solid #2ecc71;
@@ -246,7 +364,7 @@
         
         .interview-countdown h5 {
             margin: 0 0 10px 0;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .countdown-days {
@@ -258,6 +376,82 @@
         .countdown-label {
             font-size: 0.9rem;
             opacity: 0.9;
+        }
+        
+        /* 过滤器和返回按钮 */
+        .filters {
+            display: flex;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        .filter-group select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            font-size: 1rem;
+            color: #2c3e50;
+            transition: border-color 0.3s;
+        }
+        
+        .filter-group select:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .back-btn {
+            background: #7f8c8d;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-btn:hover {
+            background: #6c7b7d;
+        }
+        
+        /* 错误消息 */
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+            margin: 20px 0;
+        }
+        
+        /* 无结果消息 */
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            grid-column: 1 / -1;
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -298,53 +492,73 @@
     <main class="main-content">
         <div class="main-header">
             <h1 class="page-title">
-                <i class="fas fa-school"></i> School Information
+                <i class="fas fa-school"></i> 學校資訊及面試題目
             </h1>
             <p class="page-subtitle">香港中學面試準備 - 學校資料庫及歷年面試題目</p>
         </div>
         
         <div class="content-container">
-            <!-- School List View -->
+            <!-- 学校列表视图 -->
             <div class="card" id="school-list-view">
-                <h2><i class="fas fa-university"></i> Hong Kong School Information Database</h2>
-                <p>This page displays detailed information about top Hong Kong secondary schools for interview preparation. Each school includes previous interview questions for practice.</p>
+                <h2><i class="fas fa-university"></i> 香港中學資訊資料庫</h2>
+                <p>本頁面提供香港頂尖中學的詳細資料及歷年面試題目，協助學生準備入學面試。</p>
                 
+                <!-- 筛选器 -->
                 <div class="filters">
                     <div class="filter-group">
-                        <label for="banding-filter">Filter by Banding:</label>
+                        <label for="banding-filter">按組別篩選:</label>
                         <select id="banding-filter" onchange="filterSchools()">
-                            <option value="">All Bandings</option>
+                            <option value="">所有組別</option>
                             <option value="1A">Band 1A</option>
                             <option value="1B">Band 1B</option>
                             <option value="1C">Band 1C</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label for="district-filter">Filter by District:</label>
+                        <label for="district-filter">按地區篩選:</label>
                         <select id="district-filter" onchange="filterSchools()">
-                            <option value="">All Districts</option>
+                            <option value="">所有地區</option>
                         </select>
                     </div>
                 </div>
                 
+                <!-- 学校列表 -->
                 <div id="school-list" class="school-grid">
-                    <!-- Schools will be loaded here by JavaScript -->
+                    <!-- 学校卡片将由JavaScript加载 -->
                 </div>
                 
-                <div id="no-schools-message" style="display: none; text-align: center; padding: 40px; color: #7f8c8d;">
-                    <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 20px;"></i>
-                    <h3>No schools found</h3>
-                    <p>Try adjusting your filters to see more results.</p>
+                <!-- 无结果消息 -->
+                <div id="no-schools-message" class="no-results" style="display: none;">
+                    <i class="fas fa-search"></i>
+                    <h3>沒有找到符合條件的學校</h3>
+                    <p>請嘗試調整篩選條件</p>
                 </div>
             </div>
             
-            <!-- School Detail View -->
+            <!-- 学校详情视图 -->
             <div class="card" id="school-detail-view" style="display: none;">
                 <button class="back-btn" onclick="showSchoolList()">
-                    <i class="fas fa-arrow-left"></i> Back to School List
+                    <i class="fas fa-arrow-left"></i> 返回學校列表
                 </button>
-                <div id="school-detail-content">
-                    <!-- School details will be loaded here -->
+                
+                <div class="two-column-layout">
+                    <!-- 左侧栏 - 学校信息 -->
+                    <div class="left-column" id="school-info-column">
+                        <button class="school-info-toggle" id="toggle-school-info">
+                            <i class="fas fa-eye-slash"></i> 隱藏學校資訊
+                        </button>
+                        
+                        <div class="school-detail-card" id="school-info-content">
+                            <!-- 学校信息内容将由JavaScript加载 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 右侧栏 - 面试题目 -->
+                    <div class="right-column">
+                        <div class="interview-questions-card" id="interview-questions-content">
+                            <!-- 面试题目内容将由JavaScript加载 -->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -353,30 +567,31 @@
     <script>
         let schoolsData = [];
         let filteredSchools = [];
+        let currentSchool = null;
         
-        // Load schools data
+        // 加载学校数据
         async function loadSchoolsData() {
             try {
                 const response = await fetch('schools.json');
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`HTTP错误! 状态码: ${response.status}`);
                 }
                 schoolsData = await response.json();
                 filteredSchools = [...schoolsData.schools];
                 
-                // Initialize district filter options
+                // 初始化地区筛选器选项
                 initializeFilters();
                 
-                // Display school list
+                // 显示学校列表
                 displaySchoolList();
             } catch (error) {
-                console.error('Error loading schools data:', error);
+                console.error('加载学校数据时出错:', error);
                 document.getElementById('school-list').innerHTML = 
-                    '<div class="error-message">Failed to load school information. Please check your internet connection.</div>';
+                    '<div class="error-message">無法加載學校資訊，請檢查網絡連接。</div>';
             }
         }
         
-        // Initialize filter options
+        // 初始化筛选器选项
         function initializeFilters() {
             const districtFilter = document.getElementById('district-filter');
             const districts = new Set();
@@ -385,7 +600,7 @@
                 districts.add(school.district);
             });
             
-            // Sort districts alphabetically
+            // 按字母顺序排序地区
             const sortedDistricts = Array.from(districts).sort();
             
             sortedDistricts.forEach(district => {
@@ -396,7 +611,7 @@
             });
         }
         
-        // Filter schools based on selected filters
+        // 筛选学校
         function filterSchools() {
             const bandingFilter = document.getElementById('banding-filter').value;
             const districtFilter = document.getElementById('district-filter').value;
@@ -418,7 +633,7 @@
             displaySchoolList();
         }
         
-        // Display school list
+        // 显示学校列表
         function displaySchoolList() {
             const schoolList = document.getElementById('school-list');
             const noSchoolsMessage = document.getElementById('no-schools-message');
@@ -452,139 +667,160 @@
                             <div class="interview-countdown">
                                 <h5>面試倒計時</h5>
                                 <div class="countdown-days">${calculateDaysRemaining(school.targetInterviewDate)}</div>
-                                <div class="countdown-label">Days Remaining</div>
+                                <div class="countdown-label">天數</div>
                             </div>
                         ` : ''}
                     </div>
                     <button class="view-details-btn" onclick="viewSchoolDetails(${school.id})">
-                        <i class="fas fa-eye"></i> View Details & Interview Questions
+                        <i class="fas fa-eye"></i> 查看詳情及面試題目
                     </button>
                 `;
                 schoolList.appendChild(schoolCard);
             });
         }
         
-        // View school details
+        // 查看学校详情
         function viewSchoolDetails(schoolId) {
-            const school = schoolsData.schools.find(s => s.id === schoolId);
-            if (!school) return;
+            currentSchool = schoolsData.schools.find(s => s.id === schoolId);
+            if (!currentSchool) return;
             
             document.getElementById('school-list-view').style.display = 'none';
             document.getElementById('school-detail-view').style.display = 'block';
             
-            const detailContent = document.getElementById('school-detail-content');
+            // 加载学校信息
+            loadSchoolInfo();
             
-            // Generate interview questions HTML if available
-            let interviewQuestionsHTML = '';
-            if (school.previousInterviewQuestions) {
-                interviewQuestionsHTML = generateInterviewQuestionsHTML(school.previousInterviewQuestions);
-            } else {
-                interviewQuestionsHTML = `
-                    <div class="no-questions">
-                        <i class="fas fa-file-alt" style="font-size: 3rem; margin-bottom: 20px; color: #bdc3c7;"></i>
-                        <h4>No Interview Questions Available</h4>
-                        <p>We don't have previous interview questions for this school yet.</p>
-                    </div>
-                `;
-            }
+            // 加载面试题目
+            loadInterviewQuestions();
+        }
+        
+        // 加载学校信息
+        function loadSchoolInfo() {
+            const schoolInfoContent = document.getElementById('school-info-content');
             
-            detailContent.innerHTML = `
+            schoolInfoContent.innerHTML = `
                 <div class="school-detail-header">
-                    <h2>${school.name} <span class="banding-badge ${getBandingClass(school.banding)}">${school.banding}</span></h2>
-                    <h3>${school.chineseName}</h3>
-                    <p class="school-motto"><i class="fas fa-quote-left"></i> ${school.schoolMotto} <i class="fas fa-quote-right"></i></p>
-                    ${school.chineseMotto ? `<p class="chinese-motto">${school.chineseMotto}</p>` : ''}
+                    <h2>${currentSchool.name} <span class="banding-badge ${getBandingClass(currentSchool.banding)}">${currentSchool.banding}</span></h2>
+                    <h3>${currentSchool.chineseName}</h3>
+                    <p class="school-motto"><i class="fas fa-quote-left"></i> ${currentSchool.schoolMotto} <i class="fas fa-quote-right"></i></p>
+                    ${currentSchool.chineseMotto ? `<p class="chinese-motto">${currentSchool.chineseMotto}</p>` : ''}
                 </div>
                 
-                <div class="school-detail-grid">
-                    <div class="detail-item">
-                        <strong>學校類型:</strong> ${school.type}
+                <div class="school-info-grid">
+                    <div class="info-item">
+                        <strong>學校類型:</strong> ${currentSchool.type}
                     </div>
-                    <div class="detail-item">
-                        <strong>宗教背景:</strong> ${school.religion}
+                    <div class="info-item">
+                        <strong>宗教背景:</strong> ${currentSchool.religion}
                     </div>
-                    <div class="detail-item">
-                        <strong>性別:</strong> ${school.gender}
+                    <div class="info-item">
+                        <strong>性別:</strong> ${currentSchool.gender}
                     </div>
-                    <div class="detail-item">
-                        <strong>地區:</strong> ${school.district}
+                    <div class="info-item">
+                        <strong>地區:</strong> ${currentSchool.district}
                     </div>
-                    <div class="detail-item">
-                        <strong>教學語言:</strong> ${school.language}
+                    <div class="info-item">
+                        <strong>教學語言:</strong> ${currentSchool.language}
                     </div>
-                    <div class="detail-item">
-                        <strong>創校年份:</strong> ${school.established}
+                    <div class="info-item">
+                        <strong>創校年份:</strong> ${currentSchool.established}
                     </div>
                 </div>
                 
-                <div class="detail-section">
+                <div class="info-section">
                     <h4><i class="fas fa-bullseye"></i> 辦學宗旨 (Mission)</h4>
-                    <p>${school.mission}</p>
+                    <p>${currentSchool.mission}</p>
                 </div>
                 
-                <div class="detail-section">
+                <div class="info-section">
                     <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
-                    <p>${school.specialty}</p>
+                    <p>${currentSchool.specialty}</p>
                 </div>
                 
-                ${school.interviewFeatures ? `
-                <div class="detail-section">
+                ${currentSchool.interviewFeatures ? `
+                <div class="info-section">
                     <h4><i class="fas fa-comments"></i> 面試特色 (Interview Features)</h4>
-                    <p>${school.interviewFeatures}</p>
+                    <p>${currentSchool.interviewFeatures}</p>
                 </div>
                 ` : ''}
                 
-                ${school.specificFeatures ? `
-                <div class="detail-section">
+                ${currentSchool.specificFeatures ? `
+                <div class="info-section">
                     <h4><i class="fas fa-info-circle"></i> 特別設施/計劃 (Specific Features)</h4>
-                    <p>${school.specificFeatures}</p>
+                    <p>${currentSchool.specificFeatures}</p>
                 </div>
                 ` : ''}
                 
-                <div class="detail-section">
+                <div class="info-section">
                     <h4><i class="fas fa-info-circle"></i> 學校詳細資料 (School Details)</h4>
-                    <p><strong>學生人數:</strong> ${school.studentCount}</p>
-                    ${school.admissionProcess ? `<p><strong>收生程序:</strong> ${school.admissionProcess}</p>` : ''}
-                    ${school.tuitionFee ? `<p><strong>學費:</strong> ${school.tuitionFee}</p>` : ''}
+                    <p><strong>學生人數:</strong> ${currentSchool.studentCount}</p>
+                    ${currentSchool.admissionProcess ? `<p><strong>收生程序:</strong> ${currentSchool.admissionProcess}</p>` : ''}
+                    ${currentSchool.tuitionFee ? `<p><strong>學費:</strong> ${currentSchool.tuitionFee}</p>` : ''}
                 </div>
                 
-                ${school.targetInterviewDate ? `
-                <div class="detail-section">
+                ${currentSchool.targetInterviewDate ? `
+                <div class="info-section">
                     <h4><i class="fas fa-calendar-alt"></i> 目標面試日期 (Target Interview Date)</h4>
-                    <p><strong>日期:</strong> ${formatDate(school.targetInterviewDate)}</p>
+                    <p><strong>日期:</strong> ${formatDate(currentSchool.targetInterviewDate)}</p>
                     <div class="interview-countdown">
                         <h5>面試倒計時</h5>
-                        <div class="countdown-days">${calculateDaysRemaining(school.targetInterviewDate)}</div>
-                        <div class="countdown-label">Days Remaining</div>
+                        <div class="countdown-days">${calculateDaysRemaining(currentSchool.targetInterviewDate)}</div>
+                        <div class="countdown-label">天數</div>
                     </div>
                 </div>
                 ` : ''}
                 
-                <div class="detail-section">
-                    <h4><i class="fas fa-history"></i> 歷年面試題目 (Previous Interview Questions)</h4>
-                    <p>以下是根据歷年面試整理的真實題目，可用作面試練習參考。</p>
-                    ${interviewQuestionsHTML}
-                </div>
-                
-                ${school.website || school.phone ? `
-                <div class="detail-section">
+                ${currentSchool.website || currentSchool.phone ? `
+                <div class="info-section">
                     <h4><i class="fas fa-globe"></i> 聯絡資料 (Contact Information)</h4>
-                    ${school.phone ? `<p><strong>電話:</strong> ${school.phone}</p>` : ''}
-                    ${school.website ? `<p><strong>網址:</strong> <a href="${school.website}" target="_blank">${school.website}</a></p>` : ''}
+                    ${currentSchool.phone ? `<p><strong>電話:</strong> ${currentSchool.phone}</p>` : ''}
+                    ${currentSchool.website ? `<p><strong>網址:</strong> <a href="${currentSchool.website}" target="_blank">${currentSchool.website}</a></p>` : ''}
                 </div>
                 ` : ''}
             `;
         }
         
-        // Generate HTML for interview questions
+        // 加载面试题目
+        function loadInterviewQuestions() {
+            const questionsContent = document.getElementById('interview-questions-content');
+            
+            // 生成面试题目HTML
+            let interviewQuestionsHTML = '';
+            
+            if (currentSchool.previousInterviewQuestions) {
+                interviewQuestionsHTML = generateInterviewQuestionsHTML(currentSchool.previousInterviewQuestions);
+            } else {
+                interviewQuestionsHTML = `
+                    <div class="interview-header">
+                        <h2><i class="fas fa-history"></i> 歷年面試題目</h2>
+                    </div>
+                    <div class="no-questions">
+                        <i class="fas fa-file-alt" style="font-size: 3rem; margin-bottom: 20px; color: #bdc3c7;"></i>
+                        <h4>暫無面試題目資料</h4>
+                        <p>目前尚未收集到此學校的歷年面試題目</p>
+                    </div>
+                `;
+            }
+            
+            questionsContent.innerHTML = interviewQuestionsHTML;
+            
+            // 添加题目分类切换功能
+            addQuestionToggleFunctionality();
+        }
+        
+        // 生成面试题目HTML
         function generateInterviewQuestionsHTML(questionsData) {
-            let html = '';
+            let html = `
+                <div class="interview-header">
+                    <h2><i class="fas fa-history"></i> 歷年面試題目</h2>
+                </div>
+            `;
             
             for (const [year, data] of Object.entries(questionsData)) {
                 html += `
-                    <div class="interview-year">
+                    <div class="interview-year-section">
                         <div class="interview-year-header">
-                            <h5>${year} 年度面試題目</h5>
+                            <h5><i class="fas fa-calendar"></i> ${year} 年度面試題目</h5>
                             ${data.months ? `<span class="interview-months">${data.months.join(', ')}月</span>` : ''}
                         </div>
                 `;
@@ -592,7 +828,7 @@
                 if (data.questions && Object.keys(data.questions).length > 0) {
                     for (const [category, questions] of Object.entries(data.questions)) {
                         html += `
-                            <div class="question-category">
+                            <div class="question-category" data-category="${category}">
                                 <h6><i class="fas fa-question-circle"></i> ${category}</h6>
                                 <ul class="question-list">
                                     ${questions.map(question => `<li>${question}</li>`).join('')}
@@ -601,7 +837,7 @@
                         `;
                     }
                 } else {
-                    html += `<p class="no-questions">No questions available for this year.</p>`;
+                    html += `<p class="no-questions">此年度暫無面試題目資料</p>`;
                 }
                 
                 html += `</div>`;
@@ -610,13 +846,61 @@
             return html;
         }
         
-        // Show school list
+        // 添加题目分类切换功能
+        function addQuestionToggleFunctionality() {
+            const questionCategories = document.querySelectorAll('.question-category');
+            
+            // 创建题目分类列表
+            if (questionCategories.length > 0) {
+                const categories = Array.from(questionCategories).map(cat => cat.getAttribute('data-category'));
+                
+                let toggleHTML = '<div style="margin-bottom: 20px;">';
+                categories.forEach(category => {
+                    toggleHTML += `
+                        <button class="question-toggle" onclick="toggleQuestionCategory('${category}')">
+                            ${category}
+                        </button>
+                    `;
+                });
+                toggleHTML += '</div>';
+                
+                // 将切换按钮添加到面试题目区域的顶部
+                const interviewHeader = document.querySelector('.interview-header');
+                interviewHeader.insertAdjacentHTML('afterend', toggleHTML);
+            }
+        }
+        
+        // 切换题目分类显示
+        function toggleQuestionCategory(category) {
+            const categoryElement = document.querySelector(`.question-category[data-category="${category}"]`);
+            if (categoryElement) {
+                categoryElement.style.display = categoryElement.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+        
+        // 显示学校列表
         function showSchoolList() {
             document.getElementById('school-list-view').style.display = 'block';
             document.getElementById('school-detail-view').style.display = 'none';
         }
         
-        // Helper functions
+        // 切换学校信息显示/隐藏
+        function toggleSchoolInfo() {
+            const schoolInfoColumn = document.getElementById('school-info-column');
+            const toggleButton = document.getElementById('toggle-school-info');
+            
+            if (schoolInfoColumn.classList.contains('collapsed')) {
+                // 显示学校信息
+                schoolInfoColumn.classList.remove('collapsed');
+                toggleButton.innerHTML = '<i class="fas fa-eye-slash"></i> 隱藏學校資訊';
+            } else {
+                // 隐藏学校信息
+                schoolInfoColumn.classList.add('collapsed');
+                toggleButton.innerHTML = '<i class="fas fa-eye"></i> 顯示學校資訊';
+            }
+        }
+        
+        // 辅助函数
         function getBandingClass(banding) {
             if (banding.includes('1A')) return 'banding-1a';
             if (banding.includes('1B')) return 'banding-1b';
@@ -626,7 +910,7 @@
         
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleDateString('en-HK', {
+            return date.toLocaleDateString('zh-HK', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
@@ -644,8 +928,8 @@
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (diffDays > 0) return diffDays;
-            if (diffDays === 0) return '0 (Today)';
-            return 'Passed';
+            if (diffDays === 0) return '0 (今天)';
+            return '已過期';
         }
         
         function truncateText(text, maxLength) {
@@ -653,12 +937,18 @@
             return text.substring(0, maxLength) + '...';
         }
         
-        // Load data when page loads
-        document.addEventListener('DOMContentLoaded', loadSchoolsData);
-        
-        // Sidebar toggle
-        document.getElementById('sidebar-toggle').addEventListener('click', function() {
-            document.querySelector('.sidebar').classList.toggle('collapsed');
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载学校数据
+            loadSchoolsData();
+            
+            // 侧边栏切换
+            document.getElementById('sidebar-toggle').addEventListener('click', function() {
+                document.querySelector('.sidebar').classList.toggle('collapsed');
+            });
+            
+            // 学校信息显示/隐藏切换
+            document.getElementById('toggle-school-info').addEventListener('click', toggleSchoolInfo);
         });
     </script>
 </body>
