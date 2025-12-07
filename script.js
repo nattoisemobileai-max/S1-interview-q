@@ -79,6 +79,7 @@ async function loadData() {
         
         // Load all question files
         const questionFiles = [
+            { key: 'must', file: 'questions-must.json' },
             { key: 'chinese', file: 'questions-chi.json' },
             { key: 'english', file: 'questions-eng.json' },
             { key: 'math', file: 'questions-math.json' },
@@ -330,6 +331,7 @@ function displayQuestion(question) {
     
     // Get category display name
     const categoryNames = {
+        'must': 'MUST 必考',
         'chinese': 'Chinese 中文',
         'english': 'English 英文',
         'math': 'Mathematics 數學',
@@ -500,6 +502,7 @@ function openAnswerModal(questionId, category, text, difficulty) {
     
     // Get category display name
     const categoryNames = {
+        'must': 'MUST 必考',
         'chinese': 'Chinese 中文',
         'english': 'English 英文',
         'math': 'Mathematics 數學',
