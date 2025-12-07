@@ -41,6 +41,18 @@
       "category": "science",
       "text": "[[學而思-SPCC(P9)] 如果需要燃點火柴，你會選擇A鏡還是B鏡? ",
       "difficulty": "hard"
+    },
+    {
+      "id": 4008,
+      "category": "science",
+      "text": "[[學而思-Kings(P34)] 種子需要什麼才會發芽?",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4009,
+      "category": "science",
+      "text": "[[學而思-Kings(P34)] 為什麼植物需要空氣?",
+      "difficulty": "easy"
     }
   ]
 }
