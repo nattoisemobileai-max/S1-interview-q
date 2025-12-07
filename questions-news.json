@@ -3,9 +3,51 @@
     {
      "id": "NEW-0041",
       "category": "current_affairs",
-      "text": "[FW] 你最難忘的新聞是？",
+      "text": "[FW] 你最難忘的新聞是？/分享一項最近令你印象深刻的時事新聞。這項新聞會對你有什麼影響？",
       "difficulty": "medium",
       "modal_answer": "我最難忘的是關於「天問一號」火星探測器成功著陸的新聞。看著新聞裡科學家們激動相擁的畫面，我也感到非常振奮。這條新聞讓我深刻感受到國家科技實力的飛躍，和人類對未知宇宙永不停歇的探索精神。它不僅是一項成就，更激勵我們年輕一代要敢於夢想，努力學習科學知識，未來也許能參與更偉大的探索。"
+    },
+    {
+     "id": "NEW-0042",
+      "category": "current_affairs",
+      "text": "行政長官的名字是？/政務司司長的名字是？/律政司司長的名字是？",
+      "difficulty": "medium",
+      "modal_answer": "。"
+    },
+    {
+     "id": "NEW-0043",
+      "category": "current_affairs",
+      "text": "隨著香港人口老化，你認為這會帶來哪些社會問題？",
+      "difficulty": "medium",
+      "modal_answer": "。"
+    },
+    {
+     "id": "NEW-0044",
+      "category": "current_affairs",
+      "text": "在你看來，香港面臨的最大環境問題是什麼？你有什麼改善建議？",
+      "difficulty": "medium",
+     "modal_answer": "。"
+    },
+    {
+     "id": "NEW-0045",
+      "category": "current_affairs",
+      "text": "近年來，香港的旅遊業有所下滑。你認為應如何促進旅遊業的持續發展？",
+      "difficulty": "medium",
+      "modal_answer": "。"
+    },
+    {
+     "id": "NEW-0046",
+      "category": "current_affairs",
+      "text": "香港已設立創新及科技局，你認為香港在哪些創意工業領域有發展潛力？",
+      "difficulty": "medium",
+     "modal_answer": "。"
+    },
+    {
+     "id": "NEW-0047",
+      "category": "current_affairs",
+      "text": "你認為香港的行政長官需要具備哪些條件？",
+      "difficulty": "medium",
+      "modal_answer": "。"
     }
   ]
 }
