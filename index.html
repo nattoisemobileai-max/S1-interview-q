@@ -21,13 +21,13 @@
                 <h2><i class="fas fa-question-circle"></i> Interview Question Generator</h2>
                 <div class="category-section">
                     <div class="category-buttons">
-                        <button class="category-btn active" data-category="general">General Questions</button>
+                        <button class="category-btn" data-category="general">General Questions</button>
                         <button class="category-btn" data-category="academic">Academic</button>
                         <button class="category-btn" data-category="personal">Personal</button>
                         <button class="category-btn" data-category="school">School Specific</button>
                         <button class="category-btn" data-category="current">Current Affairs</button>
                         <button class="category-btn" data-category="creative">Creative Thinking</button>
-                        <button class="category-btn all-btn" id="all-questions">All Categories</button>
+                        <button class="category-btn all-btn active" data-category="all">All Categories</button>
                     </div>
                     
                     <div class="questions-per-category">
@@ -37,6 +37,7 @@
                             <button class="count-btn" data-count="2">2</button>
                             <button class="count-btn" data-count="3">3</button>
                             <button class="count-btn active" data-count="5">5</button>
+                            <button class="count-btn all-count-btn active" data-count="all">All</button>
                         </div>
                     </div>
                 </div>
@@ -48,10 +49,13 @@
                     <button id="clear-btn" class="clear-btn">
                         <i class="fas fa-trash-alt"></i> Clear All
                     </button>
+                    <button id="view-history-btn" class="history-btn">
+                        <i class="fas fa-history"></i> View History
+                    </button>
                 </div>
                 
                 <div class="generated-questions">
-                    <h3>Generated Questions</h3>
+                    <h3>Generated Questions <span id="questions-count-badge">0</span></h3>
                     <div id="questions-container"></div>
                 </div>
             </div>
@@ -82,13 +86,31 @@
                     <div class="stat-label">Question Pool</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="generated-count">0</div>
+                    <div class="stat-value" id="generated-today">0</div>
                     <div class="stat-label">Generated Today</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-value" id="band1-count">0</div>
-                    <div class="stat-label">Band 1 Schools</div>
+                    <div class="stat-value" id="completed-today">0</div>
+                    <div class="stat-label">Completed Today</div>
                 </div>
+            </div>
+        </div>
+        
+        <div class="card history-log" id="history-log-card" style="display: none;">
+            <h2><i class="fas fa-history"></i> Practice History</h2>
+            <div class="history-controls">
+                <button id="close-history-btn" class="close-btn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+                <button id="clear-history-btn" class="clear-btn">
+                    <i class="fas fa-trash"></i> Clear History
+                </button>
+                <button id="download-history-btn" class="download-btn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+            </div>
+            <div id="history-container" class="history-container">
+                <p class="placeholder">No practice history yet. Complete some questions to see your history here.</p>
             </div>
         </div>
     </div>
