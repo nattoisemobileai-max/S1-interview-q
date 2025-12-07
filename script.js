@@ -1,4 +1,4 @@
-// Enhanced script.js with Duolingo-style features
+// Enhanced script.js with Duolingo-style features and complete functionality
 
 // Global variables
 let schoolsData = [];
@@ -11,11 +11,12 @@ let questionsData = {
     creative: []
 };
 let studentAnswers = [];
-let selectedCategories = [];
+let selectedCategories = ['all'];
 let questionsPerCategory = 5;
 let generatedCount = 0;
 let savedAnswersCount = 0;
 let currentQuestionData = null;
+let studentXP = 0;
 
 // DOM elements
 const questionsContainer = document.getElementById('questions-container');
@@ -31,6 +32,7 @@ const historyLogCard = document.getElementById('history-log-card');
 const historyContainer = document.getElementById('history-container');
 const categoryButtons = document.querySelectorAll('.category-btn');
 const countButtons = document.querySelectorAll('.count-btn');
+const saveAllBtn = document.getElementById('save-all-btn');
 
 // Modal elements
 const answerModal = document.getElementById('answer-modal');
@@ -43,19 +45,27 @@ const modalCategory = document.getElementById('modal-category');
 const modalQuestionText = document.getElementById('modal-question-text');
 const modalQuestionId = document.getElementById('modal-question-id');
 const modalExampleAnswer = document.getElementById('modal-example-answer');
+const modalCharacterCount = document.getElementById('modal-character-count');
+
+// Student profile elements
+const studentNameEl = document.getElementById('student-name');
+const studentProgressEl = document.getElementById('student-progress');
+const studentLevelEl = document.getElementById('student-level');
+const streakCounterEl = document.getElementById('streak-counter');
+const savedAnswersEl = document.getElementById('saved-answers');
+const totalXPEl = document.getElementById('total-xp');
 
 // Statistics elements
 const totalSchoolsEl = document.getElementById('total-schools');
 const totalQuestionsEl = document.getElementById('total-questions');
 const generatedTodayEl = document.getElementById('generated-today');
-const savedAnswersEl = document.getElementById('saved-answers');
+const completedTodayEl = document.getElementById('completed-today');
 const questionsCountBadge = document.getElementById('questions-count-badge');
 
-// New Elements for Duolingo-style features
-const studentNameEl = document.getElementById('student-name');
-const studentProgressEl = document.getElementById('student-progress');
-const studentLevelEl = document.getElementById('student-level');
-const streakCounterEl = document.getElementById('streak-counter');
+// Example toast element
+const exampleToast = document.getElementById('example-toast');
+const exampleToastBody = document.getElementById('example-toast-body');
+const closeExampleToastBtn = document.querySelector('.close-example-toast');
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', function() {
@@ -120,11 +130,19 @@ function loadStudentData() {
             console.error('Error parsing saved answers:', e);
         }
     }
+    
+    // Load student XP
+    const xp = localStorage.getItem('studentXP');
+    if (xp) {
+        studentXP = parseInt(xp);
+        totalXPEl.textContent = studentXP;
+    }
 }
 
 // Save student data to localStorage
 function saveStudentData() {
     localStorage.setItem('studentAnswers', JSON.stringify(studentAnswers));
+    localStorage.setItem('studentXP', studentXP.toString());
 }
 
 // Initialize student profile
@@ -137,10 +155,13 @@ function initializeStudentProfile() {
     studentNameEl.textContent = studentName;
     streakCounterEl.textContent = studentStreak;
     studentLevelEl.textContent = `Level ${studentLevel}`;
-    studentProgressEl.textContent = `${studentProgress}%`;
     
     // Update progress bar width
-    studentProgressEl.parentElement.style.width = `${studentProgress}%`;
+    const progressBar = studentProgressEl;
+    progressBar.style.width = `${studentProgress}%`;
+    
+    // Update completed today count
+    updateCompletedToday();
 }
 
 // Populate school dropdown
@@ -171,7 +192,7 @@ function setDefaultSelections() {
 
 // Setup event listeners
 function setupEventListeners() {
-    // Category buttons - Duolingo style: single selection
+    // Category buttons
     categoryButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             const category = this.dataset.category;
@@ -235,25 +256,34 @@ function setupEventListeners() {
         if (schoolId) {
             displaySchoolDetails(schoolId);
         } else {
-            schoolDetails.innerHTML = '<p class="placeholder">Select a school from the dropdown to view detailed information</p>';
+            schoolDetails.innerHTML = '<div class="empty-state"><i class="fas fa-university fa-3x"></i><p>Select a school from the dropdown to view detailed information</p></div>';
         }
     });
     
     // Modal event listeners
-    modalCloseBtn.addEventListener('click', closeModal);
     modalCancelBtn.addEventListener('click', closeModal);
     modalSaveBtn.addEventListener('click', saveAnswer);
     modalSaveDoneBtn.addEventListener('click', saveAnswerAndMarkDone);
     
-    // Close modal when clicking outside
-    answerModal.addEventListener('click', function(e) {
-        if (e.target === answerModal) {
-            closeModal();
+    // Modal answer input character count
+    modalAnswerInput.addEventListener('input', function() {
+        modalCharacterCount.textContent = this.value.length;
+    });
+    
+    // Close modal when clicking outside (handled by Bootstrap)
+    
+    // Example toast close button
+    closeExampleToastBtn.addEventListener('click', hideExampleToast);
+    
+    // Close example toast when clicking outside
+    exampleToast.addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideExampleToast();
         }
     });
 }
 
-// Generate questions based on selected categories - FIXED
+// Generate questions based on selected categories
 function generateQuestions() {
     // Clear previous questions
     questionsContainer.innerHTML = '';
@@ -331,28 +361,21 @@ function displayQuestion(question) {
     };
     
     // Check if this question has a saved answer
-    const savedAnswer = studentAnswers.find(answer => answer.questionId === question.id);
+    const savedAnswer = studentAnswers.find(answer => {
+        if (question.category === 'chinese') {
+            return answer.questionId === question.id;
+        } else {
+            return answer.questionId == question.id;
+        }
+    });
     const isCompleted = savedAnswer && savedAnswer.completed;
     
     if (isCompleted) {
         questionEl.classList.add('completed');
     }
     
-    // Truncate answer preview if too long
-    let answerPreview = '';
-    if (savedAnswer && savedAnswer.answer) {
-        const truncatedAnswer = savedAnswer.answer.length > 200 
-            ? savedAnswer.answer.substring(0, 200) + '...' 
-            : savedAnswer.answer;
-        answerPreview = `
-            <div class="answer-preview">
-                <p><strong>Your Answer:</strong> ${truncatedAnswer}</p>
-                <button class="edit-answer-btn" onclick="openAnswerModal(${question.id}, '${question.category}', '${question.text.replace(/'/g, "\\'")}', ${question.difficulty === 'hard' ? 3 : question.difficulty === 'medium' ? 2 : 1})">
-                    <i class="fas fa-edit"></i> Edit
-                </button>
-            </div>
-        `;
-    }
+    // Calculate XP for this question
+    const xpValue = question.difficulty === 'hard' ? 30 : question.difficulty === 'medium' ? 20 : 10;
     
     questionEl.innerHTML = `
         <div class="question-item-header">
@@ -362,36 +385,57 @@ function displayQuestion(question) {
                 <div class="difficulty-badge difficulty-${question.difficulty}">${question.difficulty}</div>
             </div>
             <div class="question-header-right">
-                <button class="done-btn ${isCompleted ? 'completed' : ''}" onclick="markQuestionAsDone(${question.id})">
+                <button class="done-btn ${isCompleted ? 'completed' : ''}" onclick="markQuestionAsDone('${question.id}')">
                     <i class="fas fa-check"></i> ${isCompleted ? 'Completed' : 'Mark as Done'}
                 </button>
             </div>
         </div>
         
-        <div class="text">${question.text}</div>
+        <div class="question-text">${question.text}</div>
         
-        ${answerPreview}
+        ${savedAnswer ? `
+        <div class="answer-preview">
+            <p><strong>Your Answer:</strong> ${savedAnswer.answer.length > 150 ? savedAnswer.answer.substring(0, 150) + '...' : savedAnswer.answer}</p>
+            <button class="edit-answer-btn" onclick="openAnswerModal('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}')">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+        </div>
+        ` : ''}
         
         <div class="answer-section">
-            <div class="answer-label">Your Answer:</div>
-            <textarea class="student-answer-input" placeholder="Type your answer here..." rows="3" data-question-id="${question.id}">${savedAnswer ? savedAnswer.answer : ''}</textarea>
+            <div class="answer-header">
+                <div class="answer-label">
+                    <i class="fas fa-pencil-alt"></i>
+                    Your Answer
+                </div>
+                <div class="character-count" data-question-id="${question.id}">
+                    ${savedAnswer ? savedAnswer.answer.length : 0} characters
+                </div>
+            </div>
+            
+            <textarea class="student-answer-input" 
+                      placeholder="Type your answer here..." 
+                      rows="3" 
+                      data-question-id="${question.id}"
+                      oninput="updateCharacterCount(this)">${savedAnswer ? savedAnswer.answer : ''}</textarea>
+            
             <div class="answer-actions">
-                <button class="answer-save-btn" onclick="saveQuickAnswer(${question.id})">
-                    <i class="fas fa-save"></i> Save
+                <button class="answer-save-btn" onclick="saveQuickAnswer('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}')">
+                    <i class="fas fa-save"></i> Save Answer
                 </button>
-                <button class="answer-modal-btn" onclick="openAnswerModal(${question.id}, '${question.category}', '${question.text.replace(/'/g, "\\'")}', ${question.difficulty === 'hard' ? 3 : question.difficulty === 'medium' ? 2 : 1})">
-                    <i class="fas fa-expand"></i> Full Editor
+                <button class="answer-modal-btn" onclick="openAnswerModal('${question.id}', '${question.category}', '${question.text.replace(/'/g, "\\'")}', '${question.difficulty}')">
+                    <i class="fas fa-expand-alt"></i> Full Editor
                 </button>
                 ${question.modal_answer ? `
-                <button class="hint-btn" onclick="showModalAnswer(${question.id})">
-                    <i class="fas fa-lightbulb"></i> See Example Answer
+                <button class="hint-btn" onclick="showExampleAnswer('${question.id}')">
+                    <i class="fas fa-lightbulb"></i> Example Answer
                 </button>
                 ` : ''}
             </div>
         </div>
         
         <div class="question-footer">
-            <div class="xp-badge">+${question.difficulty === 'hard' ? '30' : question.difficulty === 'medium' ? '20' : '10'} XP</div>
+            <div class="xp-badge">+${xpValue} XP</div>
             <div class="time-estimate">${question.difficulty === 'hard' ? '5-7 min' : question.difficulty === 'medium' ? '3-5 min' : '1-3 min'}</div>
         </div>
     `;
@@ -399,8 +443,8 @@ function displayQuestion(question) {
     questionsContainer.appendChild(questionEl);
 }
 
-// Open answer modal with example answer
-function openAnswerModal(questionId, category, text, difficultyLevel) {
+// Open answer modal
+function openAnswerModal(questionId, category, text, difficulty) {
     // Find the question to get modal_answer
     const question = findQuestionById(questionId, category);
     
@@ -409,7 +453,7 @@ function openAnswerModal(questionId, category, text, difficultyLevel) {
         id: questionId,
         category: category,
         text: text,
-        difficulty: difficultyLevel,
+        difficulty: difficulty,
         modal_answer: question ? question.modal_answer : null
     };
     
@@ -431,7 +475,7 @@ function openAnswerModal(questionId, category, text, difficultyLevel) {
     // Update example answer if available
     if (currentQuestionData.modal_answer) {
         modalExampleAnswer.innerHTML = `
-            <h4>Example Answer:</h4>
+            <h6><i class="fas fa-lightbulb"></i> Example Answer:</h6>
             <div class="example-answer-content">${currentQuestionData.modal_answer}</div>
         `;
         modalExampleAnswer.style.display = 'block';
@@ -440,16 +484,22 @@ function openAnswerModal(questionId, category, text, difficultyLevel) {
     }
     
     // Check for existing answer
-    const savedAnswer = studentAnswers.find(answer => answer.questionId === questionId);
+    const savedAnswer = studentAnswers.find(answer => answer.questionId == questionId);
     if (savedAnswer) {
         modalAnswerInput.value = savedAnswer.answer;
     } else {
         modalAnswerInput.value = '';
     }
     
-    // Show modal
-    answerModal.classList.add('show');
-    modalAnswerInput.focus();
+    // Update character count
+    modalCharacterCount.textContent = modalAnswerInput.value.length;
+    
+    // Show modal using Bootstrap
+    const modal = new bootstrap.Modal(answerModal);
+    modal.show();
+    
+    // Focus on textarea
+    setTimeout(() => modalAnswerInput.focus(), 500);
 }
 
 // Find question by ID and category
@@ -457,87 +507,75 @@ function findQuestionById(questionId, category) {
     const questions = questionsData[category];
     if (!questions) return null;
     
-    if (category === 'chinese') {
-        return questions.find(q => q.id === `CHI-${String(questionId).padStart(4, '0')}`);
-    } else if (category === 'english') {
-        return questions.find(q => q.id === questionId);
-    } else {
-        return questions.find(q => q.id == questionId);
-    }
+    return questions.find(q => q.id == questionId || q.id === questionId);
 }
 
-// Show modal answer in a toast
-function showModalAnswer(questionId) {
-    const question = findQuestionById(questionId, 'chinese');
-    if (!question || !question.modal_answer) return;
+// Show example answer in toast
+function showExampleAnswer(questionId) {
+    // Find the question
+    let question = null;
+    for (const category in questionsData) {
+        question = questionsData[category].find(q => q.id == questionId || q.id === questionId);
+        if (question) break;
+    }
     
-    const modalAnswerToast = document.createElement('div');
-    modalAnswerToast.className = 'modal-answer-toast';
-    modalAnswerToast.innerHTML = `
-        <div class="modal-answer-header">
-            <h4><i class="fas fa-lightbulb"></i> Example Answer</h4>
-            <button class="close-toast" onclick="this.parentElement.parentElement.remove()">&times;</button>
+    if (!question || !question.modal_answer) {
+        showNotification('No example answer available for this question');
+        return;
+    }
+    
+    // Update toast content
+    exampleToastBody.innerHTML = `
+        <div class="question-preview">
+            <strong>Question:</strong> ${question.text}
         </div>
-        <div class="modal-answer-content">${question.modal_answer}</div>
-        <div class="modal-answer-note">This is just an example. Your answer can be different!</div>
+        <div class="answer-preview">
+            <strong>Example Answer:</strong><br>
+            ${question.modal_answer}
+        </div>
     `;
     
-    document.body.appendChild(modalAnswerToast);
+    // Show toast
+    exampleToast.classList.add('show');
     
-    // Auto-remove after 10 seconds
-    setTimeout(() => {
-        if (modalAnswerToast.parentElement) {
-            modalAnswerToast.parentElement.removeChild(modalAnswerToast);
-        }
-    }, 10000);
+    // Auto-hide after 15 seconds
+    setTimeout(hideExampleToast, 15000);
+}
+
+// Hide example toast
+function hideExampleToast() {
+    exampleToast.classList.remove('show');
 }
 
 // Save answer from quick input
-function saveQuickAnswer(questionId) {
+function saveQuickAnswer(questionId, category, text, difficulty) {
     const textarea = document.querySelector(`.student-answer-input[data-question-id="${questionId}"]`);
+    if (!textarea) {
+        console.error('Textarea not found for question:', questionId);
+        return;
+    }
+    
     const answerText = textarea.value.trim();
+    const saveBtn = textarea.parentElement.querySelector('.answer-save-btn');
     
     if (!answerText) {
         showNotification('Please write an answer before saving');
-        return;
-    }
-    
-    // Find question to get category and text
-    let question = null;
-    let category = null;
-    
-    // Search through all categories
-    for (const cat in questionsData) {
-        const found = questionsData[cat].find(q => {
-            if (cat === 'chinese') {
-                return q.id === `CHI-${String(questionId).padStart(4, '0')}`;
-            } else if (cat === 'english') {
-                return q.id === questionId;
-            } else {
-                return q.id == questionId;
-            }
-        });
-        
-        if (found) {
-            question = found;
-            category = cat;
-            break;
+        if (saveBtn) {
+            saveBtn.classList.add('shake');
+            setTimeout(() => saveBtn.classList.remove('shake'), 500);
         }
-    }
-    
-    if (!question) {
-        showNotification('Question not found');
         return;
     }
     
-    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId === questionId);
+    const difficultyLevel = difficulty === 'hard' ? 3 : difficulty === 'medium' ? 2 : 1;
+    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == questionId);
     
     const answerData = {
         questionId: questionId,
         category: category,
-        questionText: question.text,
+        questionText: text,
         answer: answerText,
-        difficulty: question.difficulty === 'hard' ? 3 : question.difficulty === 'medium' ? 2 : 1,
+        difficulty: difficultyLevel,
         completed: existingAnswerIndex >= 0 ? studentAnswers[existingAnswerIndex].completed : false,
         date: getCurrentDate(),
         time: getCurrentTime(),
@@ -552,6 +590,9 @@ function saveQuickAnswer(questionId) {
         studentAnswers.push(answerData);
         savedAnswersCount++;
     }
+    
+    // Add XP
+    addXP(difficultyLevel * 10);
     
     // Save to localStorage
     saveStudentData();
@@ -567,23 +608,48 @@ function saveQuickAnswer(questionId) {
     updateProgress();
     
     // Show success animation
-    const saveBtn = document.querySelector(`.answer-save-btn[onclick="saveQuickAnswer(${questionId})"]`);
-    saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
-    saveBtn.style.backgroundColor = '#2ecc71';
+    if (saveBtn) {
+        saveBtn.classList.add('saved');
+        const originalHTML = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<i class="fas fa-check"></i> Saved!';
+        saveBtn.style.cursor = 'default';
+        
+        // Disable button temporarily
+        saveBtn.disabled = true;
+        
+        setTimeout(() => {
+            saveBtn.classList.remove('saved');
+            saveBtn.innerHTML = originalHTML;
+            saveBtn.disabled = false;
+            saveBtn.style.cursor = 'pointer';
+        }, 2000);
+    }
     
-    setTimeout(() => {
-        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save';
-        saveBtn.style.backgroundColor = '';
-    }, 2000);
-    
-    showNotification(`Answer saved successfully! +${answerData.difficulty * 10} XP`);
+    showNotification(`Answer saved successfully! +${difficultyLevel * 10} XP`);
+}
+
+// Update character count for textareas
+function updateCharacterCount(textarea) {
+    const count = textarea.value.length;
+    const countElement = textarea.parentElement.querySelector('.character-count');
+    if (countElement) {
+        countElement.textContent = `${count} characters`;
+        
+        // Change color based on length
+        if (count < 10) {
+            countElement.style.color = '#e74c3c';
+        } else if (count < 50) {
+            countElement.style.color = '#e67e22';
+        } else {
+            countElement.style.color = '#27ae60';
+        }
+    }
 }
 
 // Close modal
 function closeModal() {
-    answerModal.classList.remove('show');
-    currentQuestionData = null;
-    modalAnswerInput.value = '';
+    const modal = bootstrap.Modal.getInstance(answerModal);
+    if (modal) modal.hide();
 }
 
 // Save answer from modal
@@ -596,14 +662,15 @@ function saveAnswer() {
         return;
     }
     
-    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId === currentQuestionData.id);
+    const difficultyLevel = currentQuestionData.difficulty === 'hard' ? 3 : currentQuestionData.difficulty === 'medium' ? 2 : 1;
+    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == currentQuestionData.id);
     
     const answerData = {
         questionId: currentQuestionData.id,
         category: currentQuestionData.category,
         questionText: currentQuestionData.text,
         answer: answerText,
-        difficulty: currentQuestionData.difficulty,
+        difficulty: difficultyLevel,
         completed: existingAnswerIndex >= 0 ? studentAnswers[existingAnswerIndex].completed : false,
         date: getCurrentDate(),
         time: getCurrentTime(),
@@ -619,6 +686,9 @@ function saveAnswer() {
         savedAnswersCount++;
     }
     
+    // Add XP
+    addXP(difficultyLevel * 10);
+    
     // Save to localStorage
     saveStudentData();
     
@@ -636,7 +706,7 @@ function saveAnswer() {
     closeModal();
     
     // Show notification
-    showNotification(`Answer saved successfully! +${currentQuestionData.difficulty * 10} XP`);
+    showNotification(`Answer saved successfully! +${difficultyLevel * 10} XP`);
 }
 
 // Save answer and mark as done
@@ -649,14 +719,15 @@ function saveAnswerAndMarkDone() {
         return;
     }
     
-    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId === currentQuestionData.id);
+    const difficultyLevel = currentQuestionData.difficulty === 'hard' ? 3 : currentQuestionData.difficulty === 'medium' ? 2 : 1;
+    const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == currentQuestionData.id);
     
     const answerData = {
         questionId: currentQuestionData.id,
         category: currentQuestionData.category,
         questionText: currentQuestionData.text,
         answer: answerText,
-        difficulty: currentQuestionData.difficulty,
+        difficulty: difficultyLevel,
         completed: true,
         date: getCurrentDate(),
         time: getCurrentTime(),
@@ -672,6 +743,9 @@ function saveAnswerAndMarkDone() {
         savedAnswersCount++;
     }
     
+    // Add XP for completion
+    addXP(difficultyLevel * 15);
+    
     // Save to localStorage
     saveStudentData();
     
@@ -689,7 +763,70 @@ function saveAnswerAndMarkDone() {
     closeModal();
     
     // Show notification
-    showNotification(`Answer saved and marked as completed! +${currentQuestionData.difficulty * 15} XP`);
+    showNotification(`Answer saved and marked as completed! +${difficultyLevel * 15} XP`);
+}
+
+// Save all answers
+function saveAllAnswers() {
+    const textareas = document.querySelectorAll('.student-answer-input');
+    let savedCount = 0;
+    
+    textareas.forEach(textarea => {
+        const questionId = textarea.dataset.questionId;
+        const questionElement = document.querySelector(`.question-item[data-id="${questionId}"]`);
+        
+        if (!questionElement) return;
+        
+        const category = questionElement.dataset.category;
+        const questionText = questionElement.querySelector('.question-text').textContent;
+        const difficulty = questionElement.querySelector('.difficulty-badge').className.includes('hard') ? 'hard' : 
+                          questionElement.querySelector('.difficulty-badge').className.includes('medium') ? 'medium' : 'easy';
+        
+        const answerText = textarea.value.trim();
+        
+        if (answerText) {
+            const difficultyLevel = difficulty === 'hard' ? 3 : difficulty === 'medium' ? 2 : 1;
+            const existingAnswerIndex = studentAnswers.findIndex(answer => answer.questionId == questionId);
+            
+            const answerData = {
+                questionId: questionId,
+                category: category,
+                questionText: questionText,
+                answer: answerText,
+                difficulty: difficultyLevel,
+                completed: existingAnswerIndex >= 0 ? studentAnswers[existingAnswerIndex].completed : false,
+                date: getCurrentDate(),
+                time: getCurrentTime(),
+                timestamp: new Date().toISOString()
+            };
+            
+            if (existingAnswerIndex >= 0) {
+                studentAnswers[existingAnswerIndex] = answerData;
+            } else {
+                studentAnswers.push(answerData);
+                savedAnswersCount++;
+            }
+            
+            addXP(difficultyLevel * 10);
+            savedCount++;
+        }
+    });
+    
+    if (savedCount > 0) {
+        saveStudentData();
+        savedAnswersEl.textContent = savedAnswersCount;
+        updateProgress();
+        showNotification(`Saved ${savedCount} answers! +${savedCount * 10} XP`);
+    } else {
+        showNotification('No answers to save');
+    }
+}
+
+// Add XP to student
+function addXP(amount) {
+    studentXP += amount;
+    totalXPEl.textContent = studentXP;
+    localStorage.setItem('studentXP', studentXP.toString());
 }
 
 // Update streak
@@ -719,23 +856,27 @@ function updateProgress() {
     // Calculate progress percentage (max 100%)
     const progress = Math.min(100, Math.round((completedAnswers / Math.max(1, totalAnswers)) * 100));
     
-    // Calculate level based on XP (10 XP per question difficulty)
-    let totalXP = 0;
-    studentAnswers.forEach(answer => {
-        totalXP += answer.completed ? answer.difficulty * 15 : answer.difficulty * 10;
-    });
-    
-    const level = Math.floor(totalXP / 1000) + 1;
-    const levelProgress = totalXP % 1000;
+    // Calculate level based on XP
+    const level = Math.floor(studentXP / 1000) + 1;
     
     localStorage.setItem('studentProgress', progress.toString());
     localStorage.setItem('studentLevel', level.toString());
     
-    studentProgressEl.textContent = `${progress}%`;
     studentLevelEl.textContent = `Level ${level}`;
     
     // Update progress bar width
-    studentProgressEl.parentElement.style.width = `${progress}%`;
+    const progressBar = studentProgressEl;
+    progressBar.style.width = `${progress}%`;
+}
+
+// Update completed today count
+function updateCompletedToday() {
+    const today = getCurrentDate();
+    const completedToday = studentAnswers.filter(answer => 
+        answer.completed && answer.date === today
+    ).length;
+    
+    completedTodayEl.textContent = completedToday;
 }
 
 // Update question display after saving answer
@@ -744,78 +885,71 @@ function updateQuestionDisplay(questionId) {
     if (!questionElement) return;
     
     // Get saved answer
-    const savedAnswer = studentAnswers.find(answer => answer.questionId === questionId);
+    const savedAnswer = studentAnswers.find(answer => answer.questionId == questionId);
     
-    // Update answer textarea
-    const textarea = questionElement.querySelector('.student-answer-input');
-    if (textarea && savedAnswer) {
-        textarea.value = savedAnswer.answer;
-    }
-    
-    // Update done button
-    const doneBtn = questionElement.querySelector('.done-btn');
-    if (doneBtn) {
-        if (savedAnswer && savedAnswer.completed) {
-            doneBtn.classList.add('completed');
-            doneBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
-            doneBtn.style.backgroundColor = '#2ecc71';
-        } else {
-            doneBtn.classList.remove('completed');
-            doneBtn.innerHTML = '<i class="fas fa-check"></i> Mark as Done';
-            doneBtn.style.backgroundColor = '';
-        }
-    }
-    
-    // Add/update answer preview
-    let answerPreview = questionElement.querySelector('.answer-preview');
-    if (savedAnswer && savedAnswer.answer) {
-        const truncatedAnswer = savedAnswer.answer.length > 200 
-            ? savedAnswer.answer.substring(0, 200) + '...' 
-            : savedAnswer.answer;
-        
-        if (answerPreview) {
-            answerPreview.innerHTML = `
-                <p><strong>Your Answer:</strong> ${truncatedAnswer}</p>
-                <button class="edit-answer-btn" onclick="openAnswerModal(${questionId}, '${savedAnswer.category}', '${savedAnswer.questionText.replace(/'/g, "\\'")}', ${savedAnswer.difficulty})">
-                    <i class="fas fa-edit"></i> Edit
-                </button>
-            `;
-        } else {
+    if (savedAnswer) {
+        // Update answer preview
+        let answerPreview = questionElement.querySelector('.answer-preview');
+        if (!answerPreview) {
             answerPreview = document.createElement('div');
             answerPreview.className = 'answer-preview';
-            answerPreview.innerHTML = `
-                <p><strong>Your Answer:</strong> ${truncatedAnswer}</p>
-                <button class="edit-answer-btn" onclick="openAnswerModal(${questionId}, '${savedAnswer.category}', '${savedAnswer.questionText.replace(/'/g, "\\'")}', ${savedAnswer.difficulty})">
-                    <i class="fas fa-edit"></i> Edit
-                </button>
-            `;
-            
-            // Insert after question text
-            const questionText = questionElement.querySelector('.text');
-            if (questionText && questionText.nextSibling) {
-                questionElement.insertBefore(answerPreview, questionText.nextSibling);
+            const questionText = questionElement.querySelector('.question-text');
+            questionText.parentNode.insertBefore(answerPreview, questionText.nextSibling);
+        }
+        
+        answerPreview.innerHTML = `
+            <p><strong>Your Answer:</strong> ${savedAnswer.answer.length > 150 ? savedAnswer.answer.substring(0, 150) + '...' : savedAnswer.answer}</p>
+            <button class="edit-answer-btn" onclick="openAnswerModal('${questionId}', '${savedAnswer.category}', '${savedAnswer.questionText.replace(/'/g, "\\'")}', '${savedAnswer.difficulty === 3 ? 'hard' : savedAnswer.difficulty === 2 ? 'medium' : 'easy'}')">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+        `;
+        
+        // Update done button
+        const doneBtn = questionElement.querySelector('.done-btn');
+        if (doneBtn) {
+            if (savedAnswer.completed) {
+                doneBtn.classList.add('completed');
+                doneBtn.innerHTML = '<i class="fas fa-check"></i> Completed';
+                doneBtn.style.backgroundColor = '#2ecc71';
+            } else {
+                doneBtn.classList.remove('completed');
+                doneBtn.innerHTML = '<i class="fas fa-check"></i> Mark as Done';
+                doneBtn.style.backgroundColor = '';
             }
         }
-    } else if (answerPreview) {
-        answerPreview.remove();
+        
+        // Update textarea value
+        const textarea = questionElement.querySelector('.student-answer-input');
+        if (textarea) {
+            textarea.value = savedAnswer.answer;
+            updateCharacterCount(textarea);
+        }
+        
+        // Update completed styling
+        if (savedAnswer.completed) {
+            questionElement.classList.add('completed');
+        } else {
+            questionElement.classList.remove('completed');
+        }
     }
     
-    // Update completed styling
-    if (savedAnswer && savedAnswer.completed) {
-        questionElement.classList.add('completed');
-    } else {
-        questionElement.classList.remove('completed');
-    }
+    updateCompletedToday();
 }
 
 // Mark a question as done
 function markQuestionAsDone(questionId) {
     // Find the answer
-    const answerIndex = studentAnswers.findIndex(answer => answer.questionId === questionId);
+    const answerIndex = studentAnswers.findIndex(answer => answer.questionId == questionId);
     
     if (answerIndex >= 0) {
         // Toggle completed status
-        studentAnswers[answerIndex].completed = !studentAnswers[answerIndex].completed;
+        const wasCompleted = studentAnswers[answerIndex].completed;
+        studentAnswers[answerIndex].completed = !wasCompleted;
+        
+        // Add/remove XP
+        if (!wasCompleted) {
+            addXP(studentAnswers[answerIndex].difficulty * 5); // Bonus XP for completion
+        }
         
         // Save to localStorage
         saveStudentData();
@@ -828,7 +962,7 @@ function markQuestionAsDone(questionId) {
         
         // Show notification
         const status = studentAnswers[answerIndex].completed ? 'marked as completed' : 'marked as incomplete';
-        showNotification(`Question ${status}!`);
+        showNotification(`Question ${status}! ${!wasCompleted ? `+${studentAnswers[answerIndex].difficulty * 5} XP` : ''}`);
     } else {
         showNotification('Please save an answer first before marking as done');
     }
@@ -836,12 +970,135 @@ function markQuestionAsDone(questionId) {
 
 // Display school details
 function displaySchoolDetails(schoolId) {
-    // ... (keep existing displaySchoolDetails function as is)
+    const school = schoolsData.schools.find(s => s.id === schoolId);
+    
+    if (!school) {
+        schoolDetails.innerHTML = '<div class="empty-state"><i class="fas fa-university fa-3x"></i><p>School information not found</p></div>';
+        return;
+    }
+    
+    // Get banding class
+    const bandingClass = `banding-${school.banding.toLowerCase().replace(' ', '')}`;
+    
+    // Format target interview date if it exists
+    let targetDateHTML = '';
+    if (school.targetInterviewDate) {
+        const date = new Date(school.targetInterviewDate);
+        const formattedDate = date.toLocaleDateString('en-HK', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            weekday: 'long'
+        });
+        const daysRemaining = calculateDaysRemaining(school.targetInterviewDate);
+        
+        // Determine color class based on urgency
+        let dateClass = 'date-normal';
+        if (daysRemaining.includes('today')) {
+            dateClass = 'date-urgent';
+        } else if (daysRemaining.includes('passed')) {
+            dateClass = 'date-past';
+        } else {
+            const daysMatch = daysRemaining.match(/\d+/);
+            if (daysMatch) {
+                const daysNum = parseInt(daysMatch[0]);
+                if (daysNum <= 7) dateClass = 'date-urgent';
+                else if (daysNum <= 30) dateClass = 'date-near';
+            }
+        }
+        
+        targetDateHTML = `
+            <div class="school-detail-item">
+                <h3><i class="fas fa-calendar-alt"></i> Target Interview Date</h3>
+                <p><strong>Scheduled Date:</strong> ${formattedDate}</p>
+                <p><strong>Status:</strong> <span class="date-badge ${dateClass}">${daysRemaining}</span></p>
+            </div>
+        `;
+    }
+    
+    schoolDetails.innerHTML = `
+        <div class="school-header-container">
+            <div class="school-header-image">
+                <img src="${school.image || 'img/default-school.jpg'}" alt="${school.name}" onerror="this.src='img/default-school.jpg'">
+            </div>
+            <div class="school-header-names">
+                <div class="school-english-name">
+                    ${school.name}
+                    <span class="banding-badge ${bandingClass}">${school.banding}</span>
+                </div>
+                <div class="school-chinese-name">
+                    ${school.chineseName}
+                </div>
+            </div>
+        </div>
+        
+        ${targetDateHTML}
+        
+        <div class="school-detail-item">
+            <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+            <div class="basic-info-grid">
+                <div><strong>Type:</strong> ${school.type}</div>
+                <div><strong>Religion:</strong> ${school.religion}</div>
+                <div><strong>Gender:</strong> ${school.gender}</div>
+                <div><strong>District:</strong> ${school.district}</div>
+                <div><strong>Medium of Instruction:</strong> ${school.language}</div>
+            </div>
+        </div>
+        
+        ${school.schoolMotto || school.chineseMotto ? `
+        <div class="school-detail-item">
+            <h3><i class="fas fa-quote-left"></i> School Motto / 校訓</h3>
+            ${school.schoolMotto ? `<p><strong>English:</strong> "${school.schoolMotto}"</p>` : ''}
+            ${school.chineseMotto ? `<p><strong>Chinese:</strong> "${school.chineseMotto}"</p>` : ''}
+        </div>
+        ` : ''}
+        
+        <div class="school-detail-item">
+            <h3><i class="fas fa-bullseye"></i> Mission Statement</h3>
+            <p>${school.mission}</p>
+        </div>
+        
+        <div class="school-detail-item">
+            <h3><i class="fas fa-comments"></i> Interview Features</h3>
+            <p>${school.interviewFeatures}</p>
+        </div>
+        
+        <div class="school-detail-item">
+            <h3><i class="fas fa-star"></i> Specialties</h3>
+            <p>${school.specialty}</p>
+        </div>
+        
+        <div class="school-detail-item">
+            <h3><i class="fas fa-school"></i> School Details</h3>
+            <p><strong>Established:</strong> ${school.established}</p>
+            <p><strong>Student Count:</strong> ${school.studentCount}</p>
+            ${school.admissionProcess ? `<p><strong>Admission Process:</strong> ${school.admissionProcess}</p>` : ''}
+            ${school.tuitionFee ? `<p><strong>Tuition Fee:</strong> ${school.tuitionFee}</p>` : ''}
+        </div>
+        
+        ${school.specificFeatures ? `
+        <div class="school-detail-item">
+            <h3><i class="fas fa-feather-alt"></i> Specific Features</h3>
+            <p>${school.specificFeatures}</p>
+        </div>
+        ` : ''}
+        
+        <div class="school-detail-item">
+            <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+            <p><strong>Phone:</strong> ${school.phone}</p>
+            <p><strong>Website:</strong> <a href="${school.website}" target="_blank">${school.website}</a></p>
+        </div>
+    `;
 }
 
 // Clear all generated questions
 function clearQuestions() {
-    questionsContainer.innerHTML = '';
+    questionsContainer.innerHTML = `
+        <div class="empty-state">
+            <i class="fas fa-question-circle fa-3x"></i>
+            <p>Select a category and click "Generate Questions" to start practicing!</p>
+        </div>
+    `;
     questionsCountBadge.textContent = '0';
     showNotification('All questions cleared');
 }
@@ -861,7 +1118,68 @@ function hideHistory() {
 
 // Display history
 function displayHistory() {
-    // ... (keep existing displayHistory function as is)
+    if (studentAnswers.length === 0) {
+        historyContainer.innerHTML = '<div class="empty-state"><i class="fas fa-history fa-3x"></i><p>No practice history yet. Complete some questions to see your history here.</p></div>';
+        return;
+    }
+    
+    historyContainer.innerHTML = '';
+    
+    // Group answers by date
+    const answersByDate = {};
+    studentAnswers.forEach(answer => {
+        if (!answersByDate[answer.date]) {
+            answersByDate[answer.date] = [];
+        }
+        answersByDate[answer.date].push(answer);
+    });
+    
+    // Display answers grouped by date (most recent first)
+    const sortedDates = Object.keys(answersByDate).sort((a, b) => new Date(b) - new Date(a));
+    
+    sortedDates.forEach(date => {
+        const dateHeader = document.createElement('h3');
+        dateHeader.textContent = date;
+        dateHeader.style.marginTop = '20px';
+        dateHeader.style.marginBottom = '10px';
+        dateHeader.style.color = '#2c3e50';
+        historyContainer.appendChild(dateHeader);
+        
+        answersByDate[date].forEach(answer => {
+            const historyItem = document.createElement('div');
+            historyItem.className = 'history-item';
+            
+            const difficultyStars = '★'.repeat(answer.difficulty) + '☆'.repeat(3 - answer.difficulty);
+            const categoryNames = {
+                'chinese': 'Chinese',
+                'english': 'English',
+                'math': 'Mathematics',
+                'science': 'Science',
+                'news': 'Current News',
+                'creative': 'Creative Thinking'
+            };
+            
+            const statusBadge = answer.completed 
+                ? '<span style="color:#2ecc71; font-weight:600;">✓ Completed</span>' 
+                : '<span style="color:#f39c12;">In Progress</span>';
+            
+            historyItem.innerHTML = `
+                <div class="history-item-header">
+                    <div class="history-category">${categoryNames[answer.category] || answer.category} ${statusBadge}</div>
+                    <div class="history-date">${answer.time}</div>
+                </div>
+                <div class="history-question">${answer.questionText}</div>
+                <div class="history-answer"><strong>Your Answer:</strong> ${answer.answer}</div>
+                <div class="history-meta">
+                    <span>Difficulty: ${difficultyStars}</span>
+                    <span>Question ID: ${answer.questionId}</span>
+                    <span>XP: +${answer.completed ? answer.difficulty * 15 : answer.difficulty * 10}</span>
+                </div>
+            `;
+            
+            historyContainer.appendChild(historyItem);
+        });
+    });
 }
 
 // Clear history
@@ -869,17 +1187,46 @@ function clearHistory() {
     if (confirm('Are you sure you want to clear all saved answers? This action cannot be undone.')) {
         studentAnswers = [];
         savedAnswersCount = 0;
+        studentXP = 0;
         localStorage.removeItem('studentAnswers');
+        localStorage.removeItem('studentXP');
         savedAnswersEl.textContent = '0';
-        displayHistory();
+        totalXPEl.textContent = '0';
         updateProgress();
-        showNotification('All saved answers cleared');
+        displayHistory();
+        showNotification('All saved answers and XP cleared');
     }
 }
 
 // Download answers as JSON file
 function downloadAnswers() {
-    // ... (keep existing downloadAnswers function as is)
+    if (studentAnswers.length === 0) {
+        showNotification('No answers to download');
+        return;
+    }
+    
+    const studentData = {
+        studentName: studentNameEl.textContent,
+        level: studentLevelEl.textContent,
+        totalXP: studentXP,
+        generatedAt: new Date().toISOString(),
+        totalAnswers: studentAnswers.length,
+        answers: studentAnswers
+    };
+    
+    const dataStr = JSON.stringify(studentData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = `student-answers-${getCurrentDate()}.json`;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    URL.revokeObjectURL(url);
+    
+    showNotification('Answers downloaded successfully!');
 }
 
 // Update statistics
@@ -897,6 +1244,9 @@ function updateStatistics() {
     
     generatedTodayEl.textContent = generatedCount;
     savedAnswersEl.textContent = savedAnswersCount;
+    
+    // Update completed today
+    updateCompletedToday();
 }
 
 // Utility functions
@@ -908,6 +1258,26 @@ function getCurrentDate() {
 function getCurrentTime() {
     const now = new Date();
     return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function calculateDaysRemaining(targetDateStr) {
+    const targetDate = new Date(targetDateStr);
+    const today = new Date();
+    
+    // Reset hours to compare only dates
+    targetDate.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    
+    const diffTime = targetDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays > 0) {
+        return `${diffDays} days remaining`;
+    } else if (diffDays === 0) {
+        return "Interview is today!";
+    } else {
+        return `Interview passed ${Math.abs(diffDays)} days ago`;
+    }
 }
 
 // Utility function to shuffle an array
@@ -931,7 +1301,7 @@ function showNotification(message) {
     
     const notificationEl = document.createElement('div');
     notificationEl.className = 'notification';
-    notificationEl.textContent = message;
+    notificationEl.innerHTML = `<i class="fas fa-bell"></i> ${message}`;
     document.body.appendChild(notificationEl);
     
     // Remove notification after 3 seconds
@@ -944,5 +1314,24 @@ function showNotification(message) {
 
 // Show error message
 function showError(message) {
-    // ... (keep existing showError function as is)
+    const errorEl = document.createElement('div');
+    errorEl.className = 'error-message';
+    errorEl.style.cssText = `
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 15px;
+        border-radius: 8px;
+        margin: 15px 0;
+        border: 1px solid #f5c6cb;
+    `;
+    errorEl.innerHTML = `<i class="fas fa-exclamation-circle"></i> Error: ${message}`;
+    
+    document.querySelector('.container').prepend(errorEl);
+    
+    // Remove error after 5 seconds
+    setTimeout(() => {
+        if (errorEl.parentNode) {
+            errorEl.parentNode.removeChild(errorEl);
+        }
+    }, 5000);
 }
