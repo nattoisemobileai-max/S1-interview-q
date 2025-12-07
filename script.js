@@ -3,6 +3,7 @@
 // Global variables
 let schoolsData = [];
 let questionsData = {
+    must: [],
     chinese: [],
     english: [],
     math: [],
@@ -94,7 +95,7 @@ async function loadData() {
                 const data = await response.json();
                 questionsData[key] = data.questions || [];
             } catch (error) {
-                console.error('Error loading ${file}:', error);
+                console.error(`Error loading ${file}:`, error);
                 questionsData[key] = [];
             }
         }
@@ -1174,6 +1175,7 @@ function displayHistory() {
             
             const difficultyStars = '★'.repeat(answer.difficulty) + '☆'.repeat(3 - answer.difficulty);
             const categoryNames = {
+                'must': 'MUST',
                 'chinese': 'Chinese',
                 'english': 'English',
                 'math': 'Mathematics',
