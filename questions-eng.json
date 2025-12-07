@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": 2001,
+      "category": "english",
+      "text": "Describe your favorite book and explain why you would recommend it to others.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 2002,
+      "category": "english",
+      "text": "What are the advantages and disadvantages of using social media for students?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 2003,
+      "category": "english",
+      "text": "Tell us about your family and your relationship with them.",
+      "difficulty": "easy"
+    },
+    {
+      "id": 2004,
+      "category": "english",
+      "text": "If you could travel anywhere in the world, where would you go and why?",
+      "difficulty": "easy"
+    },
+    {
+      "id": 2005,
+      "category": "english",
+      "text": "Discuss the importance of learning English in today's globalized world.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 2006,
+      "category": "english",
+      "text": "Describe a challenging situation you faced and how you overcame it.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 2007,
+      "category": "english",
+      "text": "What are your career aspirations and how do you plan to achieve them?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 2008,
+      "category": "english",
+      "text": "Compare traditional classroom learning with online learning. Which do you prefer and why?",
+      "difficulty": "hard"
+    },
+    {
+      "id": 2009,
+      "category": "english",
+      "text": "If you could meet any historical figure, who would it be and what would you ask them?",
+      "difficulty": "medium"
+    },
+    {
+      "id": 2010,
+      "category": "english",
+      "text": "Describe the qualities of a good leader and provide an example of someone who demonstrates these qualities.",
+      "difficulty": "hard"
+    }
+  ]
+}
