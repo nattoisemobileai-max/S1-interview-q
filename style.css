@@ -670,6 +670,11 @@ header p {
     box-shadow: 0 3px 0 rgba(0, 0, 0, 0.1);
 }
 
+.category-badge.must {
+    background: linear-gradient(135deg, var(--category-must), #c0392b);
+    color: white;
+}
+
 .category-badge.chinese {
     background: linear-gradient(135deg, var(--category-chinese), #c0392b);
     color: white;
