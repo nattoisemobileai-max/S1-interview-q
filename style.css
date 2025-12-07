@@ -364,6 +364,10 @@ header p {
     border-color: transparent;
     box-shadow: var(--shadow-button);
 }
+/* Category-specific colors */
+.must-btn.active {
+    background: linear-gradient(135deg, var(--category-must), #c0392b);
+}
 
 /* Category-specific colors */
 .chinese-btn.active {
@@ -671,7 +675,7 @@ header p {
 }
 
 .category-badge.must {
-    background: linear-gradient(135deg, var(--category-must), #c0392b);
+    background: linear-gradient(135deg, var(--category-must), #2980b9);
     color: white;
 }
 
