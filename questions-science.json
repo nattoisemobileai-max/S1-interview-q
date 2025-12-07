@@ -9,7 +9,7 @@
     {
       "id": 4002,
       "category": "science",
-      "text": "Why does an apple turn brown?",
+      "text": "[[學而思-SPCC(P9)] Why does an apple turn brown?",
       "difficulty": "easy"
     },
     {
@@ -33,13 +33,13 @@
     {
       "id": 4006,
       "category": "science",
-      "text": "[SPCC] 哪一個氣球比較熱? 為什麼當陽光照射A氣球的黑色部分時，A氣球會爆，而B 氣球不會?",
+      "text": "[[學而思-SPCC(P9)] 哪一個氣球比較熱? 為什麼當陽光照射A氣球的黑色部分時，A氣球會爆，而B 氣球不會?",
       "difficulty": "medium"
     },
     {
       "id": 4007,
       "category": "science",
-      "text": "[SPCC] 如果需要燃點火柴，你會選擇A鏡還是B鏡? ",
+      "text": "[[學而思-SPCC(P9)] 如果需要燃點火柴，你會選擇A鏡還是B鏡? ",
       "difficulty": "hard"
     }
   ]
