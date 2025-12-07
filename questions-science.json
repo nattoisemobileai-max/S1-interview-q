@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": 4001,
+      "category": "science",
+      "text": "Explain the difference between renewable and non-renewable energy sources, giving two examples of each.",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4002,
+      "category": "science",
+      "text": "What is photosynthesis and why is it important for life on Earth?",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4003,
+      "category": "science",
+      "text": "Describe the water cycle and its main stages.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 4004,
+      "category": "science",
+      "text": "What are the three states of matter? Give an example of each and explain how they differ.",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4005,
+      "category": "science",
+      "text": "Explain Newton's First Law of Motion and provide a real-life example.",
+      "difficulty": "medium"
+    },
+    {
+      "id": 4006,
+      "category": "science",
+      "text": "What causes the seasons on Earth?",
+      "difficulty": "medium"
+    },
+    {
+      "id": 4007,
+      "category": "science",
+      "text": "Describe the structure of an atom and name its three main subatomic particles.",
+      "difficulty": "hard"
+    },
+    {
+      "id": 4008,
+      "category": "science",
+      "text": "What is the difference between series and parallel circuits? Draw a simple diagram for each.",
+      "difficulty": "hard"
+    },
+    {
+      "id": 4009,
+      "category": "science",
+      "text": "Explain how vaccines work to protect us from diseases.",
+      "difficulty": "hard"
+    },
+    {
+      "id": 4010,
+      "category": "science",
+      "text": "What is climate change and what are its main causes?",
+      "difficulty": "hard"
+    }
+  ]
+}
