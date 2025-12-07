@@ -9,16 +9,6 @@ function displaySchoolDetails(schoolId) {
     // Get banding class
     const bandingClass = `banding-${school.banding.toLowerCase().replace(' ', '')}`;
     
-    // Create image HTML if image path exists
-    let imageHTML = '';
-    if (school.image) {
-        imageHTML = `
-            <div class="school-image">
-                <img src="${school.image}" alt="${school.name}" onerror="this.style.display='none'">
-            </div>
-        `;
-    }
-    
     // Format target interview date if it exists
     let targetDateHTML = '';
     if (school.targetInterviewDate) {
@@ -29,11 +19,35 @@ function displaySchoolDetails(schoolId) {
             day: 'numeric',
             weekday: 'long'
         });
+        const daysRemaining = calculateDaysRemaining(school.targetInterviewDate);
+        
+        // Determine color class based on urgency
+        let dateClass = 'date-normal';
+        if (daysRemaining.includes('Today')) {
+            dateClass = 'date-urgent';
+        } else if (daysRemaining.includes('Past')) {
+            dateClass = 'date-past';
+        } else {
+            const daysNum = parseInt(daysRemaining);
+            if (daysNum <= 7) dateClass = 'date-urgent';
+            else if (daysNum <= 30) dateClass = 'date-near';
+        }
+        
         targetDateHTML = `
             <div class="school-detail-item">
                 <h3>Target Interview Date</h3>
-                <p><strong>Date:</strong> ${formattedDate}</p>
-                <p><strong>Days remaining:</strong> <span class="days-remaining">${calculateDaysRemaining(school.targetInterviewDate)}</span></p>
+                <p><strong>Scheduled Date:</strong> ${formattedDate}</p>
+                <p><strong>Status:</strong> <span class="date-badge ${dateClass}">${daysRemaining}</span></p>
+            </div>
+        `;
+    }
+    
+    // Create image HTML if image path exists
+    let imageHTML = '';
+    if (school.image) {
+        imageHTML = `
+            <div class="school-image">
+                <img src="${school.image}" alt="${school.name}" onerror="this.style.display='none'">
             </div>
         `;
     }
@@ -42,17 +56,29 @@ function displaySchoolDetails(schoolId) {
         ${imageHTML}
         
         <div class="school-detail-item">
-            <h3>School Name <span class="banding-badge ${bandingClass}">${school.banding}</span></h3>
-            <p>${school.name} (${school.chineseName})</p>
+            <h3>School Information</h3>
+            <div class="school-name-row">
+                <div class="school-name-english">
+                    <strong>English Name:</strong> ${school.name}
+                    <span class="banding-badge ${bandingClass}">${school.banding}</span>
+                </div>
+                <div class="school-name-chinese">
+                    <strong>Chinese Name:</strong> ${school.chineseName}
+                </div>
+            </div>
         </div>
+        
+        ${targetDateHTML}
         
         <div class="school-detail-item">
             <h3>Basic Information</h3>
-            <p><strong>Type:</strong> ${school.type}</p>
-            <p><strong>Religion:</strong> ${school.religion}</p>
-            <p><strong>Gender:</strong> ${school.gender}</p>
-            <p><strong>District:</strong> ${school.district}</p>
-            <p><strong>Medium of Instruction:</strong> ${school.language}</p>
+            <div class="basic-info-grid">
+                <div><strong>Type:</strong> ${school.type}</div>
+                <div><strong>Religion:</strong> ${school.religion}</div>
+                <div><strong>Gender:</strong> ${school.gender}</div>
+                <div><strong>District:</strong> ${school.district}</div>
+                <div><strong>Medium of Instruction:</strong> ${school.language}</div>
+            </div>
         </div>
         
         ${school.schoolMotto || school.chineseMotto ? `
@@ -67,8 +93,6 @@ function displaySchoolDetails(schoolId) {
             <h3>Mission Statement</h3>
             <p>${school.mission}</p>
         </div>
-        
-        ${targetDateHTML}
         
         <div class="school-detail-item">
             <h3>Interview Features</h3>
@@ -101,9 +125,6 @@ function displaySchoolDetails(schoolId) {
             <p><strong>Website:</strong> <a href="${school.website}" target="_blank">${school.website}</a></p>
         </div>
     `;
-    
-    // Update days remaining styling
-    updateDaysRemainingStyle();
 }
 
 // Add this helper function to calculate days remaining
@@ -119,33 +140,10 @@ function calculateDaysRemaining(targetDateStr) {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     
     if (diffDays > 0) {
-        return `${diffDays} days`;
+        return `${diffDays} days remaining`;
     } else if (diffDays === 0) {
-        return "Today!";
+        return "Interview is today!";
     } else {
-        return `Past by ${Math.abs(diffDays)} days`;
+        return `Interview passed ${Math.abs(diffDays)} days ago`;
     }
-}
-
-// Add this function to style days remaining based on urgency
-function updateDaysRemainingStyle() {
-    const daysRemainingElements = document.querySelectorAll('.days-remaining');
-    
-    daysRemainingElements.forEach(element => {
-        const text = element.textContent;
-        if (text.includes('Today')) {
-            element.style.color = '#e74c3c';
-            element.style.fontWeight = 'bold';
-        } else if (text.includes('Past')) {
-            element.style.color = '#7f8c8d';
-            element.style.fontStyle = 'italic';
-        } else if (parseInt(text) <= 7) {
-            element.style.color = '#e67e22';
-            element.style.fontWeight = '600';
-        } else if (parseInt(text) <= 30) {
-            element.style.color = '#f39c12';
-        } else {
-            element.style.color = '#27ae60';
-        }
-    });
 }
