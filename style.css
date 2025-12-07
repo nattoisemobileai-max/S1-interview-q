@@ -243,53 +243,6 @@ header p {
     transform: translateY(-3px);
 }
 
-.student-info-section {
-    margin: 25px 0;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    border: 1px solid #e9ecef;
-}
-
-.student-info-section h3 {
-    color: #2c3e50;
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.student-inputs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 15px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.input-group label {
-    font-weight: 600;
-    color: #2c3e50;
-    font-size: 0.95rem;
-}
-
-.input-group input, .input-group select {
-    padding: 10px 12px;
-    border: 2px solid #ddd;
-    border-radius: 6px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.input-group input:focus, .input-group select:focus {
-    border-color: #3498db;
-    outline: none;
-}
-
 .generated-questions {
     margin-top: 25px;
 }
@@ -445,7 +398,7 @@ header p {
     margin-bottom: 20px;
 }
 
-#school-select, #target-school {
+#school-select {
     width: 100%;
     padding: 12px;
     border-radius: 8px;
@@ -455,7 +408,7 @@ header p {
     cursor: pointer;
 }
 
-#school-select:focus, #target-school:focus {
+#school-select:focus {
     border-color: #3498db;
     outline: none;
 }
@@ -498,13 +451,66 @@ header p {
     line-height: 1.6;
 }
 
+/* School header with image and names side by side */
+.school-header-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #3498db;
+}
+
+.school-header-image {
+    flex-shrink: 0;
+    width: 150px;
+    height: 150px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 3px solid #ecf0f1;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.school-header-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.school-header-names {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.school-english-name {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.school-chinese-name {
+    font-size: 1.5rem;
+    color: #34495e;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+/* Banding badge styling */
 .banding-badge {
     display: inline-block;
-    padding: 5px 12px;
+    padding: 6px 15px;
     border-radius: 20px;
     font-weight: bold;
-    font-size: 0.85rem;
-    vertical-align: middle;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .banding-1a {
@@ -522,32 +528,6 @@ header p {
     color: #333;
 }
 
-/* School name row styling */
-.school-name-row {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-
-.school-name-english, .school-name-chinese {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.school-name-english {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: #2c3e50;
-}
-
-.school-name-chinese {
-    font-size: 1.1rem;
-    color: #34495e;
-}
-
 /* Basic information grid */
 .basic-info-grid {
     display: grid;
@@ -557,16 +537,17 @@ header p {
 }
 
 .basic-info-grid div {
-    padding: 8px 12px;
+    padding: 10px 15px;
     background-color: #f8f9fa;
     border-radius: 6px;
     border-left: 3px solid #3498db;
+    font-size: 0.95rem;
 }
 
 /* Date badge styling */
 .date-badge {
     display: inline-block;
-    padding: 4px 10px;
+    padding: 5px 12px;
     border-radius: 20px;
     font-weight: 600;
     font-size: 0.9rem;
@@ -607,7 +588,7 @@ header p {
     }
 }
 
-/* School image styling */
+/* School image styling (for other images in school details) */
 .school-image {
     text-align: center;
     margin-bottom: 20px;
@@ -814,10 +795,6 @@ footer p {
         flex-direction: column;
     }
     
-    .student-inputs {
-        grid-template-columns: 1fr;
-    }
-    
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -830,15 +807,24 @@ footer p {
         grid-template-columns: 1fr;
     }
     
-    .school-name-english, .school-name-chinese {
+    .school-header-container {
         flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
+        align-items: center;
+        text-align: center;
     }
     
-    .banding-badge {
-        margin-left: 0;
-        margin-top: 5px;
+    .school-header-image {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .school-english-name {
+        justify-content: center;
+        text-align: center;
+    }
+    
+    .school-chinese-name {
+        text-align: center;
     }
     
     .question-item-header {
@@ -862,6 +848,14 @@ footer p {
     
     .action-buttons button, .history-controls button {
         width: 100%;
+    }
+    
+    .school-english-name {
+        font-size: 1.5rem;
+    }
+    
+    .school-chinese-name {
+        font-size: 1.3rem;
     }
 }
 
