@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "id": "MUST-0001",
+      "category": "必考題目",
+      "text": "[FW] 你喜歡的科目是？",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0002",
+      "category": "必考題目",
+      "text": "[FW] 你最好的朋友是？/你形容一下你最好的朋友。",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0003",
+      "category": "必考題目",
+      "text": "[FW] 你平常有沒有閱讀的習慣，最喜歡看什麼書?",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0004",
+      "category": "必考題目",
+      "text": "[FW] 你有試過失敗的經歷嗎?",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    },
+    {
+      "id": "MUST-0005",
+      "category": "必考題目",
+      "text": "[FW] 你的父母平常有沒有為你檢查家課?",
+      "difficulty": "easy",
+      "modal_answer": "。"
+    }
+  ]
+}
