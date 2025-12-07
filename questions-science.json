@@ -33,25 +33,55 @@
     {
       "id": 4006,
       "category": "science",
-      "text": "[[學而思-SPCC(P9)] 哪一個氣球比較熱? 為什麼當陽光照射A氣球的黑色部分時，A氣球會爆，而B 氣球不會?",
+      "text": "[學而思-SPCC(P9)] 哪一個氣球比較熱? 為什麼當陽光照射A氣球的黑色部分時，A氣球會爆，而B 氣球不會?",
       "difficulty": "medium"
     },
     {
       "id": 4007,
       "category": "science",
-      "text": "[[學而思-SPCC(P9)] 如果需要燃點火柴，你會選擇A鏡還是B鏡? ",
+      "text": "[學而思-SPCC(P9)] 如果需要燃點火柴，你會選擇A鏡還是B鏡? ",
       "difficulty": "hard"
     },
     {
       "id": 4008,
       "category": "science",
-      "text": "[[學而思-Kings(P34)] 種子需要什麼才會發芽?",
+      "text": "[學而思-Kings(P34)] 種子需要什麼才會發芽?",
       "difficulty": "easy"
     },
     {
       "id": 4009,
       "category": "science",
-      "text": "[[學而思-Kings(P34)] 為什麼植物需要空氣?",
+      "text": "[學而思-Kings(P34)] 為什麼植物需要空氣?",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4010,
+      "category": "science",
+      "text": "[iteda.org] 你有使用 Facebook、Instagram 或 Threads 嗎？談談這些社交平台的好處和壞處。",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4011,
+      "category": "science",
+      "text": "[iteda.org] 如果要為手錶新增一項功能，你會選擇什麼？為什麼？",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4012,
+      "category": "science",
+      "text": "[iteda.org] 對於將電子課本取代傳統紙本課本的看法，你支持還是反對？",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4013,
+      "category": "science",
+      "text": "[iteda.org 你認為網絡發展是否影響了人際溝通？請說明你的看法。？",
+      "difficulty": "easy"
+    },
+    {
+      "id": 4014,
+      "category": "science",
+      "text": "[iteda.org] 你有沒有在網絡上認識過新朋友？你認為這種方式建立友誼的效果如何？",
       "difficulty": "easy"
     }
   ]
