@@ -388,6 +388,57 @@
             display: inline-block;
         }
         
+        /* 面试百分比信息 */
+        .interview-percentage-info {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .interview-percentage-info h5 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+        
+        .percentage-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .percentage-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .chinese-weight-info {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        
+        .chinese-weight-info h5 {
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+        }
+        
+        .chinese-weight-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .chinese-weight-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
         /* 过滤器和返回按钮 */
         .filters {
             display: flex;
@@ -673,6 +724,20 @@
                         <p><strong>地區:</strong> ${school.district}</p>
                         <p><strong>教學語言:</strong> ${school.language}</p>
                         <p><strong>辦學宗旨:</strong> ${truncateText(school.mission, 50)}</p>
+                        ${school.interviewPercentage ? `
+                            <div class="interview-percentage-info">
+                                <h5>面試比重</h5>
+                                <div class="percentage-value">${getInterviewPercentageValue(school.interviewPercentage)}</div>
+                                <div class="percentage-label">${getInterviewPercentageLabel(school.interviewPercentage)}</div>
+                            </div>
+                        ` : ''}
+                        ${getChineseWeightPercentage(school) ? `
+                            <div class="chinese-weight-info">
+                                <h5>中文佔分比重</h5>
+                                <div class="chinese-weight-value">${getChineseWeightPercentage(school)}</div>
+                                <div class="chinese-weight-label">中文面試比重</div>
+                            </div>
+                        ` : ''}
                         ${school.targetInterviewDate ? `
                             <div class="interview-countdown">
                                 <h5>面試倒計時</h5>
@@ -743,17 +808,39 @@
                     <p>${currentSchool.mission}</p>
                 </div>
                 
-                <div class="info-section">
-                    <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
-                    <p>${currentSchool.specialty}</p>
-                </div>
-                
                 ${currentSchool.interviewFeatures ? `
                 <div class="info-section">
                     <h4><i class="fas fa-comments"></i> 面試特色 (Interview Features)</h4>
                     <p>${currentSchool.interviewFeatures}</p>
                 </div>
                 ` : ''}
+                
+                ${currentSchool.interviewPercentage ? `
+                <div class="info-section">
+                    <h4><i class="fas fa-chart-pie"></i> 收生評分比重 (Admission Scoring Weight)</h4>
+                    <div class="interview-percentage-info">
+                        <h5>面試比重</h5>
+                        <div class="percentage-value">${getInterviewPercentageValue(currentSchool.interviewPercentage)}</div>
+                        <div class="percentage-label">${getInterviewPercentageLabel(currentSchool.interviewPercentage)}</div>
+                    </div>
+                </div>
+                ` : ''}
+                
+                ${getChineseWeightPercentage(currentSchool) ? `
+                <div class="info-section">
+                    <h4><i class="fas fa-language"></i> 中文面試比重 (Chinese Interview Weight)</h4>
+                    <div class="chinese-weight-info">
+                        <h5>中文佔分比重</h5>
+                        <div class="chinese-weight-value">${getChineseWeightPercentage(currentSchool)}</div>
+                        <div class="chinese-weight-label">中文面試佔總面試分數比重</div>
+                    </div>
+                </div>
+                ` : ''}
+                
+                <div class="info-section">
+                    <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
+                    <p>${currentSchool.specialty}</p>
+                </div>
                 
                 ${currentSchool.specificFeatures ? `
                 <div class="info-section">
@@ -828,6 +915,22 @@
                 </div>
             `;
             
+            // 添加中文面試比重分析
+            const chineseQuestionsCount = countChineseQuestions(questionsData);
+            const totalQuestionsCount = countTotalQuestions(questionsData);
+            
+            if (totalQuestionsCount > 0) {
+                const chinesePercentage = Math.round((chineseQuestionsCount / totalQuestionsCount) * 100);
+                html += `
+                    <div class="chinese-weight-info" style="margin-bottom: 20px;">
+                        <h5>中文面試題目比重分析</h5>
+                        <div class="chinese-weight-value">${chinesePercentage}%</div>
+                        <div class="chinese-weight-label">中文題目佔歷年面試題目總數</div>
+                        <p style="font-size: 0.8rem; margin-top: 8px; opacity: 0.8;">(${chineseQuestionsCount}題中文 / ${totalQuestionsCount}題總數)</p>
+                    </div>
+                `;
+            }
+            
             for (const [year, data] of Object.entries(questionsData)) {
                 html += `
                     <div class="interview-year-section">
@@ -839,9 +942,10 @@
                 
                 if (data.questions && Object.keys(data.questions).length > 0) {
                     for (const [category, questions] of Object.entries(data.questions)) {
+                        const isChineseCategory = category.includes('中文');
                         html += `
                             <div class="question-category" data-category="${category}">
-                                <h6><i class="fas fa-question-circle"></i> ${category}</h6>
+                                <h6><i class="fas fa-question-circle"></i> ${category} ${isChineseCategory ? '<span style="color: #27ae60; font-size: 0.8rem;">(中文)</span>' : ''}</h6>
                                 <ul class="question-list">
                                     ${questions.map(question => `<li>${question}</li>`).join('')}
                                 </ul>
@@ -920,62 +1024,13 @@
             return 'banding-1c';
         }
         
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('zh-HK', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long'
-            });
+        // 获取面试百分比值
+        function getInterviewPercentageValue(percentageString) {
+            if (!percentageString) return 'N/A';
+            const match = percentageString.match(/面試\s*:\s*(\d+)%/);
+            return match ? `${match[1]}%` : 'N/A';
         }
         
-        // 新的函数：格式化为YYYY年MM月DD日 (星期W)
-        function formatDateChinese(dateString) {
-            const date = new Date(dateString);
-            const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            
-            // 星期几的映射
-            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
-            const weekday = weekdays[date.getDay()];
-            
-            return `${year}年${month}月${day}日 (星期${weekday})`;
-        }
-        
-        function calculateDaysRemaining(targetDateStr) {
-            const targetDate = new Date(targetDateStr);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            targetDate.setHours(0, 0, 0, 0);
-            
-            const diffTime = targetDate - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (diffDays > 0) return diffDays;
-            if (diffDays === 0) return '0 (今天)';
-            return '已過期';
-        }
-        
-        function truncateText(text, maxLength) {
-            if (text.length <= maxLength) return text;
-            return text.substring(0, maxLength) + '...';
-        }
-        
-        // 页面加载完成后执行
-        document.addEventListener('DOMContentLoaded', function() {
-            // 加载学校数据
-            loadSchoolsData();
-            
-            // 侧边栏切换
-            document.getElementById('sidebar-toggle').addEventListener('click', function() {
-                document.querySelector('.sidebar').classList.toggle('collapsed');
-            });
-            
-            // 学校信息显示/隐藏切换
-            document.getElementById('toggle-school-info').addEventListener('click', toggleSchoolInfo);
-        });
-    </script>
-</body>
-</html>
+        // 获取面试百分比标签
+        function getInterviewPercentageLabel(percentageString) {
+            if (!percentageString)
