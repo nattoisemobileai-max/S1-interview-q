@@ -149,14 +149,14 @@
       "chineseMotto": "追求卓越",
       "mission": "提供全人教育，培養學生的學術、品德和領導能力，並發展他們的潛能，貢獻社會",
       "interviewFeatures": "設有個人面談、小組討論、中英文寫作測試",
-      "interviewPercentage": "面試:60%; 成績、課外活動: 40%",
+      "interviewPercentage": "面試:60%; 學業成績:30%; 課外活動:10%",
       "specialty": "STEM、音樂、體育、領袖培訓、國際視野、非華裔學生入讀",
       "website": "https://www.hkmadavidli.edu.hk",
       "phone": "2626 9100",
       "established": 2000,
       "studentCount": 0,
       "admissionProcess": "直資學校，有獨立招生程序，2026/27學年提供100個中一外校生學額",
-      "tuitionFee": "港幣$39,7800元/年",
+      "tuitionFee": "港幣$39,780元/年",
       "specificFeatures": "學校以提供全人教育為使命，務求讓學生在德、智、體、群、美五育方面都有全面的發展。學校相信每位學生都有獨特之處，亦具備不同的潛質。學校既應培育學生的才能，亦要發掘學生的潛能，使他們盡展所長。",
       "image": "badge_lkp.jpg",
       "targetInterviewDate": "2026-01-20",
@@ -220,7 +220,7 @@
       "chineseMotto": "篤信善行",
       "mission": "個人成長，品格培育，關心社區/提供全人教育，培養學生的學術、品德和領導能力",
       "interviewFeatures": "設有個人面談、小組討論、中英文寫作測試。",
-      "interviewPercentage": "面試:50%; 成績、課外活動: 50%",
+      "interviewPercentage": "面試:50%; 學業成績:30%; 課外活動:20%",
       "specialty": "Science (STEM)、MATH、音樂、體育、領袖培訓",
       "website": "https://www.yingwa.edu.hk/",
       "phone": "2380-4331",
@@ -259,7 +259,7 @@
       "chineseMotto": "信與真",
       "mission": "追求學術卓越，培養具國際視野的未來領袖",
       "interviewFeatures": "設有個人面談、小組討論、家長面談。",
-      "interviewPercentage": "面試:40%; 成績、課外活動: 60%",
+      "interviewPercentage": "面試:40%; 學業成績:40%; 課外活動:20%",
       "specialty": "學術卓越、IB課程、音樂、體育",
       "website": "https://www.spcc.edu.hk/",
       "phone": "2523-1194",
@@ -331,7 +331,7 @@
       "chineseMotto": "愛敬勤誠",
       "mission": "發展學生的潛能，培養對社會有貢獻的人才",
       "interviewFeatures": "設有個人面談環節。",
-      "interviewPercentage": "面試:50%; 成績、課外活動: 50%",
+      "interviewPercentage": "面試:30%; 學業成績:60%; 課外活動:10%",
       "specialty": "Science, Math, English、體育、生涯規劃",
       "website": "http://www.plktytc.edu.hk/",
       "phone": "2461-9888",
@@ -607,7 +607,7 @@
       "chineseMotto": "敬畏耶和華是智慧的開端，認識至聖者便是聰明。(箴言九章10節) ",
       "mission": "以基督教價值觀為基礎，提供優質全人教育",
       "interviewFeatures": "設有個人面談及小組討論環節。",
-      "interviewPercentage": "面試:40%; 成績、課外活動: 60%",
+      "interviewPercentage": "面試:40%; 學業成績:50%; 課外活動:10%",
       "specialty": "社區服務、藝術、德育",
       "website": "https://www.scc.edu.hk",
       "phone": "2459 1166",
@@ -732,7 +732,100 @@
               "你認為現在的學生是不是很忙？"
             ]
           }
+        },
+        "2022": {
+          "months": ["12月"],
+          "questions": {
+            "中文個人": [
+              "閱讀文章並回答問題",
+              "小六學生應否擁有自己的智能手機？",
+              "你最敬佩的人是誰？",
+              "說出一個最深刻的童年回憶",
+              "你同意政府派發$5000消費券嗎？"
+            ],
+            "英文個人": [
+              "自我介紹",
+              "看圖說故事：(四格圖，限時5分鐘) 關於盲人",
+              "一個學生在作弊",
+              "朗讀文章：關於Robot Mum"
+            ]
+          }
+        },
+        "2023": {
+          "months": ["12月"],
+          "questions": {
+            "中文個人": [
+              "中學生應不應該課後時段打掃校園？",
+              "想隔上太空？上太空會不會變成了一件很普通的事情？",
+              "中學生閱讀半小時是否別利多於弊？",
+              "寫中文書法有什麼好處？"
+            ],
+            "英文個人": [
+              "Self-introduction",
+              "Picture Description",
+              "Read aloud"
+            ],
+            "其他": [
+              "請指出同學認為你的一個優點",
+              "請指出同學認為你的一個缺點",
+              "給一篇文章（找錯別字）",
+              "Why do you want to study our school?",
+              "What dishes will you make to your mum in Mother's Day?",
+              "Please introduce yourself and your family",
+              "一分鐘計算入條算式",
+              "心算出 1/4+2/3=?",
+              "看圖計算出角度是多少"
+            ]
+          }
+        },
+        "2024": {
+          "months": ["12月"],
+          "questions": {
+            "中文個人": [
+              "贊成取消陸運會嗎？"
+            ],
+            "英文個人": [
+              "看圖作文"
+            ]
+          }
         }
-        ]
+      }
+    },
+    {
+      "id": 7,
+      "name": "HKBU Affiliated School Wong Kam Fai Secondary and Primary School",
+      "chineseName": "香港浸會大學附屬學校王錦輝中小學",
+      "banding": "Band 1B",
+      "type": "直資",
+      "religion": "基督教",
+      "gender": "男女校",
+      "district": "沙田區",
+      "language": "英文",
+      "schoolMotto": "Pursuit of Excellence, Cultivation of Virtue",
+      "chineseMotto": "追求卓越、培育美德",
+      "mission": "秉承香港浸會大學的教育使命，以基督精神為基礎，致力為學生提供優質教育，結合中西文化，發展學生潛質，陶冶情操，明辨是非，貢獻社稷，實踐「全人為本，學子為先」的教育理念。",
+      "interviewFeatures": "設有個人面談、小組討論、創意解難測試",
+      "interviewPercentage": "面試:50%; 學業成績:30%; 課外活動:20%",
+      "specialty": "STEAM教育、國際視野、藝術發展、領袖培訓",
+      "website": "https://www.hkbuas.edu.hk",
+      "phone": "2637 2277",
+      "established": 2006,
+      "studentCount": 800,
+      "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
+      "tuitionFee": "港幣38,000元/年（設有獎學金及學費減免計劃）",
+      "specificFeatures": "設有創新實驗室、室內游泳池、黑盒劇場，與香港浸會大學有聯繫，提供多元國際交流機會",
+      "image": "badge_wkf.jpg",
+      "targetInterviewDate": "2026-01-25",
+      "previousInterviewQuestions": {
+        "2021": {
+          "months": ["1月"],
+          "questions": {
+            "創意解難": ["設計未來校園", "解決學習困難方案", "創意表達"],
+            "國際視野": ["跨文化交流經驗", "全球議題看法", "國際學習計劃"],
+            "藝術發展": ["藝術才能展示", "美學鑑賞", "創意表達"]
+          }
+        }
+      }
+    }
+  ]
 }
-      
