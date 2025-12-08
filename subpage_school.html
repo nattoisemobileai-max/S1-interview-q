@@ -378,6 +378,16 @@
             opacity: 0.9;
         }
         
+        .interview-date-display {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 12px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
         /* 过滤器和返回按钮 */
         .filters {
             display: flex;
@@ -666,6 +676,7 @@
                         ${school.targetInterviewDate ? `
                             <div class="interview-countdown">
                                 <h5>面試倒計時</h5>
+                                <div class="interview-date-display">${formatDateChinese(school.targetInterviewDate)}</div>
                                 <div class="countdown-days">${calculateDaysRemaining(school.targetInterviewDate)}</div>
                                 <div class="countdown-label">天數</div>
                             </div>
@@ -761,9 +772,10 @@
                 ${currentSchool.targetInterviewDate ? `
                 <div class="info-section">
                     <h4><i class="fas fa-calendar-alt"></i> 目標面試日期 (Target Interview Date)</h4>
-                    <p><strong>日期:</strong> ${formatDate(currentSchool.targetInterviewDate)}</p>
+                    <p><strong>日期:</strong> ${formatDateChinese(currentSchool.targetInterviewDate)}</p>
                     <div class="interview-countdown">
                         <h5>面試倒計時</h5>
+                        <div class="interview-date-display">${formatDateChinese(currentSchool.targetInterviewDate)}</div>
                         <div class="countdown-days">${calculateDaysRemaining(currentSchool.targetInterviewDate)}</div>
                         <div class="countdown-label">天數</div>
                     </div>
@@ -916,6 +928,20 @@
                 day: 'numeric',
                 weekday: 'long'
             });
+        }
+        
+        // 新的函数：格式化为YYYY年MM月DD日 (星期W)
+        function formatDateChinese(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            
+            // 星期几的映射
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            const weekday = weekdays[date.getDay()];
+            
+            return `${year}年${month}月${day}日 (星期${weekday})`;
         }
         
         function calculateDaysRemaining(targetDateStr) {
