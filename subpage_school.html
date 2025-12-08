@@ -731,13 +731,6 @@
                                 <div class="percentage-label">${getInterviewPercentageLabel(school.interviewPercentage)}</div>
                             </div>
                         ` : ''}
-                        ${getChineseWeightPercentage(school) ? `
-                            <div class="chinese-weight-info">
-                                <h5>中文佔分比重</h5>
-                                <div class="chinese-weight-value">${getChineseWeightPercentage(school)}</div>
-                                <div class="chinese-weight-label">中文面試比重</div>
-                            </div>
-                        ` : ''}
                         ${school.targetInterviewDate ? `
                             <div class="interview-countdown">
                                 <h5>面試倒計時</h5>
@@ -826,17 +819,7 @@
                 </div>
                 ` : ''}
                 
-                ${getChineseWeightPercentage(currentSchool) ? `
-                <div class="info-section">
-                    <h4><i class="fas fa-language"></i> 中文面試比重 (Chinese Interview Weight)</h4>
-                    <div class="chinese-weight-info">
-                        <h5>中文佔分比重</h5>
-                        <div class="chinese-weight-value">${getChineseWeightPercentage(currentSchool)}</div>
-                        <div class="chinese-weight-label">中文面試佔總面試分數比重</div>
-                    </div>
-                </div>
-                ` : ''}
-                
+               
                 <div class="info-section">
                     <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
                     <p>${currentSchool.specialty}</p>
@@ -1037,21 +1020,7 @@
             return percentageString.replace('面試:', '面試: ').replace(';', '; ');
         }
         
-        // 获取中文佔分比重（根据学校数据估算）
-        function getChineseWeightPercentage(school) {
-            // 根据学校名称和特性估算中文佔分比重
-            if (school.language === '中文' || school.chineseName.includes('中文') || school.type === '資助') {
-                return '40-50%';
-            }
-            
-            if (school.language === '英文' && school.name.includes('English')) {
-                return '20-30%';
-            }
-            
-            // 默认值
-            return '30-40%';
-        }
-        
+                
         // 统计中文题目数量
         function countChineseQuestions(questionsData) {
             let count = 0;
