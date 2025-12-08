@@ -1033,4 +1033,109 @@
         
         // 获取面试百分比标签
         function getInterviewPercentageLabel(percentageString) {
-            if (!percentageString)
+            if (!percentageString) return '';
+            return percentageString.replace('面試:', '面試: ').replace(';', '; ');
+        }
+        
+        // 获取中文佔分比重（根据学校数据估算）
+        function getChineseWeightPercentage(school) {
+            // 根据学校名称和特性估算中文佔分比重
+            if (school.language === '中文' || school.chineseName.includes('中文') || school.type === '資助') {
+                return '40-50%';
+            }
+            
+            if (school.language === '英文' && school.name.includes('English')) {
+                return '20-30%';
+            }
+            
+            // 默认值
+            return '30-40%';
+        }
+        
+        // 统计中文题目数量
+        function countChineseQuestions(questionsData) {
+            let count = 0;
+            for (const [year, data] of Object.entries(questionsData)) {
+                if (data.questions) {
+                    for (const [category, questions] of Object.entries(data.questions)) {
+                        if (category.includes('中文') || category.includes('普通話')) {
+                            count += questions.length;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+        
+        // 统计总题目数量
+        function countTotalQuestions(questionsData) {
+            let count = 0;
+            for (const [year, data] of Object.entries(questionsData)) {
+                if (data.questions) {
+                    for (const [category, questions] of Object.entries(data.questions)) {
+                        count += questions.length;
+                    }
+                }
+            }
+            return count;
+        }
+        
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('zh-HK', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                weekday: 'long'
+            });
+        }
+        
+        // 新的函数：格式化为YYYY年MM月DD日 (星期W)
+        function formatDateChinese(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            
+            // 星期几的映射
+            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+            const weekday = weekdays[date.getDay()];
+            
+            return `${year}年${month}月${day}日 (星期${weekday})`;
+        }
+        
+        function calculateDaysRemaining(targetDateStr) {
+            const targetDate = new Date(targetDateStr);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            targetDate.setHours(0, 0, 0, 0);
+            
+            const diffTime = targetDate - today;
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            
+            if (diffDays > 0) return diffDays;
+            if (diffDays === 0) return '0 (今天)';
+            return '已過期';
+        }
+        
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+        
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载学校数据
+            loadSchoolsData();
+            
+            // 侧边栏切换
+            document.getElementById('sidebar-toggle').addEventListener('click', function() {
+                document.querySelector('.sidebar').classList.toggle('collapsed');
+            });
+            
+            // 学校信息显示/隐藏切换
+            document.getElementById('toggle-school-info').addEventListener('click', toggleSchoolInfo);
+        });
+    </script>
+</body>
+</html>
