@@ -630,15 +630,51 @@
         let filteredSchools = [];
         let currentSchool = null;
         
+        // 学校JSON文件列表
+        const schoolFiles = [
+            'schools/school_hong_kong_federation_of_youth_groups_lee_shau_kee_college.json',
+            'schools/school_lee_kau_pat_memorial_college.json',
+            'schools/school_ying_wa_college.json',
+            'schools/school_st_pauls_co_educational_college.json',
+            'schools/school_po_leung_kuk_tang_yuk_tien_college.json',
+            'schools/school_christian_alliance_s_c_chan_memorial_college.json',
+            'schools/school_hkbu_affiliated_school_wong_kam_fai_secondary_and_primary_school.json'
+        ];
+        
         // 加载学校数据
         async function loadSchoolsData() {
             try {
-                const response = await fetch('schools.json');
-                if (!response.ok) {
-                    throw new Error(`HTTP错误! 状态码: ${response.status}`);
+                schoolsData = [];
+                
+                // 并行加载所有学校文件
+                const promises = schoolFiles.map(file => 
+                    fetch(file)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(`HTTP错误! 状态码: ${response.status} for ${file}`);
+                            }
+                            return response.json();
+                        })
+                        .catch(error => {
+                            console.error(`加载学校文件 ${file} 时出错:`, error);
+                            return null;
+                        })
+                );
+                
+                const loadedSchools = await Promise.all(promises);
+                
+                // 过滤掉加载失败的数据
+                schoolsData = loadedSchools.filter(school => school !== null);
+                
+                if (schoolsData.length === 0) {
+                    throw new Error('没有成功加载任何学校数据');
                 }
-                schoolsData = await response.json();
-                filteredSchools = [...schoolsData.schools];
+                
+                filteredSchools = [...schoolsData];
+                
+                // 按ID排序学校
+                schoolsData.sort((a, b) => a.id - b.id);
+                filteredSchools.sort((a, b) => a.id - b.id);
                 
                 // 初始化地区筛选器选项
                 initializeFilters();
@@ -648,7 +684,7 @@
             } catch (error) {
                 console.error('加载学校数据时出错:', error);
                 document.getElementById('school-list').innerHTML = 
-                    '<div class="error-message">無法加載學校資訊，請檢查網絡連接。</div>';
+                    '<div class="error-message">無法加載學校資訊，請檢查網絡連接或文件路徑。</div>';
             }
         }
         
@@ -657,12 +693,17 @@
             const districtFilter = document.getElementById('district-filter');
             const districts = new Set();
             
-            schoolsData.schools.forEach(school => {
-                districts.add(school.district);
+            schoolsData.forEach(school => {
+                if (school.district) {
+                    districts.add(school.district);
+                }
             });
             
             // 按字母顺序排序地区
             const sortedDistricts = Array.from(districts).sort();
+            
+            // 清空现有选项
+            districtFilter.innerHTML = '<option value="">所有地區</option>';
             
             sortedDistricts.forEach(district => {
                 const option = document.createElement('option');
@@ -677,14 +718,14 @@
             const bandingFilter = document.getElementById('banding-filter').value;
             const districtFilter = document.getElementById('district-filter').value;
             
-            filteredSchools = schoolsData.schools.filter(school => {
+            filteredSchools = schoolsData.filter(school => {
                 let matches = true;
                 
-                if (bandingFilter && !school.banding.includes(bandingFilter)) {
+                if (bandingFilter && school.banding && !school.banding.includes(bandingFilter)) {
                     matches = false;
                 }
                 
-                if (districtFilter && school.district !== districtFilter) {
+                if (districtFilter && school.district && school.district !== districtFilter) {
                     matches = false;
                 }
                 
@@ -716,27 +757,26 @@
                 schoolCard.innerHTML = `
                     <div class="school-card-header">
                         <h3>${school.name}</h3>
-                        <span class="banding-badge ${getBandingClass(school.banding)}">${school.banding}</span>
+                        ${school.banding ? `<span class="banding-badge ${getBandingClass(school.banding)}">${school.banding}</span>` : ''}
                     </div>
                     <div class="school-card-body">
-                        <p><strong>中文名稱:</strong> ${school.chineseName}</p>
-                        <p><strong>學校類型:</strong> ${school.type}</p>
-                        <p><strong>地區:</strong> ${school.district}</p>
-                        <p><strong>教學語言:</strong> ${school.language}</p>
-                        <p><strong>辦學宗旨:</strong> ${truncateText(school.mission, 50)}</p>
+                        ${school.chineseName ? `<p><strong>中文名稱:</strong> ${school.chineseName}</p>` : ''}
+                        ${school.type ? `<p><strong>學校類型:</strong> ${school.type}</p>` : ''}
+                        ${school.district ? `<p><strong>地區:</strong> ${school.district}</p>` : ''}
+                        ${school.language ? `<p><strong>教學語言:</strong> ${school.language}</p>` : ''}
+                        ${school.mission ? `<p><strong>辦學宗旨:</strong> ${truncateText(school.mission, 50)}</p>` : ''}
                         ${school.interviewPercentage ? `
-                            <div class="interview-percentage-info">
-                                <h5>面試比重</h5>
-                                <div class="percentage-value">${getInterviewPercentageValue(school.interviewPercentage)}</div>
-                                <div class="percentage-label">${getInterviewPercentageLabel(school.interviewPercentage)}</div>
+                            <div class="interview-percentage-info" style="margin: 15px 0; padding: 10px; border-radius: 6px; background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; text-align: center;">
+                                <h5 style="margin: 0 0 5px 0; font-size: 0.9rem;">面試比重</h5>
+                                <div style="font-size: 1.2rem; font-weight: bold; margin: 5px 0;">${getInterviewPercentageValue(school.interviewPercentage)}</div>
                             </div>
                         ` : ''}
                         ${school.targetInterviewDate ? `
-                            <div class="interview-countdown">
-                                <h5>面試倒計時</h5>
-                                <div class="interview-date-display">${formatDateChinese(school.targetInterviewDate)}</div>
-                                <div class="countdown-days">${calculateDaysRemaining(school.targetInterviewDate)}</div>
-                                <div class="countdown-label">天數</div>
+                            <div class="interview-countdown" style="margin: 15px 0; padding: 10px; border-radius: 6px; background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; text-align: center;">
+                                <h5 style="margin: 0 0 5px 0; font-size: 0.9rem;">面試倒計時</h5>
+                                <div style="font-size: 0.9rem; margin-bottom: 5px;">${formatDateChinese(school.targetInterviewDate)}</div>
+                                <div style="font-size: 1.5rem; font-weight: bold; margin: 5px 0;">${calculateDaysRemaining(school.targetInterviewDate)}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8;">天數</div>
                             </div>
                         ` : ''}
                     </div>
@@ -750,7 +790,7 @@
         
         // 查看学校详情
         function viewSchoolDetails(schoolId) {
-            currentSchool = schoolsData.schools.find(s => s.id === schoolId);
+            currentSchool = schoolsData.find(s => s.id === schoolId);
             if (!currentSchool) return;
             
             document.getElementById('school-list-view').style.display = 'none';
@@ -767,99 +807,108 @@
         function loadSchoolInfo() {
             const schoolInfoContent = document.getElementById('school-info-content');
             
-            schoolInfoContent.innerHTML = `
+            let infoHTML = `
                 <div class="school-detail-header">
-                    <h2>${currentSchool.name} <span class="banding-badge ${getBandingClass(currentSchool.banding)}">${currentSchool.banding}</span></h2>
-                    <h3>${currentSchool.chineseName}</h3>
-                    <p class="school-motto"><i class="fas fa-quote-left"></i> ${currentSchool.schoolMotto} <i class="fas fa-quote-right"></i></p>
+                    <h2>${currentSchool.name} ${currentSchool.banding ? `<span class="banding-badge ${getBandingClass(currentSchool.banding)}">${currentSchool.banding}</span>` : ''}</h2>
+                    ${currentSchool.chineseName ? `<h3>${currentSchool.chineseName}</h3>` : ''}
+                    ${currentSchool.schoolMotto ? `<p class="school-motto"><i class="fas fa-quote-left"></i> ${currentSchool.schoolMotto} <i class="fas fa-quote-right"></i></p>` : ''}
                     ${currentSchool.chineseMotto ? `<p class="chinese-motto">${currentSchool.chineseMotto}</p>` : ''}
                 </div>
                 
                 <div class="school-info-grid">
-                    <div class="info-item">
-                        <strong>學校類型:</strong> ${currentSchool.type}
-                    </div>
-                    <div class="info-item">
-                        <strong>宗教背景:</strong> ${currentSchool.religion}
-                    </div>
-                    <div class="info-item">
-                        <strong>性別:</strong> ${currentSchool.gender}
-                    </div>
-                    <div class="info-item">
-                        <strong>地區:</strong> ${currentSchool.district}
-                    </div>
-                    <div class="info-item">
-                        <strong>教學語言:</strong> ${currentSchool.language}
-                    </div>
-                    <div class="info-item">
-                        <strong>創校年份:</strong> ${currentSchool.established}
-                    </div>
+                    ${currentSchool.type ? `<div class="info-item"><strong>學校類型:</strong> ${currentSchool.type}</div>` : ''}
+                    ${currentSchool.religion ? `<div class="info-item"><strong>宗教背景:</strong> ${currentSchool.religion}</div>` : ''}
+                    ${currentSchool.gender ? `<div class="info-item"><strong>性別:</strong> ${currentSchool.gender}</div>` : ''}
+                    ${currentSchool.district ? `<div class="info-item"><strong>地區:</strong> ${currentSchool.district}</div>` : ''}
+                    ${currentSchool.language ? `<div class="info-item"><strong>教學語言:</strong> ${currentSchool.language}</div>` : ''}
+                    ${currentSchool.established ? `<div class="info-item"><strong>創校年份:</strong> ${currentSchool.established}</div>` : ''}
                 </div>
-                
-                <div class="info-section">
-                    <h4><i class="fas fa-bullseye"></i> 辦學宗旨 (Mission)</h4>
-                    <p>${currentSchool.mission}</p>
-                </div>
-                
-                ${currentSchool.interviewFeatures ? `
-                <div class="info-section">
-                    <h4><i class="fas fa-comments"></i> 面試特色 (Interview Features)</h4>
-                    <p>${currentSchool.interviewFeatures}</p>
-                </div>
-                ` : ''}
-                
-                ${currentSchool.interviewPercentage ? `
-                <div class="info-section">
-                    <h4><i class="fas fa-chart-pie"></i> 收生評分比重 (Admission Scoring Weight)</h4>
-                    <div class="interview-percentage-info">
-                        <h5>面試比重</h5>
-                        <div class="percentage-value">${getInterviewPercentageValue(currentSchool.interviewPercentage)}</div>
-                        <div class="percentage-label">${getInterviewPercentageLabel(currentSchool.interviewPercentage)}</div>
+            `;
+            
+            if (currentSchool.mission) {
+                infoHTML += `
+                    <div class="info-section">
+                        <h4><i class="fas fa-bullseye"></i> 辦學宗旨 (Mission)</h4>
+                        <p>${currentSchool.mission}</p>
                     </div>
-                </div>
-                ` : ''}
-                
-               
-                <div class="info-section">
-                    <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
-                    <p>${currentSchool.specialty}</p>
-                </div>
-                
-                ${currentSchool.specificFeatures ? `
-                <div class="info-section">
-                    <h4><i class="fas fa-info-circle"></i> 特別設施/計劃 (Specific Features)</h4>
-                    <p>${currentSchool.specificFeatures}</p>
-                </div>
-                ` : ''}
-                
+                `;
+            }
+            
+            if (currentSchool.interviewFeatures) {
+                infoHTML += `
+                    <div class="info-section">
+                        <h4><i class="fas fa-comments"></i> 面試特色 (Interview Features)</h4>
+                        <p>${currentSchool.interviewFeatures}</p>
+                    </div>
+                `;
+            }
+            
+            if (currentSchool.interviewPercentage) {
+                infoHTML += `
+                    <div class="info-section">
+                        <h4><i class="fas fa-chart-pie"></i> 收生評分比重 (Admission Scoring Weight)</h4>
+                        <div class="interview-percentage-info">
+                            <h5>面試比重</h5>
+                            <div class="percentage-value">${getInterviewPercentageValue(currentSchool.interviewPercentage)}</div>
+                            <div class="percentage-label">${getInterviewPercentageLabel(currentSchool.interviewPercentage)}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (currentSchool.specialty) {
+                infoHTML += `
+                    <div class="info-section">
+                        <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
+                        <p>${currentSchool.specialty}</p>
+                    </div>
+                `;
+            }
+            
+            if (currentSchool.specificFeatures) {
+                infoHTML += `
+                    <div class="info-section">
+                        <h4><i class="fas fa-info-circle"></i> 特別設施/計劃 (Specific Features)</h4>
+                        <p>${currentSchool.specificFeatures}</p>
+                    </div>
+                `;
+            }
+            
+            infoHTML += `
                 <div class="info-section">
                     <h4><i class="fas fa-info-circle"></i> 學校詳細資料 (School Details)</h4>
-                    <p><strong>學生人數:</strong> ${currentSchool.studentCount}</p>
+                    ${currentSchool.studentCount !== undefined ? `<p><strong>學生人數:</strong> ${currentSchool.studentCount}</p>` : ''}
                     ${currentSchool.admissionProcess ? `<p><strong>收生程序:</strong> ${currentSchool.admissionProcess}</p>` : ''}
                     ${currentSchool.tuitionFee ? `<p><strong>學費:</strong> ${currentSchool.tuitionFee}</p>` : ''}
                 </div>
-                
-                ${currentSchool.targetInterviewDate ? `
-                <div class="info-section">
-                    <h4><i class="fas fa-calendar-alt"></i> 目標面試日期 (Target Interview Date)</h4>
-                    <p><strong>日期:</strong> ${formatDateChinese(currentSchool.targetInterviewDate)}</p>
-                    <div class="interview-countdown">
-                        <h5>面試倒計時</h5>
-                        <div class="interview-date-display">${formatDateChinese(currentSchool.targetInterviewDate)}</div>
-                        <div class="countdown-days">${calculateDaysRemaining(currentSchool.targetInterviewDate)}</div>
-                        <div class="countdown-label">天數</div>
-                    </div>
-                </div>
-                ` : ''}
-                
-                ${currentSchool.website || currentSchool.phone ? `
-                <div class="info-section">
-                    <h4><i class="fas fa-globe"></i> 聯絡資料 (Contact Information)</h4>
-                    ${currentSchool.phone ? `<p><strong>電話:</strong> ${currentSchool.phone}</p>` : ''}
-                    ${currentSchool.website ? `<p><strong>網址:</strong> <a href="${currentSchool.website}" target="_blank">${currentSchool.website}</a></p>` : ''}
-                </div>
-                ` : ''}
             `;
+            
+            if (currentSchool.targetInterviewDate) {
+                infoHTML += `
+                    <div class="info-section">
+                        <h4><i class="fas fa-calendar-alt"></i> 目標面試日期 (Target Interview Date)</h4>
+                        <p><strong>日期:</strong> ${formatDateChinese(currentSchool.targetInterviewDate)}</p>
+                        <div class="interview-countdown">
+                            <h5>面試倒計時</h5>
+                            <div class="interview-date-display">${formatDateChinese(currentSchool.targetInterviewDate)}</div>
+                            <div class="countdown-days">${calculateDaysRemaining(currentSchool.targetInterviewDate)}</div>
+                            <div class="countdown-label">天數</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (currentSchool.website || currentSchool.phone) {
+                infoHTML += `
+                    <div class="info-section">
+                        <h4><i class="fas fa-globe"></i> 聯絡資料 (Contact Information)</h4>
+                        ${currentSchool.phone ? `<p><strong>電話:</strong> ${currentSchool.phone}</p>` : ''}
+                        ${currentSchool.website ? `<p><strong>網址:</strong> <a href="${currentSchool.website}" target="_blank">${currentSchool.website}</a></p>` : ''}
+                    </div>
+                `;
+            }
+            
+            schoolInfoContent.innerHTML = infoHTML;
         }
         
         // 加载面试题目
@@ -869,7 +918,7 @@
             // 生成面试题目HTML
             let interviewQuestionsHTML = '';
             
-            if (currentSchool.previousInterviewQuestions) {
+            if (currentSchool.previousInterviewQuestions && Object.keys(currentSchool.previousInterviewQuestions).length > 0) {
                 interviewQuestionsHTML = generateInterviewQuestionsHTML(currentSchool.previousInterviewQuestions);
             } else {
                 interviewQuestionsHTML = `
@@ -914,7 +963,11 @@
                 `;
             }
             
-            for (const [year, data] of Object.entries(questionsData)) {
+            // 按年份排序（从最新到最旧）
+            const years = Object.keys(questionsData).sort((a, b) => b - a);
+            
+            for (const year of years) {
+                const data = questionsData[year];
                 html += `
                     <div class="interview-year-section">
                         <div class="interview-year-header">
@@ -924,8 +977,11 @@
                 `;
                 
                 if (data.questions && Object.keys(data.questions).length > 0) {
-                    for (const [category, questions] of Object.entries(data.questions)) {
-                        const isChineseCategory = category.includes('中文');
+                    // 按分类名称排序
+                    const categories = Object.keys(data.questions).sort();
+                    for (const category of categories) {
+                        const questions = data.questions[category];
+                        const isChineseCategory = category.includes('中文') || category.includes('普通話');
                         html += `
                             <div class="question-category" data-category="${category}">
                                 <h6><i class="fas fa-question-circle"></i> ${category} ${isChineseCategory ? '<span style="color: #27ae60; font-size: 0.8rem;">(中文)</span>' : ''}</h6>
@@ -952,9 +1008,10 @@
             // 创建题目分类列表
             if (questionCategories.length > 0) {
                 const categories = Array.from(questionCategories).map(cat => cat.getAttribute('data-category'));
+                const uniqueCategories = [...new Set(categories)];
                 
-                let toggleHTML = '<div style="margin-bottom: 20px;">';
-                categories.forEach(category => {
+                let toggleHTML = '<div style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px;">';
+                uniqueCategories.forEach(category => {
                     toggleHTML += `
                         <button class="question-toggle" onclick="toggleQuestionCategory('${category}')">
                             ${category}
@@ -971,10 +1028,10 @@
         
         // 切换题目分类显示
         function toggleQuestionCategory(category) {
-            const categoryElement = document.querySelector(`.question-category[data-category="${category}"]`);
-            if (categoryElement) {
-                categoryElement.style.display = categoryElement.style.display === 'none' ? 'block' : 'none';
-            }
+            const categoryElements = document.querySelectorAll(`.question-category[data-category="${category}"]`);
+            categoryElements.forEach(element => {
+                element.style.display = element.style.display === 'none' ? 'block' : 'none';
+            });
         }
         
         // 显示学校列表
@@ -1001,6 +1058,7 @@
         
         // 辅助函数
         function getBandingClass(banding) {
+            if (!banding) return 'banding-1c';
             if (banding.includes('1A')) return 'banding-1a';
             if (banding.includes('1B')) return 'banding-1b';
             if (banding.includes('1C')) return 'banding-1c';
@@ -1020,7 +1078,6 @@
             return percentageString.replace('面試:', '面試: ').replace(';', '; ');
         }
         
-                
         // 统计中文题目数量
         function countChineseQuestions(questionsData) {
             let count = 0;
@@ -1049,45 +1106,55 @@
             return count;
         }
         
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('zh-HK', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                weekday: 'long'
-            });
-        }
-        
-        // 新的函数：格式化为YYYY年MM月DD日 (星期W)
+        // 格式化为YYYY年MM月DD日 (星期W)
         function formatDateChinese(dateString) {
-            const date = new Date(dateString);
-            const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            
-            // 星期几的映射
-            const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
-            const weekday = weekdays[date.getDay()];
-            
-            return `${year}年${month}月${day}日 (星期${weekday})`;
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    return dateString; // 如果日期无效，返回原始字符串
+                }
+                
+                const year = date.getFullYear();
+                const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                const day = date.getDate().toString().padStart(2, '0');
+                
+                // 星期几的映射
+                const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
+                const weekday = weekdays[date.getDay()];
+                
+                return `${year}年${month}月${day}日 (星期${weekday})`;
+            } catch (error) {
+                console.error('日期格式化错误:', error);
+                return dateString;
+            }
         }
         
         function calculateDaysRemaining(targetDateStr) {
-            const targetDate = new Date(targetDateStr);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            targetDate.setHours(0, 0, 0, 0);
-            
-            const diffTime = targetDate - today;
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            
-            if (diffDays > 0) return diffDays;
-            if (diffDays === 0) return '0 (今天)';
-            return '已過期';
+            try {
+                const targetDate = new Date(targetDateStr);
+                const today = new Date();
+                
+                if (isNaN(targetDate.getTime())) {
+                    return '日期无效';
+                }
+                
+                today.setHours(0, 0, 0, 0);
+                targetDate.setHours(0, 0, 0, 0);
+                
+                const diffTime = targetDate - today;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                
+                if (diffDays > 0) return diffDays;
+                if (diffDays === 0) return '0 (今天)';
+                return '已過期';
+            } catch (error) {
+                console.error('计算天数错误:', error);
+                return '日期错误';
+            }
         }
         
         function truncateText(text, maxLength) {
+            if (!text) return '';
             if (text.length <= maxLength) return text;
             return text.substring(0, maxLength) + '...';
         }
@@ -1098,12 +1165,18 @@
             loadSchoolsData();
             
             // 侧边栏切换
-            document.getElementById('sidebar-toggle').addEventListener('click', function() {
-                document.querySelector('.sidebar').classList.toggle('collapsed');
-            });
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            if (sidebarToggle) {
+                sidebarToggle.addEventListener('click', function() {
+                    document.querySelector('.sidebar').classList.toggle('collapsed');
+                });
+            }
             
             // 学校信息显示/隐藏切换
-            document.getElementById('toggle-school-info').addEventListener('click', toggleSchoolInfo);
+            const toggleSchoolInfoBtn = document.getElementById('toggle-school-info');
+            if (toggleSchoolInfoBtn) {
+                toggleSchoolInfoBtn.addEventListener('click', toggleSchoolInfo);
+            }
         });
     </script>
 </body>
