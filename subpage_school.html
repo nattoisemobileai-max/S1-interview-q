@@ -514,6 +514,28 @@
             font-size: 3rem;
             margin-bottom: 20px;
         }
+        
+        /* 加载动画 */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
@@ -579,6 +601,15 @@
                         <label for="district-filter">按地區篩選:</label>
                         <select id="district-filter" onchange="filterSchools()">
                             <option value="">所有地區</option>
+                            <!-- 地区选项将由JavaScript动态生成 -->
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="type-filter">按學校類型篩選:</label>
+                        <select id="type-filter" onchange="filterSchools()">
+                            <option value="">所有類型</option>
+                            <option value="直資">直資學校</option>
+                            <option value="資助">資助學校</option>
                         </select>
                     </div>
                 </div>
@@ -586,6 +617,9 @@
                 <!-- 学校列表 -->
                 <div id="school-list" class="school-grid">
                     <!-- 学校卡片将由JavaScript加载 -->
+                    <div class="loading-spinner" id="loading-spinner">
+                        <div class="spinner"></div>
+                    </div>
                 </div>
                 
                 <!-- 无结果消息 -->
@@ -646,6 +680,10 @@
             try {
                 schoolsData = [];
                 
+                // 显示加载动画
+                const loadingSpinner = document.getElementById('loading-spinner');
+                loadingSpinner.style.display = 'flex';
+                
                 // 并行加载所有学校文件
                 const promises = schoolFiles.map(file => 
                     fetch(file)
@@ -663,6 +701,9 @@
                 
                 const loadedSchools = await Promise.all(promises);
                 
+                // 隐藏加载动画
+                loadingSpinner.style.display = 'none';
+                
                 // 过滤掉加载失败的数据
                 schoolsData = loadedSchools.filter(school => school !== null);
                 
@@ -676,13 +717,14 @@
                 schoolsData.sort((a, b) => a.id - b.id);
                 filteredSchools.sort((a, b) => a.id - b.id);
                 
-                // 初始化地区筛选器选项
+                // 初始化筛选器选项
                 initializeFilters();
                 
                 // 显示学校列表
                 displaySchoolList();
             } catch (error) {
                 console.error('加载学校数据时出错:', error);
+                document.getElementById('loading-spinner').style.display = 'none';
                 document.getElementById('school-list').innerHTML = 
                     '<div class="error-message">無法加載學校資訊，請檢查網絡連接或文件路徑。</div>';
             }
@@ -717,6 +759,7 @@
         function filterSchools() {
             const bandingFilter = document.getElementById('banding-filter').value;
             const districtFilter = document.getElementById('district-filter').value;
+            const typeFilter = document.getElementById('type-filter').value;
             
             filteredSchools = schoolsData.filter(school => {
                 let matches = true;
@@ -726,6 +769,10 @@
                 }
                 
                 if (districtFilter && school.district && school.district !== districtFilter) {
+                    matches = false;
+                }
+                
+                if (typeFilter && school.type && !school.type.includes(typeFilter)) {
                     matches = false;
                 }
                 
@@ -756,15 +803,15 @@
                 schoolCard.className = 'school-card';
                 schoolCard.innerHTML = `
                     <div class="school-card-header">
-                        <h3>${school.name}</h3>
-                        ${school.banding ? `<span class="banding-badge ${getBandingClass(school.banding)}">${school.banding}</span>` : ''}
+                        <h3>${escapeHtml(school.name)}</h3>
+                        ${school.banding ? `<span class="banding-badge ${getBandingClass(school.banding)}">${escapeHtml(school.banding)}</span>` : ''}
                     </div>
                     <div class="school-card-body">
-                        ${school.chineseName ? `<p><strong>中文名稱:</strong> ${school.chineseName}</p>` : ''}
-                        ${school.type ? `<p><strong>學校類型:</strong> ${school.type}</p>` : ''}
-                        ${school.district ? `<p><strong>地區:</strong> ${school.district}</p>` : ''}
-                        ${school.language ? `<p><strong>教學語言:</strong> ${school.language}</p>` : ''}
-                        ${school.mission ? `<p><strong>辦學宗旨:</strong> ${truncateText(school.mission, 50)}</p>` : ''}
+                        ${school.chineseName ? `<p><strong>中文名稱:</strong> ${escapeHtml(school.chineseName)}</p>` : ''}
+                        ${school.type ? `<p><strong>學校類型:</strong> ${escapeHtml(school.type)}</p>` : ''}
+                        ${school.district ? `<p><strong>地區:</strong> ${escapeHtml(school.district)}</p>` : ''}
+                        ${school.language ? `<p><strong>教學語言:</strong> ${escapeHtml(school.language)}</p>` : ''}
+                        ${school.mission ? `<p><strong>辦學宗旨:</strong> ${escapeHtml(truncateText(school.mission, 50))}</p>` : ''}
                         ${school.interviewPercentage ? `
                             <div class="interview-percentage-info" style="margin: 15px 0; padding: 10px; border-radius: 6px; background: linear-gradient(135deg, #9b59b6, #8e44ad); color: white; text-align: center;">
                                 <h5 style="margin: 0 0 5px 0; font-size: 0.9rem;">面試比重</h5>
@@ -809,19 +856,19 @@
             
             let infoHTML = `
                 <div class="school-detail-header">
-                    <h2>${currentSchool.name} ${currentSchool.banding ? `<span class="banding-badge ${getBandingClass(currentSchool.banding)}">${currentSchool.banding}</span>` : ''}</h2>
-                    ${currentSchool.chineseName ? `<h3>${currentSchool.chineseName}</h3>` : ''}
-                    ${currentSchool.schoolMotto ? `<p class="school-motto"><i class="fas fa-quote-left"></i> ${currentSchool.schoolMotto} <i class="fas fa-quote-right"></i></p>` : ''}
-                    ${currentSchool.chineseMotto ? `<p class="chinese-motto">${currentSchool.chineseMotto}</p>` : ''}
+                    <h2>${escapeHtml(currentSchool.name)} ${currentSchool.banding ? `<span class="banding-badge ${getBandingClass(currentSchool.banding)}">${escapeHtml(currentSchool.banding)}</span>` : ''}</h2>
+                    ${currentSchool.chineseName ? `<h3>${escapeHtml(currentSchool.chineseName)}</h3>` : ''}
+                    ${currentSchool.schoolMotto ? `<p class="school-motto"><i class="fas fa-quote-left"></i> ${escapeHtml(currentSchool.schoolMotto)} <i class="fas fa-quote-right"></i></p>` : ''}
+                    ${currentSchool.chineseMotto ? `<p class="chinese-motto">${escapeHtml(currentSchool.chineseMotto)}</p>` : ''}
                 </div>
                 
                 <div class="school-info-grid">
-                    ${currentSchool.type ? `<div class="info-item"><strong>學校類型:</strong> ${currentSchool.type}</div>` : ''}
-                    ${currentSchool.religion ? `<div class="info-item"><strong>宗教背景:</strong> ${currentSchool.religion}</div>` : ''}
-                    ${currentSchool.gender ? `<div class="info-item"><strong>性別:</strong> ${currentSchool.gender}</div>` : ''}
-                    ${currentSchool.district ? `<div class="info-item"><strong>地區:</strong> ${currentSchool.district}</div>` : ''}
-                    ${currentSchool.language ? `<div class="info-item"><strong>教學語言:</strong> ${currentSchool.language}</div>` : ''}
-                    ${currentSchool.established ? `<div class="info-item"><strong>創校年份:</strong> ${currentSchool.established}</div>` : ''}
+                    ${currentSchool.type ? `<div class="info-item"><strong>學校類型:</strong> ${escapeHtml(currentSchool.type)}</div>` : ''}
+                    ${currentSchool.religion ? `<div class="info-item"><strong>宗教背景:</strong> ${escapeHtml(currentSchool.religion)}</div>` : ''}
+                    ${currentSchool.gender ? `<div class="info-item"><strong>性別:</strong> ${escapeHtml(currentSchool.gender)}</div>` : ''}
+                    ${currentSchool.district ? `<div class="info-item"><strong>地區:</strong> ${escapeHtml(currentSchool.district)}</div>` : ''}
+                    ${currentSchool.language ? `<div class="info-item"><strong>教學語言:</strong> ${escapeHtml(currentSchool.language)}</div>` : ''}
+                    ${currentSchool.established ? `<div class="info-item"><strong>創校年份:</strong> ${escapeHtml(currentSchool.established)}</div>` : ''}
                 </div>
             `;
             
@@ -829,7 +876,7 @@
                 infoHTML += `
                     <div class="info-section">
                         <h4><i class="fas fa-bullseye"></i> 辦學宗旨 (Mission)</h4>
-                        <p>${currentSchool.mission}</p>
+                        <p>${escapeHtml(currentSchool.mission)}</p>
                     </div>
                 `;
             }
@@ -838,7 +885,7 @@
                 infoHTML += `
                     <div class="info-section">
                         <h4><i class="fas fa-comments"></i> 面試特色 (Interview Features)</h4>
-                        <p>${currentSchool.interviewFeatures}</p>
+                        <p>${escapeHtml(currentSchool.interviewFeatures)}</p>
                     </div>
                 `;
             }
@@ -850,7 +897,7 @@
                         <div class="interview-percentage-info">
                             <h5>面試比重</h5>
                             <div class="percentage-value">${getInterviewPercentageValue(currentSchool.interviewPercentage)}</div>
-                            <div class="percentage-label">${getInterviewPercentageLabel(currentSchool.interviewPercentage)}</div>
+                            <div class="percentage-label">${escapeHtml(getInterviewPercentageLabel(currentSchool.interviewPercentage))}</div>
                         </div>
                     </div>
                 `;
@@ -860,7 +907,7 @@
                 infoHTML += `
                     <div class="info-section">
                         <h4><i class="fas fa-star"></i> 學校特色 (Specialties)</h4>
-                        <p>${currentSchool.specialty}</p>
+                        <p>${escapeHtml(currentSchool.specialty)}</p>
                     </div>
                 `;
             }
@@ -869,7 +916,7 @@
                 infoHTML += `
                     <div class="info-section">
                         <h4><i class="fas fa-info-circle"></i> 特別設施/計劃 (Specific Features)</h4>
-                        <p>${currentSchool.specificFeatures}</p>
+                        <p>${escapeHtml(currentSchool.specificFeatures)}</p>
                     </div>
                 `;
             }
@@ -877,9 +924,10 @@
             infoHTML += `
                 <div class="info-section">
                     <h4><i class="fas fa-info-circle"></i> 學校詳細資料 (School Details)</h4>
-                    ${currentSchool.studentCount !== undefined ? `<p><strong>學生人數:</strong> ${currentSchool.studentCount}</p>` : ''}
-                    ${currentSchool.admissionProcess ? `<p><strong>收生程序:</strong> ${currentSchool.admissionProcess}</p>` : ''}
-                    ${currentSchool.tuitionFee ? `<p><strong>學費:</strong> ${currentSchool.tuitionFee}</p>` : ''}
+                    ${currentSchool.studentCount !== undefined ? `<p><strong>學生人數:</strong> ${escapeHtml(currentSchool.studentCount)}</p>` : ''}
+                    ${currentSchool.admissionProcess ? `<p><strong>收生程序:</strong> ${escapeHtml(currentSchool.admissionProcess)}</p>` : ''}
+                    ${currentSchool.tuitionFee ? `<p><strong>學費:</strong> ${escapeHtml(currentSchool.tuitionFee)}</p>` : ''}
+                    ${currentSchool.image ? `<p><strong>學校標誌:</strong> ${escapeHtml(currentSchool.image)}</p>` : ''}
                 </div>
             `;
             
@@ -902,8 +950,8 @@
                 infoHTML += `
                     <div class="info-section">
                         <h4><i class="fas fa-globe"></i> 聯絡資料 (Contact Information)</h4>
-                        ${currentSchool.phone ? `<p><strong>電話:</strong> ${currentSchool.phone}</p>` : ''}
-                        ${currentSchool.website ? `<p><strong>網址:</strong> <a href="${currentSchool.website}" target="_blank">${currentSchool.website}</a></p>` : ''}
+                        ${currentSchool.phone ? `<p><strong>電話:</strong> ${escapeHtml(currentSchool.phone)}</p>` : ''}
+                        ${currentSchool.website ? `<p><strong>網址:</strong> <a href="${escapeHtml(currentSchool.website)}" target="_blank">${escapeHtml(currentSchool.website)}</a></p>` : ''}
                     </div>
                 `;
             }
@@ -983,10 +1031,10 @@
                         const questions = data.questions[category];
                         const isChineseCategory = category.includes('中文') || category.includes('普通話');
                         html += `
-                            <div class="question-category" data-category="${category}">
-                                <h6><i class="fas fa-question-circle"></i> ${category} ${isChineseCategory ? '<span style="color: #27ae60; font-size: 0.8rem;">(中文)</span>' : ''}</h6>
+                            <div class="question-category" data-category="${escapeHtml(category)}">
+                                <h6><i class="fas fa-question-circle"></i> ${escapeHtml(category)} ${isChineseCategory ? '<span style="color: #27ae60; font-size: 0.8rem;">(中文)</span>' : ''}</h6>
                                 <ul class="question-list">
-                                    ${questions.map(question => `<li>${question}</li>`).join('')}
+                                    ${questions.map(question => `<li>${escapeHtml(question)}</li>`).join('')}
                                 </ul>
                             </div>
                         `;
@@ -1013,8 +1061,8 @@
                 let toggleHTML = '<div style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px;">';
                 uniqueCategories.forEach(category => {
                     toggleHTML += `
-                        <button class="question-toggle" onclick="toggleQuestionCategory('${category}')">
-                            ${category}
+                        <button class="question-toggle" onclick="toggleQuestionCategory('${escapeHtml(category)}')">
+                            ${escapeHtml(category)}
                         </button>
                     `;
                 });
@@ -1028,7 +1076,7 @@
         
         // 切换题目分类显示
         function toggleQuestionCategory(category) {
-            const categoryElements = document.querySelectorAll(`.question-category[data-category="${category}"]`);
+            const categoryElements = document.querySelectorAll(`.question-category[data-category="${escapeHtml(category)}"]`);
             categoryElements.forEach(element => {
                 element.style.display = element.style.display === 'none' ? 'block' : 'none';
             });
@@ -1157,6 +1205,19 @@
             if (!text) return '';
             if (text.length <= maxLength) return text;
             return text.substring(0, maxLength) + '...';
+        }
+        
+        // HTML转义函数
+        function escapeHtml(text) {
+            if (!text) return '';
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
         }
         
         // 页面加载完成后执行
