@@ -1,0 +1,276 @@
+{
+  "id": 5,
+  "name": "Po Leung Kuk Tang Yuk Tien College",
+  "chineseName": "保良局董玉娣中學",
+  "banding": "Band 1A",
+  "type": "資助",
+  "religion": "無",
+  "gender": "男女校",
+  "district": "屯門區",
+  "language": "中文",
+  "schoolMotto": "Love, Respect, Diligence, Honesty",
+  "chineseMotto": "愛敬勤誠",
+  "mission": "發展學生的潛能，培養對社會有貢獻的人才",
+  "interviewFeatures": "設有個人面談環節。",
+  "interviewPercentage": "面試:30%; 學業成績:60%; 課外活動:10%",
+  "specialty": "Science, Math, English、體育、生涯規劃",
+  "website": "http://www.plktytc.edu.hk/",
+  "phone": "2461-9888",
+  "established": 1988,
+  "studentCount": 1000,
+  "admissionProcess": "資助中學，按教育局中學學位分配辦法收生",
+  "specificFeatures": "五育並重，發揮學生各潛能。貢獻社會，培養進取新一代。",
+  "image": "badge_plktytc.jpg",
+  "targetInterviewDate": "2026-03-14",
+  "previousInterviewQuestions": {
+    "2013": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "選擇題（改錯）",
+          "選擇題（閱讀）",
+          "聯想題（從某字、詞聯想到甚麼？）",
+          "重組句子",
+          "一般問題：有甚麼難忘的事？",
+          "學校如有人受傷，你會？",
+          "功課後會做甚麼？"
+        ],
+        "英文個人": [
+          "選擇題（閱讀）",
+          "看圖描述",
+          "閱讀理解問題（5條一般問題，2條開放題）",
+          "一般問題：Our school background",
+          "What do you do after school？",
+          "Why do you want to join our school？"
+        ],
+        "其他": [
+          "心算題",
+          "一般計算題",
+          "時事題：如何說服行政長官改善房屋、幼稚園教育、人口老化上其中一項的政策？",
+          "父母和子女用電子溝通有何利弊？"
+        ]
+      }
+    },
+    "2014": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "問答（寫）：你會選擇在哪兒做義工？孤兒院、弱智學校或老人院？",
+          "個人介紹",
+          "問題：如果我校未有錄取你，你會選哪間中學？",
+          "小學的功課多嗎？",
+          "在空閒時你會做甚麼？",
+          "改錯處",
+          "閱讀理解問題"
+        ],
+        "英文個人": [
+          "問答（寫）：為甚麼選這一間中學？",
+          "哪一間中學是你的第二選擇？為甚麼？",
+          "你最喜歡哪個科目？",
+          "問答（口）：在空閒時你會做甚麼？",
+          "你有甚麼興趣？",
+          "改錯處（5題）",
+          "閱讀理解"
+        ],
+        "數學": [
+          "計算題（10題）"
+        ]
+      }
+    },
+    "2016": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "選擇題（錯別字、閱讀理解、重組句子）",
+          "聯想題（「蘋果」、「雲」、「月亮」）",
+          "問答：有何難忘的事件？",
+          "父母和子女用電子溝通對個人有何利弊？",
+          "改錯題（文法、錯別字）"
+        ],
+        "英文個人": [
+          "選擇題：閱讀理解",
+          "朗讀文章（10分鐘預備）",
+          "問答：你的第二志願學校？",
+          "為何要選我校？",
+          "介紹你小學的背景",
+          "改錯題（文法、錯別字）"
+        ],
+        "數學": [
+          "心算題 (9-10題)"
+        ],
+        "其他": [
+          "時事題：施政報告",
+          "TSA應否取消？",
+          "如行政長官在你面前，你會如何說服他改善以下其中一項政策？（房屋/人口老化/幼稚園）"
+        ]
+      }
+    },
+    "2017": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "語文能力題（選詞、填字、拼句成段、找錯別字）",
+          "聯想題（題目：時鐘、雞蛋）",
+          "問答：你認為行政長官應有甚麼條件？",
+          "你認為如何可以阻止欺凌？",
+          "看到這個emoji你會聯想起甚麼？",
+          "閱讀文章，回答問題：篇有關一人冒著生命危險去捐贈器官的故事",
+          "你認為捐贈器官對病者家屬的意義",
+          "你認為怎樣才能提高捐贈率？",
+          "你認為怎樣才能提高香港市民的互助性？"
+        ]
+      }
+    },
+    "2018": {
+      "months": ["12月"],
+      "questions": {
+        "英文個人": [
+          "Question (Written): What is the name of your school ? / What school are you studying in now ?",
+          "What is your second choice of the college ?",
+          "Why do you choose our school ?",
+          "What do you do when you have free time ? / How do you spend your leisure time ?",
+          "Question (oral): What is your favourite season ?",
+          "Which subject do you like the most ?",
+          "Why do you choose our school ?",
+          "Which school is your second choice ? Why ?",
+          "How do you spend your leisure time ? Give more details",
+          "What is the name of your primary school ?",
+          "How do you spend your leisure time ? Please tell me as detailed as you can",
+          "Proofreading",
+          "Reading passage and answer question"
+        ],
+        "數學": [
+          "數學題 (9條,1分鐘)"
+        ],
+        "其他": [
+          "時事題：你認為「關愛座」是否應讓座？",
+          "你認為是否要強制青少年讓座？",
+          "面對網民對「關愛座」的抨擊，你會用甚麼方法解決？"
+        ]
+      }
+    },
+    "2019": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "成語題",
+          "拼句成段",
+          "找錯字",
+          "網購對環境造成甚麼影響？",
+          "對淘寶光棍節的看法，你認為市民應否大量購物？",
+          "用2分鐘來說：「怎麼可以解決網購製造垃圾的問題？」",
+          "你認為負責任，有禮貌，動力，自己最需要改善哪方面？"
+        ],
+        "英文個人": [
+          "Read passage and answer question (The adventure of a milkman)",
+          "5 sentences are given, find the mistakes and correct",
+          "Why do you want to study in our school ?",
+          "What do you like doing in your spare time ?",
+          "Reading aloud (A patient was tricked by a doctor to buy his medicine)",
+          "Grammar mistake and wrong spelling word",
+          "Which school is your second choice ? Why ? (Written test)",
+          "How do you spend your leisure time ?",
+          "Why do you choose our school ?"
+        ],
+        "數學": [
+          "X/3 +6=9, X=?",
+          "9+99+999+9999=?",
+          "1, 4, 9, 16, X, Y, 49, 64, X+Y =?",
+          "由15個小正方形組成的正方形，問正方形有多少個？",
+          "1996+1994+2004+2006+1998+2002 =?"
+        ],
+        "其他": [
+          "時事題 (2分鐘短講)：健康飲食/淘寶雙11產生大量垃圾/對旺角殺街之看法及建議",
+          "面試前須填寫1張問卷（應該是筆試）",
+          "聯想題：過山車的影子圖像，你會聯想到甚麼？",
+          "圖：1+1=2（黑底白字）",
+          "看到一個交通燈，你會聯想到怎麼？",
+          "思考題：閱讀一則關於健康的文章後發表自己的意見，下面有3個小提示"
+        ]
+      }
+    },
+    "2020": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "疫情下我們長時間留在家，對製作食物、家庭費等有不少具體的經驗",
+          "試以「如何製作／完成」為題，介紹一種食物的製作方法或完成家庭費事的程序",
+          "說出一次勇敢的經歷",
+          "在疫情期間相信也經歷過不少，請你記述一次做專家或煮食的經過（1分鐘）",
+          "同學，你現在正值六年級，就快升上中學，你會如何運用你最後一個小學的暑假呢？（1分鐘）",
+          "畢業前最後一個假期最想和同學去哪裡？",
+          "疫情下，少了外出，你在家和家人一起做了甚麼？",
+          "圖（LEGO）介紹玩具"
+        ],
+        "數學": [
+          "試推理X的值。7, 10, 14, 19, X",
+          "7/8 - 4/5",
+          "ABCDE的面積是多少？",
+          "63-5X=3·X=？",
+          "一件物品的原價是$400，以7折出售，哪處該物品便宜了多少？",
+          "某人以15公里/小時從A地走到B地，再以30公里/小時從B地走到C地。已知AB=BC=30公里，問他從A地到C地的平均速度。"
+        ],
+        "英文個人": [
+          "See a picture: What is/are the object(s) shown in the picture ?",
+          "Please describe the object(s)",
+          "What can it / them do ?",
+          "Use your imagination and explain how the object(s) is / are similar to your personality",
+          "Give you a picture of puzzle (nai/4 toy blocks, red cylinder, yellow cuboid, green cube, blue cone/rice cooker)",
+          "What is in the picture ?",
+          "What can you do ?",
+          "What do you think about this ?",
+          "What can you imagine ?",
+          "How to describe yourself by using this picture ? (1 min)",
+          "Self-introduction: Where is your primary school ?",
+          "Creative question: A time machine was invested by the scientist; how would you use it ?",
+          "If you can add a classroom rule, what do you want to add ?"
+        ]
+      }
+    },
+    "2022": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "爸爸有腦退化症/減退，連兒子也忘記",
+          "我和爸爸到一間裝模臺的餐廳，經過一片杯盤狼藉……找出錯別字和杯盤狼藉的意思",
+          "目瞪口呆的意思",
+          "父母會老，父母______（連接詞）會病",
+          "「假如你做完功課」，用另一個連接詞代替「假如」",
+          "一小段文字解釋字義和補充段落中空位",
+          "疫情期間如何分配時間",
+          "考題作答：「危在旦夕」是甚麼意思？"
+        ],
+        "英文個人": [
+          "用Serafina and the Black Clock做主題講故事",
+          "一本書的封面說故事、6段句子找錯誤。只提供書的封面，然後介紹這本書，看文章後回答題目",
+          "學生對學校操行的理解/認為怎樣才得到操行A",
+          "你認為自己在老師心目中是怎樣的學生，為甚麼覺得老師會給你操行A？"
+        ],
+        "數學": [
+          "81.77.72？",
+          "3/8+5/4x7=？",
+          "一件衫原價450元以七折出售便宜了多少元？"
+        ]
+      }
+    },
+    "2023": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "心算題（速率、方程、找規律、分數加減乘除）",
+          "六至七條關於四則運算、分數、折扣、圖形面積、速率的問題",
+          "給一篇文章（用詞語或者連接詞填空，並找錯別字）",
+          "一篇關於停車場對話的文章，並回答相關的問題"
+        ],
+        "英文個人": [
+          "Proofreading, 4 sentences and given, find and correct 3 grammar mistakes",
+          "Individual response: Why do you have this nick name？",
+          "Why do you have this Chinese name？",
+          "If you were the chairperson of school activity group and you need to organize activities for your classmate, what would they be？",
+          "What is your favorite holiday？",
+          "How to allocate time after homework？"
+        ]
+      }
+    }
+  }
+}
