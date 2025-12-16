@@ -1,0 +1,39 @@
+{
+  "id": 3,
+  "name": "Ying Wa College",
+  "chineseName": "英華書院",
+  "banding": "Band 1B–1A",
+  "type": "直資",
+  "religion": "基督教",
+  "gender": "男校",
+  "district": "深水埗區",
+  "language": "英文",
+  "schoolMotto": "To strive, to seek, to find, and not to yield",
+  "chineseMotto": "篤信善行",
+  "mission": "個人成長，品格培育，關心社區/提供全人教育，培養學生的學術、品德和領導能力",
+  "interviewFeatures": "設有個人面談、小組討論、中英文寫作測試。",
+  "interviewPercentage": "面試:50%; 學業成績:30%; 課外活動:20%",
+  "specialty": "Science (STEM)、MATH、音樂、體育、領袖培訓",
+  "website": "https://www.yingwa.edu.hk/",
+  "phone": "2380-4331",
+  "established": 1818,
+  "studentCount": 80,
+  "admissionProcess": "現時所有中一新生均按能力平均編為6班。每一班都有來自英華小學（一條龍）及非英華小學的學生。學校安排的迎新日及各項升中銜接計劃，幫助學生適應新環境和互相認識（詳情見「學生成長支援」部分）。在班主任的照顧下，同學一般很快便適應，大家亦不分彼此，融洽相處。",
+  "tuitionFee": "港幣25,300元/年（設有學費減免計劃）",
+  "specificFeatures": "Brothership, leadership, Christian Life。配合教育發展的趨勢，教師經常參加專業進修。重視學生五育發展。課程均衡，除一般科目外，中一必須選擇學習1種樂器或運動項目。校內舉辦暑期閱讀計劃、晨早閱讀計劃、廣泛閱讀計劃，並設學會負責推廣。校外參加不同比賽。",
+  "image": "badge_yingwa.jpg",
+  "targetInterviewDate": "2026-01-17",
+  "previousInterviewQuestions": {
+    "2019": {
+      "months": ["12月", "2月"],
+      "questions": {
+        "中文個人": ["關於李時珍", "你是否贊成學校成立電競學會？"],
+        "中文小組": ["Relieve Stress", "看文章回答問題", "Picture Description", "Ask questions related to student's portfolio"],
+        "英文個人": ["有篇中文文章，學生閱讀文章後為文章定主題", "基本自我介紹"],
+        "中國文化": ["如何鼓勵學生在校園減電的建議", "若學校想設感恩主題週，如何安排及活動建議？", "是否可以以半日授課取代全日授課？"],
+        "注意事項": ["小組討論每組題目不同", "英華面試會看學生的態度，如體貌、離場推椅等"],
+        "其他": ["第二輪面試取消，直接根據第一次面試和學校成績、課外活動作收生", "論模範生應有甚麼條件", "看文章回答問題", "給予一常識題，及後問對其看法及意見"]
+      }
+    }
+  }
+}
