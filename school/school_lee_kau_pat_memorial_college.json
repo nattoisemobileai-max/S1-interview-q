@@ -1,0 +1,71 @@
+{
+  "id": 2,
+  "name": "Lee Kau Pat Memorial College",
+  "chineseName": "香港管理專業協會李國寶中學",
+  "banding": "Band 1B",
+  "type": "直資",
+  "religion": "沒有",
+  "gender": "男女校",
+  "district": "油尖旺區",
+  "language": "英文",
+  "schoolMotto": "In Search of Excellence",
+  "chineseMotto": "追求卓越",
+  "mission": "提供全人教育，培養學生的學術、品德和領導能力，並發展他們的潛能，貢獻社會",
+  "interviewFeatures": "設有個人面談、小組討論、中英文寫作測試",
+  "interviewPercentage": "面試:60%; 學業成績:30%; 課外活動:10%",
+  "specialty": "STEM、音樂、體育、領袖培訓、國際視野、非華裔學生入讀",
+  "website": "https://www.hkmadavidli.edu.hk",
+  "phone": "2626 9100",
+  "established": 2000,
+  "studentCount": 0,
+  "admissionProcess": "直資學校，有獨立招生程序，2026/27學年提供100個中一外校生學額",
+  "tuitionFee": "港幣$39,780元/年",
+  "specificFeatures": "學校以提供全人教育為使命，務求讓學生在德、智、體、群、美五育方面都有全面的發展。學校相信每位學生都有獨特之處，亦具備不同的潛質。學校既應培育學生的才能，亦要發掘學生的潛能，使他們盡展所長。",
+  "image": "badge_lkp.jpg",
+  "targetInterviewDate": "2026-01-20",
+  "previousInterviewQuestions": {
+    "2019": {
+      "months": ["12月", "2月"],
+      "questions": {
+        "中文個人": [
+          "讀文章，有一句要求用普通話讀，之後問有關的問題"
+        ],
+        "英文個人": [
+          "Why do you think that most of the people like to buy things in Hong Kong ?",
+          "You are going to redesign our logo, here are a piece of paper and a marker pen, after you draw our new logo, please explain"
+        ],
+        "其他": [
+          "（家長一起面試）學生：請問你平時看甚麼書？如果在 WhatsApp 有人取笑別人，你會做甚麼？",
+          "家長：你覺得你的孩子是甚麼性格？平日假期你們會做甚麼？"
+        ]
+      }
+    },
+    "2021": {
+      "months": ["12月"],
+      "questions": {
+        "家長面試": [
+          "Why do you choose our school for your child ?",
+          "How did you support your child's learning ?",
+          "What are your expectations about your child's personal development ?"
+        ],
+        "學生面試": [
+          "Which virtue do you think is the most important (e.g. respect, honesty, diligence, etc.) ? Share one personal experience to illustrate the importance of this virtue",
+          "If you were given HK$10,000, how would you spend the money ?"
+        ]
+      }
+    },
+    "2022": {
+      "months": ["12月"],
+      "questions": {
+        "中文個人": [
+          "因應個人檔案出題（為甚麼四五年級成績有明顯進步？）",
+          "要求學生設定溫習及補習計劃",
+          "朗讀文章（問文中成語意思及造句）"
+        ],
+        "英文個人": [
+          "What's your favourite restaurant ?"
+        ]
+      }
+    }
+  }
+}
