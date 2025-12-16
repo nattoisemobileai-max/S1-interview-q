@@ -1,0 +1,36 @@
+{
+  "id": 7,
+  "name": "HKBU Affiliated School Wong Kam Fai Secondary and Primary School",
+  "chineseName": "香港浸會大學附屬學校王錦輝中小學",
+  "banding": "Band 1B",
+  "type": "直資",
+  "religion": "基督教",
+  "gender": "男女校",
+  "district": "沙田區",
+  "language": "英文",
+  "schoolMotto": "Pursuit of Excellence, Cultivation of Virtue",
+  "chineseMotto": "追求卓越、培育美德",
+  "mission": "秉承香港浸會大學的教育使命，以基督精神為基礎，致力為學生提供優質教育，結合中西文化，發展學生潛質，陶冶情操，明辨是非，貢獻社稷，實踐「全人為本，學子為先」的教育理念。",
+  "interviewFeatures": "設有個人面談、小組討論、創意解難測試",
+  "interviewPercentage": "面試:50%; 學業成績:30%; 課外活動:20%",
+  "specialty": "STEAM教育、國際視野、藝術發展、領袖培訓",
+  "website": "https://www.hkbuas.edu.hk",
+  "phone": "2637 2277",
+  "established": 2006,
+  "studentCount": 800,
+  "admissionProcess": "直資學校，有獨立招生程序，注重學生多元發展",
+  "tuitionFee": "港幣38,000元/年（設有獎學金及學費減免計劃）",
+  "specificFeatures": "設有創新實驗室、室內游泳池、黑盒劇場，與香港浸會大學有聯繫，提供多元國際交流機會",
+  "image": "badge_wkf.jpg",
+  "targetInterviewDate": "2026-01-25",
+  "previousInterviewQuestions": {
+    "2021": {
+      "months": ["1月"],
+      "questions": {
+        "創意解難": ["設計未來校園", "解決學習困難方案", "創意表達"],
+        "國際視野": ["跨文化交流經驗", "全球議題看法", "國際學習計劃"],
+        "藝術發展": ["藝術才能展示", "美學鑑賞", "創意表達"]
+      }
+    }
+  }
+}
