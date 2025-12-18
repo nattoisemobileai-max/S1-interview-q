@@ -270,24 +270,79 @@
             background: #d5dbdb;
         }
         
-        .interview-year-section {
-            margin-bottom: 25px;
-            padding: 20px;
+        /* 新的问题分类布局 */
+        .question-category-section {
+            margin-bottom: 30px;
             background: #f8f9fa;
             border-radius: 10px;
-            border-left: 4px solid #9b59b6;
+            overflow: hidden;
+            border-left: 4px solid;
         }
         
-        .interview-year-header {
+        .question-category-section.chinese {
+            border-left-color: #e74c3c;
+        }
+        
+        .question-category-section.math {
+            border-left-color: #3498db;
+        }
+        
+        .question-category-section.english-individual {
+            border-left-color: #2ecc71;
+        }
+        
+        .question-category-section.english-group {
+            border-left-color: #9b59b6;
+        }
+        
+        .category-header {
+            background: linear-gradient(135deg, var(--category-color), var(--category-color-dark));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .category-header h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-icon {
+            font-size: 1.3rem;
+        }
+        
+        .category-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .year-questions {
+            padding: 20px;
+        }
+        
+        .year-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .year-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #eee;
         }
         
-        .interview-year-header h5 {
+        .year-header h5 {
             color: #2c3e50;
             font-size: 1.1rem;
             margin: 0;
@@ -296,33 +351,17 @@
             gap: 10px;
         }
         
-        .interview-months {
-            background: #9b59b6;
+        .year-months {
+            background: #7f8c8d;
             color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.85rem;
-        }
-        
-        .question-category {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        .question-category h6 {
-            color: #2c3e50;
-            margin-bottom: 12px;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
         }
         
         .question-list {
-            padding-left: 20px;
+            padding-left: 0;
+            margin: 0;
         }
         
         .question-item {
@@ -330,16 +369,31 @@
             padding: 12px;
             background: #f8f9fa;
             border-radius: 6px;
-            border-left: 3px solid #2ecc71;
+            border-left: 3px solid;
             position: relative;
             padding-left: 15px;
             transition: all 0.3s ease;
         }
         
+        .question-item.chinese {
+            border-left-color: #e74c3c;
+        }
+        
+        .question-item.math {
+            border-left-color: #3498db;
+        }
+        
+        .question-item.english-individual {
+            border-left-color: #2ecc71;
+        }
+        
+        .question-item.english-group {
+            border-left-color: #9b59b6;
+        }
+        
         .question-item.done {
             opacity: 0.6;
             background: #e8f5e9;
-            border-left-color: #27ae60;
         }
         
         .question-item.hidden {
@@ -348,10 +402,25 @@
         
         .question-item::before {
             content: "•";
-            color: #2ecc71;
             font-weight: bold;
             position: absolute;
             left: 5px;
+        }
+        
+        .question-item.chinese::before {
+            color: #e74c3c;
+        }
+        
+        .question-item.math::before {
+            color: #3498db;
+        }
+        
+        .question-item.english-individual::before {
+            color: #2ecc71;
+        }
+        
+        .question-item.english-group::before {
+            color: #9b59b6;
         }
         
         .question-item.done::before {
@@ -517,6 +586,59 @@
         
         .reset-done-btn:hover {
             background: #c0392b;
+        }
+        
+        /* 面試分類導航 */
+        .category-navigation {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .category-nav-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .category-nav-btn.chinese {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .category-nav-btn.math {
+            background: #3498db;
+            color: white;
+        }
+        
+        .category-nav-btn.english-individual {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .category-nav-btn.english-group {
+            background: #9b59b6;
+            color: white;
+        }
+        
+        .category-nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .category-nav-btn.active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         
         /* 面试倒计时 */
@@ -843,6 +965,38 @@
             'school/school_hkbu_affiliated_school_wong_kam_fai_secondary_and_primary_school.json'
         ];
         
+        // 类别配置
+        const categoryConfig = {
+            '中文個人': {
+                name: '中文個人',
+                cssClass: 'chinese',
+                icon: 'fas fa-language',
+                color: '#e74c3c',
+                colorDark: '#c0392b'
+            },
+            '數學': {
+                name: '數學',
+                cssClass: 'math',
+                icon: 'fas fa-calculator',
+                color: '#3498db',
+                colorDark: '#2980b9'
+            },
+            '英文個人': {
+                name: '英文個人',
+                cssClass: 'english-individual',
+                icon: 'fas fa-user',
+                color: '#2ecc71',
+                colorDark: '#27ae60'
+            },
+            '英文小組': {
+                name: '英文小組',
+                cssClass: 'english-group',
+                icon: 'fas fa-users',
+                color: '#9b59b6',
+                colorDark: '#8e44ad'
+            }
+        };
+        
         // 加载学校数据
         async function loadSchoolsData() {
             try {
@@ -1160,16 +1314,20 @@
             // 初始化已完成问题的状态
             initDoneQuestions();
             
-            // 添加题目分类切换功能
-            addQuestionToggleFunctionality();
+            // 添加分类导航点击事件
+            addCategoryNavigationEvents();
         }
         
-        // 生成面试题目HTML
+        // 生成面试题目HTML - 按类别组织
         function generateInterviewQuestionsHTML(questionsData) {
+            // 首先组织数据 - 按类别分组
+            const organizedData = organizeQuestionsByCategory(questionsData);
+            
             // 计算总问题数
             const totalQuestions = countTotalQuestions(questionsData);
             const doneCount = getDoneCount();
             
+            // 生成HTML
             let html = `
                 <div class="interview-header">
                     <h2><i class="fas fa-history"></i> 歷年面試題目</h2>
@@ -1192,9 +1350,25 @@
                 </div>
                 
                 <!-- 重置按钮 -->
-                <div style="text-align: center; margin-bottom: 15px;">
+                <div style="text-align: center; margin-bottom: 20px;">
                     <button class="reset-done-btn" onclick="resetAllDoneQuestions()">
                         <i class="fas fa-redo"></i> 重置已完成題目
+                    </button>
+                </div>
+                
+                <!-- 分类导航 -->
+                <div class="category-navigation" id="category-navigation">
+                    <button class="category-nav-btn chinese active" data-category="chinese">
+                        <i class="fas fa-language"></i> 中文個人
+                    </button>
+                    <button class="category-nav-btn math" data-category="math">
+                        <i class="fas fa-calculator"></i> 數學
+                    </button>
+                    <button class="category-nav-btn english-individual" data-category="english-individual">
+                        <i class="fas fa-user"></i> 英文個人
+                    </button>
+                    <button class="category-nav-btn english-group" data-category="english-group">
+                        <i class="fas fa-users"></i> 英文小組
                     </button>
                 </div>
             `;
@@ -1214,111 +1388,364 @@
                 `;
             }
             
-            // 按年份排序（从最新到最旧）
-            const years = Object.keys(questionsData).sort((a, b) => b - a);
+            // 生成每个类别的HTML
             let questionIndex = 0;
             
-            for (const year of years) {
-                const data = questionsData[year];
+            // 中文個人
+            if (organizedData['中文個人'] && organizedData['中文個人'].length > 0) {
+                const categoryConfig = categoryConfigMap['中文個人'];
+                const categoryQuestions = organizedData['中文個人'];
+                const categoryCount = categoryQuestions.reduce((sum, yearData) => sum + yearData.questions.length, 0);
+                
                 html += `
-                    <div class="interview-year-section">
-                        <div class="interview-year-header">
-                            <h5><i class="fas fa-calendar"></i> ${year} 年度面試題目</h5>
-                            ${data.months ? `<span class="interview-months">${data.months.join(', ')}月</span>` : ''}
+                    <div class="question-category-section chinese" data-category="chinese">
+                        <div class="category-header" style="--category-color: ${categoryConfig.color}; --category-color-dark: ${categoryConfig.colorDark};">
+                            <h4><i class="${categoryConfig.icon} category-icon"></i> ${categoryConfig.name}</h4>
+                            <div class="category-stats">共 ${categoryCount} 題</div>
                         </div>
+                        <div class="year-questions">
                 `;
                 
-                if (data.questions && Object.keys(data.questions).length > 0) {
-                    // 按分类名称排序
-                    const categories = Object.keys(data.questions).sort();
-                    for (const category of categories) {
-                        const questions = data.questions[category];
-                        const isChineseCategory = category.includes('中文') || category.includes('普通話');
-                        html += `
-                            <div class="question-category" data-category="${escapeHtml(category)}">
-                                <h6><i class="fas fa-question-circle"></i> ${escapeHtml(category)} ${isChineseCategory ? '<span style="color: #27ae60; font-size: 0.8rem;">(中文)</span>' : ''}</h6>
-                                <ul class="question-list">
-                        `;
-                        
-                        for (const question of questions) {
-                            const questionId = `q-${currentSchool.id}-${year}-${category}-${questionIndex}`;
-                            const isDone = doneQuestions.has(questionId);
-                            const answer = getAnswerForQuestion(currentSchool.id, year, category, question);
-                            
-                            html += `
-                                <li class="question-item ${isDone ? 'done' : ''} ${isDone ? 'hidden' : ''}" id="${questionId}">
-                                    <div class="question-content">
-                                        <div class="question-text">${escapeHtml(question)}</div>
-                                        <div class="question-actions">
-                                            <button class="show-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
-                                                查看答案
-                                            </button>
-                                            <button class="done-btn ${isDone ? 'done' : ''}" onclick="toggleDoneQuestion('${escapeHtml(questionId)}')">
-                                                ${isDone ? '已標記' : 'DONE'}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="answer-modal" id="answer-${questionId}">
-                                        <div class="answer-header">
-                                            <h6>參考答案</h6>
-                                            <button class="close-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
-                                                <i class="fas fa-times"></i> 關閉
-                                            </button>
-                                        </div>
-                                        <div class="answer-content">
-                                            ${answer ? escapeHtml(answer) : '暫無參考答案，請自行準備回答。'}
-                                        </div>
-                                    </div>
-                                </li>
-                            `;
-                            questionIndex++;
-                        }
-                        
-                        html += `
-                                </ul>
+                // 按年份排序（从最新到最旧）
+                categoryQuestions.sort((a, b) => b.year - a.year);
+                
+                for (const yearData of categoryQuestions) {
+                    html += `
+                        <div class="year-section">
+                            <div class="year-header">
+                                <h5><i class="fas fa-calendar"></i> ${yearData.year} 年度</h5>
+                                ${yearData.months && yearData.months.length > 0 ? `<span class="year-months">${yearData.months.join(', ')}月</span>` : ''}
                             </div>
+                            <ul class="question-list">
+                    `;
+                    
+                    for (const question of yearData.questions) {
+                        const questionId = `q-${currentSchool.id}-${yearData.year}-中文個人-${questionIndex}`;
+                        const isDone = doneQuestions.has(questionId);
+                        const answer = getAnswerForQuestion(currentSchool.id, yearData.year, '中文個人', question);
+                        
+                        html += `
+                            <li class="question-item chinese ${isDone ? 'done' : ''} ${isDone ? 'hidden' : ''}" id="${questionId}">
+                                <div class="question-content">
+                                    <div class="question-text">${escapeHtml(question)}</div>
+                                    <div class="question-actions">
+                                        <button class="show-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            查看答案
+                                        </button>
+                                        <button class="done-btn ${isDone ? 'done' : ''}" onclick="toggleDoneQuestion('${escapeHtml(questionId)}')">
+                                            ${isDone ? '已標記' : 'DONE'}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="answer-modal" id="answer-${questionId}">
+                                    <div class="answer-header">
+                                        <h6>參考答案</h6>
+                                        <button class="close-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            <i class="fas fa-times"></i> 關閉
+                                        </button>
+                                    </div>
+                                    <div class="answer-content">
+                                        ${answer ? escapeHtml(answer) : '暫無參考答案，請自行準備回答。'}
+                                    </div>
+                                </div>
+                            </li>
                         `;
+                        questionIndex++;
                     }
-                } else {
-                    html += `<p class="no-questions">此年度暫無面試題目資料</p>`;
+                    
+                    html += `
+                            </ul>
+                        </div>
+                    `;
                 }
                 
-                html += `</div>`;
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 數學
+            if (organizedData['數學'] && organizedData['數學'].length > 0) {
+                const categoryConfig = categoryConfigMap['數學'];
+                const categoryQuestions = organizedData['數學'];
+                const categoryCount = categoryQuestions.reduce((sum, yearData) => sum + yearData.questions.length, 0);
+                
+                html += `
+                    <div class="question-category-section math" data-category="math">
+                        <div class="category-header" style="--category-color: ${categoryConfig.color}; --category-color-dark: ${categoryConfig.colorDark};">
+                            <h4><i class="${categoryConfig.icon} category-icon"></i> ${categoryConfig.name}</h4>
+                            <div class="category-stats">共 ${categoryCount} 題</div>
+                        </div>
+                        <div class="year-questions">
+                `;
+                
+                // 按年份排序（从最新到最旧）
+                categoryQuestions.sort((a, b) => b.year - a.year);
+                
+                for (const yearData of categoryQuestions) {
+                    html += `
+                        <div class="year-section">
+                            <div class="year-header">
+                                <h5><i class="fas fa-calendar"></i> ${yearData.year} 年度</h5>
+                                ${yearData.months && yearData.months.length > 0 ? `<span class="year-months">${yearData.months.join(', ')}月</span>` : ''}
+                            </div>
+                            <ul class="question-list">
+                    `;
+                    
+                    for (const question of yearData.questions) {
+                        const questionId = `q-${currentSchool.id}-${yearData.year}-數學-${questionIndex}`;
+                        const isDone = doneQuestions.has(questionId);
+                        const answer = getAnswerForQuestion(currentSchool.id, yearData.year, '數學', question);
+                        
+                        html += `
+                            <li class="question-item math ${isDone ? 'done' : ''} ${isDone ? 'hidden' : ''}" id="${questionId}">
+                                <div class="question-content">
+                                    <div class="question-text">${escapeHtml(question)}</div>
+                                    <div class="question-actions">
+                                        <button class="show-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            查看答案
+                                        </button>
+                                        <button class="done-btn ${isDone ? 'done' : ''}" onclick="toggleDoneQuestion('${escapeHtml(questionId)}')">
+                                            ${isDone ? '已標記' : 'DONE'}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="answer-modal" id="answer-${questionId}">
+                                    <div class="answer-header">
+                                        <h6>參考答案</h6>
+                                        <button class="close-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            <i class="fas fa-times"></i> 關閉
+                                        </button>
+                                    </div>
+                                    <div class="answer-content">
+                                        ${answer ? escapeHtml(answer) : '暫無參考答案，請自行準備回答。'}
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                        questionIndex++;
+                    }
+                    
+                    html += `
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 英文個人
+            if (organizedData['英文個人'] && organizedData['英文個人'].length > 0) {
+                const categoryConfig = categoryConfigMap['英文個人'];
+                const categoryQuestions = organizedData['英文個人'];
+                const categoryCount = categoryQuestions.reduce((sum, yearData) => sum + yearData.questions.length, 0);
+                
+                html += `
+                    <div class="question-category-section english-individual" data-category="english-individual">
+                        <div class="category-header" style="--category-color: ${categoryConfig.color}; --category-color-dark: ${categoryConfig.colorDark};">
+                            <h4><i class="${categoryConfig.icon} category-icon"></i> ${categoryConfig.name}</h4>
+                            <div class="category-stats">共 ${categoryCount} 題</div>
+                        </div>
+                        <div class="year-questions">
+                `;
+                
+                // 按年份排序（从最新到最旧）
+                categoryQuestions.sort((a, b) => b.year - a.year);
+                
+                for (const yearData of categoryQuestions) {
+                    html += `
+                        <div class="year-section">
+                            <div class="year-header">
+                                <h5><i class="fas fa-calendar"></i> ${yearData.year} 年度</h5>
+                                ${yearData.months && yearData.months.length > 0 ? `<span class="year-months">${yearData.months.join(', ')}月</span>` : ''}
+                            </div>
+                            <ul class="question-list">
+                    `;
+                    
+                    for (const question of yearData.questions) {
+                        const questionId = `q-${currentSchool.id}-${yearData.year}-英文個人-${questionIndex}`;
+                        const isDone = doneQuestions.has(questionId);
+                        const answer = getAnswerForQuestion(currentSchool.id, yearData.year, '英文個人', question);
+                        
+                        html += `
+                            <li class="question-item english-individual ${isDone ? 'done' : ''} ${isDone ? 'hidden' : ''}" id="${questionId}">
+                                <div class="question-content">
+                                    <div class="question-text">${escapeHtml(question)}</div>
+                                    <div class="question-actions">
+                                        <button class="show-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            查看答案
+                                        </button>
+                                        <button class="done-btn ${isDone ? 'done' : ''}" onclick="toggleDoneQuestion('${escapeHtml(questionId)}')">
+                                            ${isDone ? '已標記' : 'DONE'}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="answer-modal" id="answer-${questionId}">
+                                    <div class="answer-header">
+                                        <h6>參考答案</h6>
+                                        <button class="close-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            <i class="fas fa-times"></i> 關閉
+                                        </button>
+                                    </div>
+                                    <div class="answer-content">
+                                        ${answer ? escapeHtml(answer) : '暫無參考答案，請自行準備回答。'}
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                        questionIndex++;
+                    }
+                    
+                    html += `
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // 英文小組
+            if (organizedData['英文小組'] && organizedData['英文小組'].length > 0) {
+                const categoryConfig = categoryConfigMap['英文小組'];
+                const categoryQuestions = organizedData['英文小組'];
+                const categoryCount = categoryQuestions.reduce((sum, yearData) => sum + yearData.questions.length, 0);
+                
+                html += `
+                    <div class="question-category-section english-group" data-category="english-group">
+                        <div class="category-header" style="--category-color: ${categoryConfig.color}; --category-color-dark: ${categoryConfig.colorDark};">
+                            <h4><i class="${categoryConfig.icon} category-icon"></i> ${categoryConfig.name}</h4>
+                            <div class="category-stats">共 ${categoryCount} 題</div>
+                        </div>
+                        <div class="year-questions">
+                `;
+                
+                // 按年份排序（从最新到最旧）
+                categoryQuestions.sort((a, b) => b.year - a.year);
+                
+                for (const yearData of categoryQuestions) {
+                    html += `
+                        <div class="year-section">
+                            <div class="year-header">
+                                <h5><i class="fas fa-calendar"></i> ${yearData.year} 年度</h5>
+                                ${yearData.months && yearData.months.length > 0 ? `<span class="year-months">${yearData.months.join(', ')}月</span>` : ''}
+                            </div>
+                            <ul class="question-list">
+                    `;
+                    
+                    for (const question of yearData.questions) {
+                        const questionId = `q-${currentSchool.id}-${yearData.year}-英文小組-${questionIndex}`;
+                        const isDone = doneQuestions.has(questionId);
+                        const answer = getAnswerForQuestion(currentSchool.id, yearData.year, '英文小組', question);
+                        
+                        html += `
+                            <li class="question-item english-group ${isDone ? 'done' : ''} ${isDone ? 'hidden' : ''}" id="${questionId}">
+                                <div class="question-content">
+                                    <div class="question-text">${escapeHtml(question)}</div>
+                                    <div class="question-actions">
+                                        <button class="show-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            查看答案
+                                        </button>
+                                        <button class="done-btn ${isDone ? 'done' : ''}" onclick="toggleDoneQuestion('${escapeHtml(questionId)}')">
+                                            ${isDone ? '已標記' : 'DONE'}
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="answer-modal" id="answer-${questionId}">
+                                    <div class="answer-header">
+                                        <h6>參考答案</h6>
+                                        <button class="close-answer-btn" onclick="toggleAnswer('${escapeHtml(questionId)}')">
+                                            <i class="fas fa-times"></i> 關閉
+                                        </button>
+                                    </div>
+                                    <div class="answer-content">
+                                        ${answer ? escapeHtml(answer) : '暫無參考答案，請自行準備回答。'}
+                                    </div>
+                                </div>
+                            </li>
+                        `;
+                        questionIndex++;
+                    }
+                    
+                    html += `
+                            </ul>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                        </div>
+                    </div>
+                `;
             }
             
             return html;
         }
         
-        // 添加题目分类切换功能
-        function addQuestionToggleFunctionality() {
-            const questionCategories = document.querySelectorAll('.question-category');
+        // 按类别组织问题数据
+        function organizeQuestionsByCategory(questionsData) {
+            const organizedData = {
+                '中文個人': [],
+                '數學': [],
+                '英文個人': [],
+                '英文小組': []
+            };
             
-            // 创建题目分类列表
-            if (questionCategories.length > 0) {
-                const categories = Array.from(questionCategories).map(cat => cat.getAttribute('data-category'));
-                const uniqueCategories = [...new Set(categories)];
-                
-                let toggleHTML = '<div style="margin-bottom: 20px; display: flex; flex-wrap: wrap; gap: 10px;">';
-                uniqueCategories.forEach(category => {
-                    toggleHTML += `
-                        <button class="question-toggle" onclick="toggleQuestionCategory('${escapeHtml(category)}')">
-                            ${escapeHtml(category)}
-                        </button>
-                    `;
-                });
-                toggleHTML += '</div>';
-                
-                // 将切换按钮添加到面试题目区域的顶部
-                const interviewHeader = document.querySelector('.interview-header');
-                interviewHeader.insertAdjacentHTML('afterend', toggleHTML);
+            // 初始化类别数组
+            for (const category in organizedData) {
+                organizedData[category] = [];
             }
+            
+            // 按年份处理数据
+            for (const [year, yearData] of Object.entries(questionsData)) {
+                const months = yearData.months || [];
+                const questions = yearData.questions || {};
+                
+                // 处理每个类别
+                for (const category in organizedData) {
+                    if (questions[category] && questions[category].length > 0) {
+                        organizedData[category].push({
+                            year: parseInt(year),
+                            months: months,
+                            questions: questions[category]
+                        });
+                    }
+                }
+            }
+            
+            return organizedData;
         }
         
-        // 切换题目分类显示
-        function toggleQuestionCategory(category) {
-            const categoryElements = document.querySelectorAll(`.question-category[data-category="${escapeHtml(category)}"]`);
-            categoryElements.forEach(element => {
-                element.style.display = element.style.display === 'none' ? 'block' : 'none';
+        // 添加分类导航点击事件
+        function addCategoryNavigationEvents() {
+            const navButtons = document.querySelectorAll('.category-nav-btn');
+            const categorySections = document.querySelectorAll('.question-category-section');
+            
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 更新导航按钮状态
+                    navButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 显示/隐藏对应的类别部分
+                    categorySections.forEach(section => {
+                        if (section.getAttribute('data-category') === category) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
+                    });
+                });
             });
         }
         
@@ -1582,6 +2009,38 @@
             };
             return text.toString().replace(/[&<>"']/g, function(m) { return map[m]; });
         }
+        
+        // 类别配置映射
+        const categoryConfigMap = {
+            '中文個人': {
+                name: '中文個人',
+                cssClass: 'chinese',
+                icon: 'fas fa-language',
+                color: '#e74c3c',
+                colorDark: '#c0392b'
+            },
+            '數學': {
+                name: '數學',
+                cssClass: 'math',
+                icon: 'fas fa-calculator',
+                color: '#3498db',
+                colorDark: '#2980b9'
+            },
+            '英文個人': {
+                name: '英文個人',
+                cssClass: 'english-individual',
+                icon: 'fas fa-user',
+                color: '#2ecc71',
+                colorDark: '#27ae60'
+            },
+            '英文小組': {
+                name: '英文小組',
+                cssClass: 'english-group',
+                icon: 'fas fa-users',
+                color: '#9b59b6',
+                colorDark: '#8e44ad'
+            }
+        };
         
         // 页面加载完成后执行
         document.addEventListener('DOMContentLoaded', function() {
