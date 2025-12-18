@@ -432,57 +432,57 @@
       "questions": {
         "中文個人": [
           {
-            "question": "請在十秒內說出三個含有「名」的成語。",
+            "question": "1) 請在十秒內說出三個含有「名」的成語。",
             "modelAnswer": "名不虛傳、名列前茅、名正言順。"
           },
           {
-            "question": "你覺得自己有什麼缺點？有沒有一些地方想改進？",
+            "question": "2) 你覺得自己有什麼缺點？有沒有一些地方想改進？",
             "modelAnswer": "我有時會因追求完美而花費過多時間。我正在學習更好的時間管理，區分輕重緩急，並接受不完美也是學習過程的一部分。"
           },
           {
-            "question": "你在小學有什麼職務？",
+            "question": "3) 你在小學有什麼職務？",
             "modelAnswer": "我曾擔任班長和圖書管理員。這些職務培養了我的責任感、領導能力和組織能力。"
           },
           {
-            "question": "有沒有最不喜歡的科目？原因是什麼？",
+            "question": "4) 有沒有最不喜歡的科目？原因是什麼？",
             "modelAnswer": "沒有完全不喜歡的科目，但視覺藝術對我較有挑戰。我正在通過多練習和觀察來提升藝術技巧和創造力。"
           },
           {
-            "question": "你平日的溫習習慣是怎樣的?例如放學後的時間安排。",
+            "question": "5) 你平日的溫習習慣是怎樣的?例如放學後的時間安排。",
             "modelAnswer": "放學後我會先休息30分鐘，然後用2小時完成作業，再用1小時預習和複習。週末會安排時間做練習和閱讀。"
           }
         ],
         "英文個人": [
           {
-            "question": "Do you prefer individual or group activities?",
+            "question": "1) Do you prefer individual or group activities?",
             "modelAnswer": "I value both. Individual activities allow deep focus, while group activities teach teamwork and communication. A balance is important for complete development."
           },
           {
-            "question": "Which is your favourite subject in your primary school?",
+            "question": "2) Which is your favourite subject in your primary school?",
             "modelAnswer": "My favorite subject is Mathematics. It challenges me to think logically and solve problems systematically. The satisfaction of solving difficult problems motivates my learning."
           }
         ],
         "英文小組": [
           {
-            "question": "Your group is working on a major project. One member suggests copying parts from an online source to save time and improve the final result, arguing that 'everyone does it.' As a group, discuss your response and reach a consensus.",
+            "question": "1) Your group is working on a major project. One member suggests copying parts from an online source to save time and improve the final result, arguing that 'everyone does it.' As a group, discuss your response and reach a consensus.",
             "modelAnswer": "I would suggest that instead of copying, we should use online sources as references and properly cite them. Copying is academically dishonest and doesn't reflect our true abilities. We can divide work efficiently to save time while maintaining integrity."
           },
           {
-            "question": "Some believe smartphones should be completely banned in secondary schools to reduce distraction. Others argue they are essential learning tools. Discuss this topic in your group and see if you can find common ground.",
+            "question": "2) Some believe smartphones should be completely banned in secondary schools to reduce distraction. Others argue they are essential learning tools. Discuss this topic in your group and see if you can find common ground.",
             "modelAnswer": "A complete ban might be too extreme. Instead, we could have clear rules about when and how smartphones can be used - allowing them for educational purposes during specific lessons but restricting use during tests and lectures. Education about responsible use is also important."
           }
         ],
         "中文小組": [
           {
-            "question": "如果你們小組是學校活動籌委會，現在有10萬元預算，請一起討論並決定如何舉辦一場對中一生最有價值的活動。",
+            "question": "1) 如果你們小組是學校活動籌委會，現在有10萬元預算，請一起討論並決定如何舉辦一場對中一生最有價值的活動。",
             "modelAnswer": "我建議舉辦科學探索營，結合實驗工作坊、團隊挑戰和職業講座。這樣的活動能激發學習興趣，培養團隊精神，幫助中一生適應中學生活。"
           },
           {
-            "question": "小組中有兩位同學因意見不合發生爭執，影響活動進度。如果你是其中一員，會如何處理？",
+            "question": "2) 小組中有兩位同學因意見不合發生爭執，影響活動進度。如果你是其中一員，會如何處理？",
             "modelAnswer": "我會先請大家冷靜，然後分別聆聽雙方意見，找出爭執核心。接著引導大家聚焦共同目標，尋找雙方都能接受的解決方案或提出新方案。"
           },
           {
-            "question": "請小組用5分鐘，一起設計一個代表『理想中學生』的標誌（Logo），並解釋其寓意。",
+            "question": "3) 請小組用5分鐘，一起設計一個代表『理想中學生』的標誌（Logo），並解釋其寓意。",
             "modelAnswer": "可以設計一個由書本、火炬和橄欖枝組成的標誌。書本代表知識，火炬代表智慧和啟發，橄欖枝代表和平與成長。整體象徵中學生追求知識、發展智慧和全面成長。"
           }
         ],
