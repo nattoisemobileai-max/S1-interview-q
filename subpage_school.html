@@ -1797,21 +1797,7 @@
             });
             
             html += `</div>`;
-            
-            // 添加中文面試比重分析
-            const chineseQuestionsCount = countChineseQuestions(questionsData);
-            
-            if (totalQuestions > 0) {
-                const chinesePercentage = Math.round((chineseQuestionsCount / totalQuestions) * 100);
-                html += `
-                    <div class="chinese-weight-info" style="margin-bottom: 20px;">
-                        <h5>中文面試題目比重分析</h5>
-                        <div class="chinese-weight-value">${chinesePercentage}%</div>
-                        <div class="chinese-weight-label">中文題目佔歷年面試題目總數</div>
-                        <p style="font-size: 0.8rem; margin-top: 8px; opacity: 0.8;">(${chineseQuestionsCount}題中文 / ${totalQuestions}題總數)</p>
-                    </div>
-                `;
-            }
+          
             
             // 生成每个年份的HTML
             let questionIndex = 0;
