@@ -215,7 +215,7 @@
         ]
       }
     },
-    "2025": {
+    "2025-Day1": {
       "months": ["SELF-Day1"],
       "questions": {
         "中文個人": [
@@ -250,11 +250,6 @@
             "modelAnswer": "My daily study routine starts after school. First, I take a short break to rest and have a snack. Then, I spend about 2-3 hours doing homework and reviewing what I learned in school. I make sure to understand concepts rather than just memorize them. Before bed, I spend 30 minutes reading books in English to improve my language skills. On weekends, I allocate more time for project work and preparing for tests."
           }
         ],
-        "英文小組": [
-          {
-            "question": "It's your first week at a new secondary school. One of your new classmates seems very shy and sits alone during breaks. As a group, discuss what you could do to help them feel welcome.",
-            "modelAnswer": "I think the most important thing is to help them feel included without putting them on the spot. Maybe we could start by noticing what they might be interested in—like if they’re reading a book or drawing something—and use that as a natural way to start a conversation."
-          },
         "數學": [
           {
             "question": "1) 1.5×0.4+2.8= ?",
@@ -275,7 +270,7 @@
         ]
       }
     },
-    "2026": {
+    "2025-Day2": {
       "months": ["SELF-Day2"],
       "questions": {
         "中文個人": [
@@ -372,3 +367,4 @@
       "表現團隊合作精神和領導潛質"
     ]
   }
+}
