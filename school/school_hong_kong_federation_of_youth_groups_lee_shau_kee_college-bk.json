@@ -22,42 +22,123 @@
   "tuitionFee": "港幣約28,360元/年",
   "specificFeatures": "設有STEAM創新實驗室、國際交流計劃、領袖訓練課程，自主學習，英語辯論比賽",
   "image": "badge_hlc.jpg",
-  "targetInterviewDate": "2025-12-20",
-  "previousInterviewQuestions": {
+  "targetInterviewDate": "2025-12-20"
+}
+<!--
+,
+  "previousInterviewQuestionsWithAnswers": {
     "2018": {
       "months": ["12"],
       "questions": {
         "中文個人": [
-          "朗讀文章（普通話）：文章關於作者小時候在後院看星星。",
-          "用廣東話講一則近期特別/深刻的新聞。",
-          "猜謎語。（廣東話）",
-          "說出5個有「千」字的成語。",
-          "你最尊重的人是誰？",
-          "有甚麼抒情手法？文中的排比在哪？",
-          "用普通話說「擦腳」和一篇文章。",
-          "一個你嚮往的地方。",
-          "形容身體部位的成語。（4個）",
-          "「馬驅失聰」猜一個身體部位。",
-          "說出5個跟動物有關的成語。",
-          "請說出5個形容外貌的成語。",
-          "說「士多啤梨」的普通話。"
+          {
+            "question": "朗讀文章（普通話）：文章關於作者小時候在後院看星星。",
+            "modelAnswer": "（清晰、流利地用普通話朗讀文章，注意發音準確，語調自然，表達出對星空的好奇和對童年的美好回憶）"
+          },
+          {
+            "question": "用廣東話講一則近期特別/深刻的新聞。",
+            "modelAnswer": "近期最深刻嘅新聞係香港推動減塑政策，限制即棄塑膠用品。呢個政策顯示社會對環保嘅重視，亦提醒我哋每個人都要為保護環境出一分力，從減少使用塑膠袋開始。"
+          },
+          {
+            "question": "猜謎語。（廣東話）",
+            "modelAnswer": "（根據實際謎語思考後回答）如果我知答案，我會清晰講出；如果唔知，我會禮貌咁話：『呢個謎語好有趣，我暫時諗唔到答案，可以比我再諗下嗎？』"
+          },
+          {
+            "question": "說出5個有「千」字的成語。",
+            "modelAnswer": "千變萬化、千載難逢、千鈞一髮、千言萬語、千山萬水。"
+          },
+          {
+            "question": "你最尊重的人是誰？",
+            "modelAnswer": "我最尊重的人是我的小學班主任。她不只教我知識，更以身作則教會我誠實、負責和關愛他人。她總是用心聆聽每個學生的困難，耐心幫助我們成長。"
+          },
+          {
+            "question": "有甚麼抒情手法？文中的排比在哪？",
+            "modelAnswer": "常見的抒情手法有直抒胸臆、借景抒情、寓情於物、托物言志等。文中的排比句出現在描述星星的段落：『有的像……有的像……有的像……』，通過重複句式增強表達效果。"
+          },
+          {
+            "question": "用普通話說「擦腳」和一篇文章。",
+            "modelAnswer": "「擦腳」的普通話是「擦腳」或「擦腳部」。關於衛生習慣的文章：保持腳部清潔是個人衛生的重要部分。每天洗腳並擦乾可以預防細菌滋生和腳氣，保持身體健康。"
+          },
+          {
+            "question": "一個你嚮往的地方。",
+            "modelAnswer": "我嚮往日本京都。那裡有豐富的歷史文化遺產，如古老的寺廟和傳統町屋，可以了解日本傳統與現代的融合，體驗不同的文化氛圍和自然美景。"
+          },
+          {
+            "question": "形容身體部位的成語。（4個）",
+            "modelAnswer": "眼明手快、頭頭是道、心平氣和、腳踏實地。"
+          },
+          {
+            "question": "「馬驅失聰」猜一個身體部位。",
+            "modelAnswer": "耳朵（解析：『驅』與『去』諧音，『馬去』為『駡』，『駡』與『耳』相關，『失聰』指失去聽覺，所以是耳朵）"
+          },
+          {
+            "question": "說出5個跟動物有關的成語。",
+            "modelAnswer": "龍馬精神、虎頭蛇尾、馬到功成、雞犬不寧、畫蛇添足。"
+          },
+          {
+            "question": "請說出5個形容外貌的成語。",
+            "modelAnswer": "眉清目秀、儀表堂堂、容光煥發、虎背熊腰、亭亭玉立。"
+          },
+          {
+            "question": "說「士多啤梨」的普通話。",
+            "modelAnswer": "「士多啤梨」的普通話是「草莓」。"
+          }
         ],
         "英文個人": [
-          "自我介紹 (Self-introduction)",
-          "填空題及朗讀文章（戲劇文章，背景為沙灘）",
-          "在我們學校你想學習哪個科目？為甚麼？",
-          "你有沒有在任何比賽中獲獎？",
-          "為甚麼你想入讀我們學校？",
-          "有一段學生和老師的對話，填寫對話中的空白。",
-          "你最喜歡吃什麼水果？",
-          "你喜歡在哪裡吃晚餐？外出用餐還是在家吃？為甚麼？",
-          "你為什麼喜歡用餐？",
-          "請與面試官一起朗讀文章。",
-          "你想有兄弟或姐妹嗎？為甚麼？"
+          {
+            "question": "自我介紹 (Self-introduction)",
+            "modelAnswer": "Good morning, my name is [Your Name]. I'm 12 years old and currently studying at [Your Primary School]. I enjoy reading, playing basketball, and exploring science experiments. I'm a curious person who likes to learn new things and solve problems. I believe that education is important for personal growth and I'm excited about the possibility of studying at your school."
+          },
+          {
+            "question": "填空題及朗讀文章（戲劇文章，背景為沙灘）",
+            "modelAnswer": "（根據上下文填寫適當詞語，注意語法和語境，然後清晰流利地朗讀文章，注意語調和情感表達）"
+          },
+          {
+            "question": "在我們學校你想學習哪個科目？為甚麼？",
+            "modelAnswer": "I would like to learn Science and English at your school. Science fascinates me because it helps us understand how the world works. English is important as an international language that allows communication with people from different countries and access to global knowledge."
+          },
+          {
+            "question": "你有沒有在任何比賽中獲獎？",
+            "modelAnswer": "Yes, I won third prize in the school Mathematics Competition last year, and I received a certificate of merit in the English Reading Challenge. These experiences taught me valuable lessons about preparation, perseverance, and learning from both successes and challenges."
+          },
+          {
+            "question": "為甚麼你想入讀我們學校？",
+            "modelAnswer": "I want to study at your school because of its excellent reputation for academic achievement and character development. I'm particularly impressed by your school motto 'Wisdom in Action' which emphasizes the practical application of knowledge. I believe your school can provide me with a well-rounded education that balances academic learning with personal growth."
+          },
+          {
+            "question": "有一段學生和老師的對話，填寫對話中的空白。",
+            "modelAnswer": "（仔細聆聽對話，根據語境、語法和邏輯關係填寫適當的回應，注意保持對話的自然流暢）"
+          },
+          {
+            "question": "你最喜歡吃什麼水果？",
+            "modelAnswer": "My favorite fruit is mango. It's sweet, juicy, and rich in vitamins. I enjoy eating it fresh or in desserts like mango pudding and smoothies."
+          },
+          {
+            "question": "你喜歡在哪裡吃晚餐？外出用餐還是在家吃？為甚麼？",
+            "modelAnswer": "I prefer eating dinner at home because it's usually healthier and allows quality family time together. At home, we can share our daily experiences while enjoying nutritious home-cooked meals prepared with care."
+          },
+          {
+            "question": "你為什麼喜歡用餐？",
+            "modelAnswer": "I enjoy meals not just for the food itself, but because they provide valuable family time. It's when we gather together, share stories about our day, and strengthen our family bonds. Meals are opportunities for connection and relaxation."
+          },
+          {
+            "question": "請與面試官一起朗讀文章。",
+            "modelAnswer": "（與面試官配合朗讀，注意聆聽對方的節奏和語調，保持流暢自然的配合，適時輪流朗讀）"
+          },
+          {
+            "question": "你想有兄弟或姐妹嗎？為甚麼？",
+            "modelAnswer": "I already have a younger brother, and I'm grateful for him. He's not just my sibling but also my friend. Having a brother teaches me responsibility, sharing, patience, and how to care for others."
+          }
         ],
         "數學": [
-          "以對答形式回答14題數學題，學生可以廣東話或英語作答。（限時一分半鐘）",
-          "數學題。用4分鐘計算14題數/百分數/普通加減乘除。"
+          {
+            "question": "以對答形式回答14題數學題，學生可以廣東話或英語作答。（限時一分半鐘）",
+            "modelAnswer": "（快速準確地回答基礎數學問題，例如：15×8=120，25% of 200=50，3/4+1/2=1.25，7²=49，注意時間管理和計算準確性）"
+          },
+          {
+            "question": "數學題。用4分鐘計算14題數/百分數/普通加減乘除。",
+            "modelAnswer": "（合理分配時間，先完成簡單題目，仔細檢查計算，例如：125×8=1000，75% of 80=60，5/6-1/3=1/2，√64=8，確保答案準確）"
+          }
         ]
       }
     },
@@ -65,23 +146,62 @@
       "months": ["12"],
       "questions": {
         "中文個人": [
-          "閱讀文章4段",
-          "普通話朗讀",
-          "文章修飾手法",
-          "文章有關問題"
+          {
+            "question": "閱讀文章4段",
+            "modelAnswer": "（仔細閱讀四段文章，理解主要內容、中心思想和細節，準備回答相關問題）"
+          },
+          {
+            "question": "普通話朗讀",
+            "modelAnswer": "（用標準普通話清晰朗讀指定文章，注意發音準確、語調自然、節奏適當）"
+          },
+          {
+            "question": "文章修飾手法",
+            "modelAnswer": "文章運用了多種修辭手法：比喻（如『時間如流水』）、擬人（如『花兒在微笑』）、排比（如『有的……有的……有的……』）、誇張等，增強了文章的表達效果。"
+          },
+          {
+            "question": "文章有關問題",
+            "modelAnswer": "（根據具體文章內容回答問題，展示對文章的理解深度和表達能力）"
+          }
         ],
         "英文個人": [
-          "自我介紹 (Self-introduction)",
-          "小組活動（2人+老師）",
-          "英文口試 - 圖片/問題",
-          "試卷中的5個問題（學生互相提問）",
-          "問答：母親節？感受？（老師）",
-          "問答：最喜歡的節日（老師）",
-          "學校的難忘時刻（老師）",
-          "閱讀 - 小段落"
+          {
+            "question": "自我介紹 (Self-introduction)",
+            "modelAnswer": "Hello, I'm [Your Name], a Primary 6 student who loves learning and exploring new things. I have a particular interest in science and technology. In my free time, I enjoy reading adventure books and playing badminton with friends."
+          },
+          {
+            "question": "小組活動（2人+老師）",
+            "modelAnswer": "（積極參與小組討論，尊重他人意見，認真聆聽，清晰表達自己的想法，與同伴合作解決問題）"
+          },
+          {
+            "question": "英文口試 - 圖片/問題",
+            "modelAnswer": "（仔細觀察圖片細節，用英文描述所見內容，回答相關問題，注意使用正確的語法、詞彙和句子結構）"
+          },
+          {
+            "question": "試卷中的5個問題（學生互相提問）",
+            "modelAnswer": "（準備有深度但不過於複雜的問題，例如：What qualities do you think make a good student? How do you balance academic studies and personal hobbies? What is your favorite book and why?）"
+          },
+          {
+            "question": "問答：母親節？感受？（老師）",
+            "modelAnswer": "On Mother's Day, I usually help with household chores and make a handmade card for my mother. I feel deeply grateful for her endless love and hard work. It's a special day to express our appreciation for everything mothers do for their families."
+          },
+          {
+            "question": "問答：最喜歡的節日（老師）",
+            "modelAnswer": "My favorite holiday is Chinese New Year because it's a time for family reunions, enjoying delicious traditional food, and participating in cultural traditions like giving and receiving red packets. The festive atmosphere brings joy to everyone."
+          },
+          {
+            "question": "學校的難忘時刻（老師）",
+            "modelAnswer": "My most memorable school moment was during the annual sports day when our class won the 4×100 meters relay race. The teamwork, mutual encouragement, and cheering from classmates made it an unforgettable experience that taught me the importance of collaboration."
+          },
+          {
+            "question": "閱讀 - 小段落",
+            "modelAnswer": "（仔細閱讀英文小段落，理解內容大意和細節，準備回答相關問題）"
+          }
         ],
         "數學": [
-          "英文數學題目14題"
+          {
+            "question": "英文數學題目14題",
+            "modelAnswer": "（仔細閱讀英文數學題目，理解問題要求，準確計算，例如：If a=5, b=3, then 2a+b=13；Calculate 15% of 200 = 30）"
+          }
         ]
       }
     },
@@ -89,25 +209,64 @@
       "months": ["12"],
       "questions": {
         "中文個人": [
-          "電子閱讀理解（成語意思，解釋）",
-          "你最喜愛的中文書？",
-          "你最喜愛的老師？",
-          "在學校難忘的經歷？",
-          "有沒有認識的師兄師姐在本校就讀？"
+          {
+            "question": "電子閱讀理解（成語意思，解釋）",
+            "modelAnswer": "（仔細閱讀成語解釋，理解其含義、出處和用法，例如：『勤能補拙』意思是勤奮能彌補天資的不足，出自《後漢書》）"
+          },
+          {
+            "question": "你最喜愛的中文書？",
+            "modelAnswer": "我最喜愛的中文書是《三國演義》。這本書不僅故事精彩、人物形象鮮明，還蘊含豐富的智慧和策略思考。通過閱讀這本書，我學到了領導才能、團隊合作和處世智慧。"
+          },
+          {
+            "question": "你最喜愛的老師？",
+            "modelAnswer": "我最喜愛的是我的數學老師。他用生動有趣的教學方法，將抽象的數學概念與生活實例結合，讓我發現數學的趣味性和實用性。他總是鼓勵我克服難題，培養了我的邏輯思維能力。"
+          },
+          {
+            "question": "在學校難忘的經歷？",
+            "modelAnswer": "最難忘的是代表學校參加全港小學朗誦比賽。雖然最初很緊張，但經過老師的指導和自己的認真準備，我最終獲得了季軍。這次經歷讓我學會了克服恐懼、認真準備和享受挑戰的過程。"
+          },
+          {
+            "question": "有沒有認識的師兄師姐在本校就讀？",
+            "modelAnswer": "是的，我的鄰居姐姐目前在貴校就讀中三。她告訴我學校的學習氛圍很好，老師們都很關心學生，課外活動豐富多樣。她的正面分享讓我對貴校的教育理念和學習環境更加嚮往。"
+          }
         ],
         "英文個人": [
-          "閱讀文章（5個空格，即時用30秒想）",
-          "你認為香港是慶祝聖誕節的好地方嗎？",
-          "問答（1對2）：你想有兄弟或姐妹嗎？為甚麼？",
-          "你最開心的時刻是甚麼時候？為甚麼？",
-          "你的小學生活是怎樣的？"
+          {
+            "question": "閱讀文章（5個空格，即時用30秒想）",
+            "modelAnswer": "（快速閱讀文章，理解上下文，根據語法規則和語義連貫性選擇合適的詞語填空）"
+          },
+          {
+            "question": "你認為香港是慶祝聖誕節的好地方嗎？",
+            "modelAnswer": "Yes, I think Hong Kong is an excellent place to celebrate Christmas. The city is beautifully decorated with festive lights and decorations. There are numerous Christmas events and activities, and people from diverse cultural backgrounds come together to celebrate, creating a joyful and inclusive atmosphere."
+          },
+          {
+            "question": "問答（1對2）：你想有兄弟或姐妹嗎？為甚麼？",
+            "modelAnswer": "I have an older sister and I value our relationship greatly. She helps me with homework, shares interests with me, and provides guidance. Having a sibling teaches me important life skills like sharing, responsibility, and empathy."
+          },
+          {
+            "question": "你最開心的時刻是甚麼時候？為甚麼？",
+            "modelAnswer": "My happiest moment was when our family visited Ocean Park last summer. Both my parents took time off work to spend the whole day with us. We enjoyed exciting rides together, watched amazing animal shows, and created wonderful memories as a family. It was special because we were all together having fun."
+          },
+          {
+            "question": "你的小學生活是怎樣的？",
+            "modelAnswer": "My primary school life has been both challenging and rewarding. I've learned various subjects, participated in different activities like choir and sports competitions, made lasting friendships, and grown both academically and personally. The supportive teachers have helped me develop important skills like time management and teamwork."
+          }
         ],
         "英文小組": [
-          "在你心目中，理想的中学是怎樣的？",
-          "你認為我們學校符合你的期望嗎？"
+          {
+            "question": "在你心目中，理想的中学是怎樣的？",
+            "modelAnswer": "In my opinion, an ideal secondary school should have several important qualities: dedicated and passionate teachers, a balanced curriculum that includes both academic and extracurricular activities, good facilities, and most importantly, a supportive and positive learning environment where students feel safe, respected, and motivated to achieve their best."
+          },
+          {
+            "question": "你認為我們學校符合你的期望嗎？",
+            "modelAnswer": "Yes, I believe your school meets my expectations very well. From what I've learned, your school has a strong academic reputation, emphasizes English language learning, and focuses on holistic development through various programs like STEAM, leadership training, and international exchanges. The school motto 'Wisdom in Action' aligns perfectly with what I value in education."
+          }
         ],
         "數學": [
-          "英文數學題目（14題）電子版（有中文翻譯）心算"
+          {
+            "question": "英文數學題目（14題）電子版（有中文翻譯）心算",
+            "modelAnswer": "（利用電子設備仔細閱讀題目，快速心算，例如：12×15=180，35% of 200=70，3³=27，注意時間管理和計算準確性）"
+          }
         ]
       }
     },
@@ -115,19 +274,40 @@
       "months": ["12"],
       "questions": {
         "中文個人": [
-          "你認識中文書法、中國茶技和中國樂器古事，琵琶等等嗎？",
-          "用電腦做一篇閱讀理解（回答問題有十題，10分鐘內完成）",
-          "文言文閱讀理解"
+          {
+            "question": "你認識中文書法、中國茶技和中國樂器古事，琵琶等等嗎？",
+            "modelAnswer": "是的，我對中國傳統文化有一定的了解和興趣。中文書法是中國獨特的藝術形式，有不同的字體風格如楷書、行書、草書等。中國茶文化歷史悠久，茶藝講究茶具、水溫、沖泡技巧和品茶禮儀。中國傳統樂器中，我知道琵琶是一種歷史悠久的彈撥樂器，有四根弦，音色優美，被譽為『民樂之王』，經典曲目有《十面埋伏》等。"
+          },
+          {
+            "question": "用電腦做一篇閱讀理解（回答問題有十題，10分鐘內完成）",
+            "modelAnswer": "（快速閱讀文章，抓住主要內容和關鍵細節，有條理地回答十個問題，注意時間分配和答案的準確性）"
+          },
+          {
+            "question": "文言文閱讀理解",
+            "modelAnswer": "（仔細閱讀文言文，理解古今詞義差異，分析句子結構和語法，準確理解文章含義和作者意圖）"
+          }
         ],
         "英文個人": [
-          "朗讀文章"
+          {
+            "question": "朗讀文章",
+            "modelAnswer": "（清晰流利地朗讀指定的英文文章，注意發音準確、語調自然、停頓適當，展現良好的英語朗讀能力）"
+          }
         ],
         "英文小組": [
-          "兩人互相朗讀文章",
-          "為甚麼年輕人不喜歡吃水果？"
+          {
+            "question": "兩人互相朗讀文章",
+            "modelAnswer": "（與同伴配合，輪流朗讀文章，注意聆聽對方的朗讀，保持節奏一致，展現良好的合作精神）"
+          },
+          {
+            "question": "為甚麼年輕人不喜歡吃水果？",
+            "modelAnswer": "I think there are several reasons why some young people might not like eating fruit. First, they often prefer processed snacks and fast food that are more convenient and heavily advertised. Second, some fruits require preparation like washing and peeling, which takes time. Third, the natural sweetness of fruits might not be as intense as candies or sugary desserts. However, it's important to remember that fruits provide essential vitamins, minerals, and fiber that processed foods lack, so we should encourage healthier eating habits."
+          }
         ],
         "數學": [
-          "用電腦答題（小數混合加減，百分數和方程，共20題，10分鐘內完成）"
+          {
+            "question": "用電腦答題（小數混合加減，百分數和方程，共20題，10分鐘內完成）",
+            "modelAnswer": "（合理分配時間，先完成簡單題目，仔細計算，例如：2.5+3.7-1.2=5.0，15% of 300=45，2x+3=11則x=4，確保答案準確，最後檢查）"
+          }
         ]
       }
     },
@@ -135,44 +315,254 @@
       "months": ["SELF-Day1"],
       "questions": {
         "中文個人": [
-          "你和家人最難忘的經歷是什麼？(限時1分鐘）",
-          "如果同學忘記帶文具向你借，但你也只剩一支筆，你會怎樣做？",
-          "請在十秒內說出三個含有「心」的成語。",
-          "你有什麼興趣或嗜好？為什麼會喜歡它們？",
-"你覺得自己有什麼優點？有沒有一些地方想改進？",
-"你和家人平時相處如何？在家中會負責什麼家務或工作？",
-"遇到家庭意見不合時，你通常會怎樣處理？",
-          "你最喜歡哪一科？為什麼？",
-          "有沒有最不喜歡的科目？原因是什麼？",
-          "你平日的溫習習慣是怎樣的?例如放學後的時間安排。",
-          "如果某一科成績退步了，你會怎樣找出原因並改善？",
-          "你最近看過哪一本書或一篇文章？內容大概是什麼？從中學到什麼？"
+          {
+            "question": "你和家人最難忘的經歷是什麼？(限時1分鐘）",
+            "modelAnswer": "我和家人最難忘的經歷是去年暑假一起攀登大帽山。雖然山路陡峭艱辛，但我們互相鼓勵支持，最終成功登頂，看到了壯麗的日出。這次經歷不僅讓我體會到堅持不懈的重要性，也加深了家人之間的感情，讓我明白團隊合作和互相扶持的價值。"
+          },
+          {
+            "question": "如果同學忘記帶文具向你借，但你也只剩一支筆，你會怎樣做？",
+            "modelAnswer": "我會先了解同學的具體需要。如果是重要考試或課堂練習，我會主動提出分享使用時間，或者一起向其他同學或老師尋求幫助。這樣不僅解決了同學的困難，也培養了我們解決問題的能力和互助精神，體現了同學之間應有的關懷與合作。"
+          },
+          {
+            "question": "請在十秒內說出三個含有「心」的成語。",
+            "modelAnswer": "心想事成、心平氣和、心滿意足。"
+          },
+          {
+            "question": "你有什麼興趣或嗜好？為什麼會喜歡它們？",
+            "modelAnswer": "我的主要興趣是閱讀和下棋。我喜歡閱讀因為它能帶我進入不同的世界，擴闊視野，增加知識，培養想像力。我喜歡下棋因為它能訓練邏輯思維、策略思考和專注力。這兩項愛好一靜一動，相互補充，幫助我全面發展。"
+          },
+          {
+            "question": "你覺得自己有什麼優點？有沒有一些地方想改進？",
+            "modelAnswer": "我覺得自己的優點是認真負責、善於聆聽和樂於助人。我會努力完成自己的任務，也願意耐心聽取他人的意見和困難。需要改進的地方是有時會過於追求完美，導致在某些細節上花費過多時間。我正在學習更好的時間管理，區分事情的輕重緩急，在追求質量和效率之間找到平衡。"
+          },
+          {
+            "question": "你和家人平時相處如何？在家中會負責什麼家務或工作？",
+            "modelAnswer": "我和家人相處融洽，互相關心和支持。在家中，我負責整理自己的房間、飯後洗碗和倒垃圾。這些家務讓我學會了責任感和分擔家庭事務的重要性，也理解了父母維持家庭整潔的辛苦。"
+          },
+          {
+            "question": "遇到家庭意見不合時，你通常會怎樣處理？",
+            "modelAnswer": "遇到家庭意見不合時，我會先保持冷靜，認真聆聽各方的觀點和理由。然後我會禮貌地表達自己的想法和感受，嘗試尋找共同點和可行的解決方案。我相信互相理解、尊重和溝通是解決分歧的關鍵，最終目標是維護家庭和諧。"
+          },
+          {
+            "question": "你最喜歡哪一科？為什麼？",
+            "modelAnswer": "我最喜歡數學科。因為數學需要邏輯思考、分析問題和解決問題的能力，這些技能在日常生活和各個領域都很重要。數學像一個有趣的謎題，解決數學問題時很有挑戰性和成就感。而且數學知識有很強的實用性，在科學、工程、經濟等領域都有廣泛應用。"
+          },
+          {
+            "question": "你平日的溫習習慣是怎樣的?例如放學後的時間安排。",
+            "modelAnswer": "放學後，我會先休息30分鐘，放鬆身心。然後用2-3小時專心完成當天的作業和溫習。我會先處理較難或重要的科目，保持專注，避免分心。晚上會用30分鐘預習第二天的課程，睡前會閱讀課外書。週末會安排時間進行系統性複習和做練習題。"
+          },
+          {
+            "question": "如果某一科成績退步了，你會怎樣找出原因並改善？",
+            "modelAnswer": "如果某一科成績退步，我會首先分析試卷，找出錯誤的類型和原因。然後檢討自己的學習方法和時間分配，看看是否有需要調整的地方。我會主動向老師請教，尋求專業建議。接著制定具體的改進計劃，如增加該科目的練習時間、改變溫習策略、尋求同學幫助等，並定期檢視進展。"
+          },
+          {
+            "question": "你最近看過哪一本書或一篇文章？內容大概是什麼？從中學到什麼？",
+            "modelAnswer": "我最近看了海明威的《老人與海》。這本書講述了一位老漁夫與一條大魚搏鬥的故事。從中我學到了堅持不懈、永不放棄的精神，即使在面對巨大困難和挑戰時也要保持勇氣和尊嚴。這本書教會我，真正的勝利不在於最終的結果，而在於奮鬥的過程中所展現的毅力和精神力量。"
+          }
         ],
         "英文個人": [
-          "What is your daily study routine?"
+          {
+            "question": "What is your daily study routine?",
+            "modelAnswer": "My daily study routine begins after school. First, I take a 30-minute break to rest and have a snack. Then I spend 2-3 hours completing homework and reviewing what I learned in school. I focus on understanding concepts thoroughly rather than just memorizing information. Before bedtime, I dedicate 30 minutes to reading English books to improve my language skills. On weekends, I allocate additional time for project work, test preparation, and exploring topics of personal interest."
+          }
         ],
         "英文小組": [
-          "xxx",
-          "xxx"
+          {
+            "question": "xxx",
+            "modelAnswer": "（準備參與小組討論，積極聆聽，尊重他人意見，清晰表達自己的想法，與組員合作完成任務）"
+          },
+          {
+            "question": "xxx",
+            "modelAnswer": "（根據具體的小組活動內容，展現團隊合作精神、溝通能力和問題解決能力）"
+          }
         ],
         "數學": [
-          "1) 1.5×0.4+2.8= ? #小數混合運算",
-          "2) 3/4+1/8= ? #分數加法",
-          "3) 0.9÷3×100=? #小數四則運算",
-          "4) 4/5−1/10=? #分數減法",
-          "5) 12.5×8= #小數乘法",
-          "6) 90 的 40% 是多少? #百分數計算",
-          "7) 某物品原價 300 元，現以八折出售，售價是多少元？ #百分數應用",
-          "8) 某班有 30 人，其中 10% 戴眼鏡，有多少人戴眼鏡？ #百分數應用",
-          "9) 一部玩具原價 500 元，現以七五折出售，可節省多少元？ #百分數應用",
-          "10) 2X+5=17，求 X。 #簡單方程",
-          "11) 3(X−4)=15，求 X。 #簡單方程",
-          "12) X/5+2=6，求 X。 #簡單方程",
-          "13) 找出數列的下一個數字：3,6,10,15,21,? #找規律",
-          "14) 499+501+32=? #簡便運算 (加法)",
-          "15) 10+5×6÷3=? #混合四則運算"
+          {
+            "question": "1) 1.5×0.4+2.8= ? #小數混合運算",
+            "modelAnswer": "3.4 (計算過程：1.5×0.4=0.6，0.6+2.8=3.4)"
+          },
+          {
+            "question": "2) 3/4+1/8= ? #分數加法",
+            "modelAnswer": "7/8 (計算過程：3/4=6/8，6/8+1/8=7/8)"
+          },
+          {
+            "question": "3) 0.9÷3×100=? #小數四則運算",
+            "modelAnswer": "30 (計算過程：0.9÷3=0.3，0.3×100=30)"
+          },
+          {
+            "question": "4) 4/5−1/10=? #分數減法",
+            "modelAnswer": "7/10 (計算過程：4/5=8/10，8/10-1/10=7/10)"
+          },
+          {
+            "question": "5) 12.5×8= #小數乘法",
+            "modelAnswer": "100"
+          },
+          {
+            "question": "6) 90 的 40% 是多少? #百分數計算",
+            "modelAnswer": "36 (計算過程：90×0.4=36)"
+          },
+          {
+            "question": "7) 某物品原價 300 元，現以八折出售，售價是多少元？ #百分數應用",
+            "modelAnswer": "240元 (計算過程：300×0.8=240)"
+          },
+          {
+            "question": "8) 某班有 30 人，其中 10% 戴眼鏡，有多少人戴眼鏡？ #百分數應用",
+            "modelAnswer": "3人 (計算過程：30×0.1=3)"
+          },
+          {
+            "question": "9) 一部玩具原價 500 元，現以七五折出售，可節省多少元？ #百分數應用",
+            "modelAnswer": "125元 (計算過程：500×0.25=125 或 500-500×0.75=500-375=125)"
+          },
+          {
+            "question": "10) 2X+5=17，求 X。 #簡單方程",
+            "modelAnswer": "X=6 (計算過程：2X=17-5=12，X=12÷2=6)"
+          },
+          {
+            "question": "11) 3(X−4)=15，求 X。 #簡單方程",
+            "modelAnswer": "X=9 (計算過程：X-4=15÷3=5，X=5+4=9)"
+          },
+          {
+            "question": "12) X/5+2=6，求 X。 #簡單方程",
+            "modelAnswer": "X=20 (計算過程：X/5=6-2=4，X=4×5=20)"
+          },
+          {
+            "question": "13) 找出數列的下一個數字：3,6,10,15,21,? #找規律",
+            "modelAnswer": "28 (規律：相差依次為+3,+4,+5,+6,+7，所以21+7=28)"
+          },
+          {
+            "question": "14) 499+501+32=? #簡便運算 (加法)",
+            "modelAnswer": "1032 (計算過程：499+501=1000，1000+32=1032)"
+          },
+          {
+            "question": "15) 10+5×6÷3=? #混合四則運算",
+            "modelAnswer": "20 (計算過程：先乘除後加減，5×6=30，30÷3=10，10+10=20)"
+          }
+        ]
+      }
+    },
+    "2026": {
+      "months": ["SELF-Day2"],
+      "questions": {
+        "中文個人": [
+          {
+            "question": "請在十秒內說出三個含有「名」的成語。",
+            "modelAnswer": "名不虛傳、名列前茅、名正言順。"
+          },
+          {
+            "question": "你覺得自己有什麼缺點？有沒有一些地方想改進？",
+            "modelAnswer": "我有時會因為追求完美而在細節上花費過多時間，影響整體效率。另外，在多人討論時，我有時會過於謹慎，需要更多時間才表達意見。我正在學習更好的時間管理技巧，區分事情的輕重緩急；同時也在練習更自信地表達自己的想法，同時保持開放態度聆聽他人意見，在果斷和謹慎之間找到平衡。"
+          },
+          {
+            "question": "你在小學有什麼職務？",
+            "modelAnswer": "在小學期間，我曾擔任班長和圖書館管理員。作為班長，我協助老師管理班級事務，幫助同學解決問題，組織班級活動，這培養了我的責任感、領導能力和組織能力。作為圖書館管理員，我學習了如何整理書籍、協助同學尋找書籍、維護閱讀環境，這讓我更加愛惜書籍並享受閱讀的樂趣。"
+          },
+          {
+            "question": "有沒有最不喜歡的科目？原因是什麼？",
+            "modelAnswer": "沒有一個科目是我完全不喜歡的，但我承認視覺藝術科對我來說比較有挑戰性。這不是因為我不喜歡藝術，而是我覺得自己在創意表達和繪畫技巧方面還有較大的進步空間。不過，我把這視為一個學習和成長的機會，正通過多練習、觀察和學習不同藝術形式來改善自己的藝術能力。"
+          },
+          {
+            "question": "你平日的溫習習慣是怎樣的?例如放學後的時間安排。",
+            "modelAnswer": "放學後，我會先休息30分鐘，讓大腦放鬆。然後用2小時專心完成當天的作業，重點處理較難的科目。之後用1小時進行預習和複習，鞏固所學知識。晚餐後，我會用30分鐘閱讀課外書或進行興趣活動。週末會安排專門時間進行系統性複習、做練習題和準備考試。我認為規律的作息和有效的時間管理對學習很重要。"
+          }
+        ],
+        "英文個人": [
+          {
+            "question": "Do you prefer individual or group activities?",
+            "modelAnswer": "I appreciate both individual and group activities for different reasons. Individual activities allow me to focus deeply, work at my own pace, and develop self-discipline and independent thinking skills. Group activities, on the other hand, teach me teamwork, communication, collaboration, and how to combine different perspectives to achieve common goals. I believe a balance of both is ideal for complete personal and academic development."
+          },
+          {
+            "question": "Which is your favourite subject in your primary school?",
+            "modelAnswer": "My favorite subject in primary school has been Mathematics. I enjoy the logical thinking and systematic problem-solving process it involves. Mathematics challenges me to think critically, analyze patterns, and find solutions to various types of problems. The satisfaction of solving a difficult math problem is very rewarding and continually motivates me to learn more and take on new challenges."
+          }
+        ],
+        "英文小組": [
+          {
+            "question": "Your group is working on a major project. One member suggests copying parts from an online source to save time and improve the final result, arguing that 'everyone does it.' As a group, discuss your response and reach a consensus.",
+            "modelAnswer": "I would respectfully disagree with the suggestion to copy from online sources. While it might save time in the short term, it's academically dishonest and doesn't reflect our true abilities or learning. Instead, we could use online sources as references, properly cite them, and then express the ideas in our own words. This approach allows us to learn more, develop our skills, and produce original work we can be proud of. We could also discuss how to divide the work more efficiently to save time while maintaining academic integrity."
+          },
+          {
+            "question": "Some believe smartphones should be completely banned in secondary schools to reduce distraction. Others argue they are essential learning tools. Discuss this topic in your group and see if you can find common ground.",
+            "modelAnswer": "While smartphones can be distracting, a complete ban might be too extreme as they can also be valuable learning tools for research, educational apps, and communication. A more balanced approach could involve establishing clear rules about when and how smartphones can be used in school - perhaps allowing them during specific lessons for educational purposes but restricting use during tests, lectures, and other focused learning times. Additionally, educating students about responsible technology use and digital citizenship is important. We could find common ground by agreeing that smartphones should be used purposefully and responsibly in educational settings."
+          }
+        ],
+        "中文小組": [
+          {
+            "question": "如果你們小組是學校活動籌委會，現在有10萬元預算，請一起討論並決定如何舉辦一場對中一生最有價值的活動。",
+            "modelAnswer": "我建議舉辦一個為期兩天的『科學與領導力訓練營』。活動可以包括：科學實驗工作坊（2萬元）、團隊建設挑戰（1.5萬元）、職業探索講座（1萬元）、戶外探索活動（2萬元）、材料和設備（2萬元）、餐飲（1萬元）、雜費和後備金（0.5萬元）。這樣的活動能讓中一生在實踐中學習科學知識，培養團隊合作和領導能力，同時認識新朋友，順利適應中學生活，是對他們成長最有價值的投資。"
+          },
+          {
+            "question": "小組中有兩位同學因意見不合發生爭執，影響活動進度。如果你是其中一員，會如何處理？",
+            "modelAnswer": "我會首先請大家冷靜下來，暫停爭論。然後分別聆聽雙方的意見和理由，理解各自的立場和關注點。接著，我會引導大家回顧小組的共同目標，找出爭執的核心問題。我會提議尋找雙方都能接受的解決方案，或者提出第三個方案結合雙方的優點。重要的是保持互相尊重，理解不同觀點都有其價值，並以團隊利益和活動成功為重做出決定。最後，確保大家達成共識後，繼續推進活動進度。"
+          },
+          {
+            "question": "請小組用5分鐘，一起設計一個代表『理想中學生』的標誌（Logo），並解釋其寓意。",
+            "modelAnswer": "我們可以設計一個由三部分組成的標誌：上方是一本打開的書代表知識和學習；中間是一個燃燒的火炬代表智慧、啟發和熱情；下方是相互交織的橄欖枝代表和平、成長和團結。整體採用藍色和綠色，藍色象徵智慧與穩定，綠色象徵成長與希望。這個標誌寓意理想中學生應該追求知識（書本）、擁有智慧和熱情（火炬），並在和平團結的環境中全面成長（橄欖枝）。"
+          }
+        ],
+        "數學": [
+          {
+            "question": "1) 2.5×0.6+1.4=? #小數混合運算",
+            "modelAnswer": "2.9 (計算過程：2.5×0.6=1.5，1.5+1.4=2.9)"
+          },
+          {
+            "question": "2) 1/2+2/3=? #分數加法",
+            "modelAnswer": "7/6 或 1又1/6 (計算過程：1/2=3/6，2/3=4/6，3/6+4/6=7/6)"
+          },
+          {
+            "question": "3) 4x-7=9，求x。 #簡單方程",
+            "modelAnswer": "x=4 (計算過程：4x=9+7=16，x=16÷4=4)"
+          },
+          {
+            "question": "4) 2,5,10,17,26,? #找規律",
+            "modelAnswer": "37 (規律：相差依次為+3,+5,+7,+9,+11，所以26+11=37)"
+          },
+          {
+            "question": "5) 一本書原價120元，現以九折出售，售價是多少元？ #百分數應用",
+            "modelAnswer": "108元 (計算過程：120×0.9=108)"
+          },
+          {
+            "question": "6) 3.2÷0.8+5.1=? #小數混合運算",
+            "modelAnswer": "9.1 (計算過程：3.2÷0.8=4，4+5.1=9.1)"
+          },
+          {
+            "question": "7) 3/5+1/4=? #分數加法",
+            "modelAnswer": "17/20 (計算過程：3/5=12/20，1/4=5/20，12/20+5/20=17/20)"
+          },
+          {
+            "question": "8) 5(x+2)=35，求x。 #簡單方程",
+            "modelAnswer": "x=5 (計算過程：x+2=35÷5=7，x=7-2=5)"
+          },
+          {
+            "question": "9) 1,3,6,10,15,? #找規律",
+            "modelAnswer": "21 (規律：相差依次為+2,+3,+4,+5,+6，所以15+6=21)"
+          },
+          {
+            "question": "10) 一間餐廳有50個座位，午餐時段有80%入座率，有多少人用餐？ #百分數應用",
+            "modelAnswer": "40人 (計算過程：50×0.8=40)"
+          },
+          {
+            "question": "11) 6.5×0.4+2.8=? #小數混合運算",
+            "modelAnswer": "5.4 (計算過程：6.5×0.4=2.6，2.6+2.8=5.4)"
+          },
+          {
+            "question": "12) 5/6+1/3=? #分數加法",
+            "modelAnswer": "7/6 或 1又1/6 (計算過程：5/6=5/6，1/3=2/6，5/6+2/6=7/6)"
+          },
+          {
+            "question": "13) 2x/3=8，求x。 #簡單方程",
+            "modelAnswer": "x=12 (計算過程：2x=8×3=24，x=24÷2=12)"
+          },
+          {
+            "question": "14) 5,10,20,40,80,? #找規律",
+            "modelAnswer": "160 (規律：×2，所以80×2=160)"
+          },
+          {
+            "question": "15) 一部手機原價4500元，現以八五折出售，可節省多少元？ #百分數應用",
+            "modelAnswer": "675元 (計算過程：4500×0.15=675 或 4500-4500×0.85=4500-3825=675)"
+          }
         ]
       }
     }
   }
 }
+-->
