@@ -24,7 +24,7 @@
   "image": "badge_hlc.jpg",
   "targetInterviewDate": "2025-12-20",
   "previousInterviewQuestions": {
-    "2025": {
+    "2025-1": {
       "months": ["SELF-Day1", "SELF-Day2"],
       "questions": {
         "中文個人": [
@@ -34,32 +34,17 @@
           "你有什麼興趣或嗜好？為什麼會喜歡它們？",
           "你覺得自己有什麼優點？有沒有一些地方想改進？",
           "你和家人平時相處如何？在家中會負責什麼家務或工作？",
-          "遇到家庭意見不合時，你通常會怎樣處理？",
-          "你最喜歡哪一科？為什麼？",
-          "有沒有最不喜歡的科目？原因是什麼？",
-          "你平日的溫習習慣是怎樣的?例如放學後的時間安排。",
-          "如果某一科成績退步了，你會怎樣找出原因並改善？",
-          "你最近看過哪一本書或一篇文章？內容大概是什麼？從中學到什麼？",
-          "請在十秒內說出三個含有「名」的成語。",
-          "你覺得自己有什麼缺點？有沒有一些地方想改進？",
-          "你在小學有什麼職務？"
+          "遇到家庭意見不合時，你通常會怎樣處理？"
         ],
         "中文小組": [
-          "如果你們小組是學校活動籌委會，現在有10萬元預算，請一起討論並決定如何舉辦一場對中一生最有價值的活動。",
-          "小組中有兩位同學因意見不合發生爭執，影響活動進度。如果你是其中一員，會如何處理？",
-          "請小組用5分鐘，一起設計一個代表『理想中學生』的標誌（Logo），並解釋其寓意。"
+          "如果你們小組是學校活動籌委會，現在有10萬元預算，請一起討論並決定如何舉辦一場對中一生最有價值的活動。"
         ],
         "英文個人": [
-          "What is your daily study routine?",
-          "Do you prefer individual or group activities?",
-          "Which is your favourite subject in your primary school?"
+          "What is your daily study routine?"
         ],
         "英文小組": [
           "Your group is working on a major project. One member suggests copying parts from an online source to save time and improve the final result, arguing that 'everyone does it.' As a group, discuss your response and reach a consensus.",
-          "Some believe smartphones should be completely banned in secondary schools to reduce distraction. Others argue they are essential learning tools. Discuss this topic in your group and see if you can find common ground.",
-          "xxx",
-          "xxx"
-        ],
+         ],
         "數學": [
           "1) 1.5×0.4+2.8= ? #小數混合運算",
           "2) 3/4+1/8= ? #分數加法",
@@ -75,7 +60,34 @@
           "12) X/5+2=6，求 X。 #簡單方程",
           "13) 找出數列的下一個數字：3,6,10,15,21,? #找規律",
           "14) 499+501+32=? #簡便運算 (加法)",
-          "15) 10+5×6÷3=? #混合四則運算",
+          "15) 10+5×6÷3=? #混合四則運算"
+        ]
+      }
+    },
+      "2025-2": {
+      "months": ["SELF-Day1", "SELF-Day2"],
+      "questions": {
+        "中文個人": [
+          "你最喜歡哪一科？為什麼？",
+          "有沒有最不喜歡的科目？原因是什麼？",
+          "你平日的溫習習慣是怎樣的?例如放學後的時間安排。",
+          "如果某一科成績退步了，你會怎樣找出原因並改善？",
+          "你最近看過哪一本書或一篇文章？內容大概是什麼？從中學到什麼？",
+          "請在十秒內說出三個含有「名」的成語。",
+          "你覺得自己有什麼缺點？有沒有一些地方想改進？",
+          "你在小學有什麼職務？"
+        ],
+        "中文小組": [
+          "請小組用5分鐘，一起設計一個代表『理想中學生』的標誌（Logo），並解釋其寓意。"
+        ],
+        "英文個人": [
+          "Do you prefer individual or group activities?",
+          "Which is your favourite subject in your primary school?"
+        ],
+        "英文小組": [
+          "Some believe smartphones should be completely banned in secondary schools to reduce distraction. Others argue they are essential learning tools. Discuss this topic in your group and see if you can find common ground."
+         ],
+        "數學": [
           "1) 2.5×0.6+1.4=? #小數混合運算",
           "2) 1/2+2/3=? #分數加法",
           "3) 4x-7=9，求x。 #簡單方程",
