@@ -93,3 +93,5 @@ async function loadData() {
         showError('Failed to load data. Please check if JSON files are available.');
     }
 }
+console.log('問題數據類型:', typeof questions[year].questions[category]);
+console.log('第一個項目:', questions[year].questions[category][0]);
