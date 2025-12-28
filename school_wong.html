@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>王錦輝升中面試 5 天精讀訓練 (STEM & 奧數版)</title>
+    <style>
+        :root {
+            --primary: #0056b3;
+            --accent: #e8f0fe;
+            --text: #333;
+            --danger: #d9534f;
+            --success: #5cb85c;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            color: var(--text);
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: white;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .sidebar-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        .nav-btn {
+            padding: 15px 20px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border-left: 4px solid transparent;
+        }
+        .nav-btn:hover {
+            background-color: #f0f0f0;
+        }
+        .nav-btn.active {
+            background-color: var(--accent);
+            border-left-color: var(--primary);
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        .day-header {
+            margin-bottom: 30px;
+        }
+        .day-header h1 {
+            margin: 0 0 10px;
+        }
+        .day-desc {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Exercise Card */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+        }
+        .question-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .question-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+        
+        /* Recorder Controls */
+        .recorder-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .btn-record { background-color: var(--danger); color: white; }
+        .btn-stop { background-color: #555; color: white; display: none; }
+        .btn-play { background-color: var(--success); color: white; }
+        .btn-check { background-color: var(--primary); color: white; width: 100%; justify-content: center; margin-top: 10px;}
+        
+        .recording-indicator {
+            color: var(--danger);
+            font-weight: bold;
+            display: none;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Modal / Feedback Section */
+        .feedback-section {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            animation: fadeIn 0.5s;
+        }
+        .model-answer {
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 15px;
+        }
+        .checklist {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        .checklist h4, .model-answer h4 { margin-top: 0; }
+        .checklist ul { padding-left: 20px; margin-bottom: 0; }
+        .checklist li { margin-bottom: 5px; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; flex-direction: row; overflow-x: auto; padding: 10px; border-bottom: 1px solid #ddd; border-right: none;}
+            .sidebar-header { display: none; }
+            .nav-btn { padding: 10px; white-space: nowrap; font-size: 0.9rem; border-left: none; border-bottom: 3px solid transparent; }
+            .nav-btn.active { border-left: none; border-bottom-color: var(--primary); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>WKF Interview Prep</h2>
+            <p style="font-size:0.8rem; color:#666;">針對 STEM & 奧數背景</p>
+        </div>
+        <button class="nav-btn active" onclick="loadDay(1)">Day 1: 個人故事主線</button>
+        <button class="nav-btn" onclick="loadDay(2)">Day 2: 英文流暢度 (No Fillers)</button>
+        <button class="nav-btn" onclick="loadDay(3)">Day 3: 高頻 Q&A</button>
+        <button class="nav-btn" onclick="loadDay(4)">Day 4: 數理邏輯解說</button>
+        <button class="nav-btn" onclick="loadDay(5)">Day 5: Full Mock 實戰</button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-content" id="content-area">
+        <!-- Content will be injected here by JavaScript -->
+    </div>
+
+    <script>
+        // Data for 5 Days
+        const daysData = {
+            1: {
+                title: "Day 1: 建立個人主線 (STEM & Math)",
+                desc: "目標：將你的強項 (STEM, 奧數, Head Prefect) 轉化為 3 個核心故事。重點是邏輯清晰 (Situation -> Action -> Result)。",
+                exercises: [
+                    {
+                        tag: "STEM / Science",
+                        q: "Tell me about a STEM project you are most proud of.",
+                        model: "<strong>Key Structure:</strong> Project Name -> Your Role -> Problem Solved -> What you learned.<br><br><em>Example:</em> 'I joined the school robotics team last year. We built a robot arm to pick up rubbish. My main role was coding the movement using Python. One challenge was that the arm was too shaky, so we used math to calculate the best angle. Finally, it worked smoothly. This taught me that coding needs both logic and patience.'",
+                        check: ["有沒有提到具體的 Project 名稱？", "有沒有使用 'First', 'Then', 'Finally' 連接詞？", "有沒有提到你在當中的具體角色？"]
+                    },
+                    {
+                        tag: "Leadership / Head Prefect",
+                        q: "What was the most difficult challenge as a Head Prefect?",
+                        model: "<strong>Key Structure:</strong> Conflict/Problem -> Your Solution -> Outcome.<br><br><em>Example:</em> 'The hardest part was handling arguments between students. Once, two classmates were fighting over a football game. Instead of shouting, I separated them and let them speak one by one. I learned that a good leader must be a good listener, not just give orders.'",
+                        check: ["有沒有避免只說 'It was hard'？", "有沒有具體講出解決方法？", "有沒有最後的 'I learned' 反思？"]
+                    }
+                ]
+            },
+            2: {
+                title: "Day 2: 英文流暢度特訓 (Killer Fillers)",
+                desc: "目標：消滅 'E...er', 'Um', 'You know'。使用 'Safety Phrases' 來爭取思考時間。",
+                exercises: [
+                    {
+                        tag: "Self-Introduction",
+                        q: "Please introduce yourself in 1 minute.",
+                        model: "<strong>Focus:</strong> Name -> School -> 3 Key Tags (Math, STEM, Leadership) -> Why WKF.<br><br><em>Safety Phrase if stuck:</em> 'Let me share a bit more about my hobby...'<br><br><em>Example:</em> 'Good morning. My name is [Name]. I come from [School]. I would describe myself as a problem solver because I love Olympiad Math and STEM. I am also the Head Prefect, which trained me to be responsible. I want to join WKF because of your strong science curriculum.'",
+                        check: ["數一數你說了多少次 'er'？(目標少於 3 次)", "有沒有包含 STEM 和 Prefect 兩個亮點？", "語速是否適中？"]
+                    },
+                    {
+                        tag: "Drill",
+                        q: "Why do you want to study at Wong Kam Fai?",
+                        model: "<strong>Keywords:</strong> IB curriculum, English environment, STEM facilities.<br><br><em>Transition Phrase:</em> 'Another reason is...'<br><br><em>Example:</em> 'First, I really like the IB curriculum here because it encourages independent thinking. Second, I know WKF puts a lot of resources into STEM, and I want to continue my robotics research here.'",
+                        check: ["有沒有具體提到學校特色 (IB/STEM)？", "有沒有用 'First', 'Second' 來分段？"]
+                    }
+                ]
+            },
+            3: {
+                title: "Day 3: 高頻 Q&A (價值觀與生活)",
+                desc: "目標：應對時事與性格題。回答要有個人的見解，不要只答 Yes/No。",
+                exercises: [
+                    {
+                        tag: "Personal / Weakness",
+                        q: "What is your greatest weakness?",
+                        model: "<strong>Strategy:</strong> Real weakness + How you are fixing it.<br><br><em>Example:</em> 'Sometimes I focus too much on details, especially in Math problems, which slows me down. To fix this, I now set a timer for myself to ensure I balance speed and accuracy. This helps me manage my time better.'",
+                        check: ["你的缺點是否真實？", "有沒有提供改善方法 (Solution)？"]
+                    },
+                    {
+                        tag: "Current Affairs / AI",
+                        q: "What do you think about using AI (like ChatGPT) in homework?",
+                        model: "<strong>Structure:</strong> Pros (Benefits) -> Cons (Risks) -> Your Stance.<br><br><em>Example:</em> 'I think AI is a powerful tool. On the one hand, it helps us find information quickly. On the other hand, if we just copy answers, we learn nothing. So, I think we should use AI to explain concepts, but not to do the work for us.'",
+                        check: ["有沒有用到 'On the one hand... On the other hand...'？", "立場是否清晰？"]
+                    }
+                ]
+            },
+            4: {
+                title: "Day 4: 數理邏輯解說 (Math & Logic)",
+                desc: "目標：用英文解釋數學與邏輯。王錦輝看重「過程」多於答案。",
+                exercises: [
+                    {
+                        tag: "Math Application",
+                        q: "How does Mathematics help you in daily life?",
+                        model: "<strong>Key Concept:</strong> Logical thinking, Planning, Problem-solving.<br><br><em>Example:</em> 'Math is not just about numbers; it changes how I think. For example, before I start a STEM project, I calculate the time and budget I need. This is like solving a math problem—I break a big task into small steps. Math trains me to be logical and organized.'",
+                        check: ["有沒有提到 'Logical thinking'？", "有沒有舉出生活例子（如時間管理、預算）？"]
+                    },
+                    {
+                        tag: "Logic / Time Management",
+                        q: "You have too much homework and a competition tomorrow. How do you manage your time?",
+                        model: "<strong>Steps:</strong> Prioritize -> Schedule -> Execute.<br><br><em>Example:</em> 'First, I would list out all the tasks. I would prioritize the competition preparation first because it is urgent. Then, I would estimate the time for each homework assignment. If I really cannot finish, I would talk to my teacher honestly. But usually, planning ahead solves the problem.'",
+                        check: ["有沒有使用邏輯連接詞 (First, Then, If)？", "解決方案是否合理？"]
+                    }
+                ]
+            },
+            5: {
+                title: "Day 5: Full Mock 實戰 (綜合模擬)",
+                desc: "目標：整合所有技巧，模擬真實面試 4 條題目。",
+                exercises: [
+                    {
+                        tag: "Mock Question 1",
+                        q: "Self-Introduction (Include your hobbies and strengths)",
+                        model: "Review Day 2 Model Answer.",
+                        check: ["保持微笑", "眼神接觸鏡頭", "無 Filler"]
+                    },
+                    {
+                        tag: "Mock Question 2",
+                        q: "If you are the leader of a group project and a member refuses to work, what would you do?",
+                        model: "<em>Key:</em> Communication + Encouragement + Responsibility.<br>Answer: 'I would first ask him why. Maybe he finds the task too hard. I would try to give him a simpler task or help him. If he still refuses, I would do his part to protect the team's grade, but let the teacher know afterwards.'",
+                        check: ["有沒有展現領袖風範？", "有沒有展現同理心？"]
+                    },
+                    {
+                        tag: "Mock Question 3",
+                        q: "Describe a picture: Imagine a student sleeping in class. What would you do?",
+                        model: "Answer: 'I would gently wake him up because he might miss important lessons. Maybe he stayed up late studying. After class, I would ask if he is feeling okay.'",
+                        check: ["語氣是否友善？"]
+                    }
+                ]
+            }
+        };
+
+        let currentDay = 1;
+        let mediaRecorder;
+        let audioChunks = [];
+
+        function loadDay(day) {
+            currentDay = day;
+            // Update UI buttons
+            document.querySelectorAll('.nav-btn').forEach((btn, index) => {
+                btn.classList.toggle('active', index + 1 === day);
+            });
+
+            const data = daysData[day];
+            const contentDiv = document.getElementById('content-area');
+            
+            let exercisesHtml = '';
+            data.exercises.forEach((ex, index) => {
+                exercisesHtml += `
+                    <div class="card">
+                        <span class="question-tag">${ex.tag}</span>
+                        <div class="question-text">${ex.q}</div>
+                        
+                        <div class="recorder-controls">
+                            <button class="btn btn-record" onclick="startRecording(this, ${index})">🔴 錄音</button>
+                            <button class="btn btn-stop" onclick="stopRecording(this, ${index})">⬛ 停止</button>
+                            <span class="recording-indicator">錄音中...</span>
+                            <audio id="audio-${index}" controls style="display:none; height: 35px;"></audio>
+                        </div>
+
+                        <button class="btn btn-check" onclick="toggleFeedback(${index})">✨ 我答完咗，顯示分析與參考答案</button>
+
+                        <div class="feedback-section" id="feedback-${index}">
+                            <div class="model-answer">
+                                <h4>🏆 參考範例 (Model Answer)</h4>
+                                <p>${ex.model}</p>
+                            </div>
+                            <div class="checklist">
+                                <h4>✅ 自我批改 (Self-Check)</h4>
+                                <ul>
+                                    ${ex.check.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            contentDiv.innerHTML = `
+                <div class="day-header">
+                    <h1>${data.title}</h1>
+                    <p class="day-desc">${data.desc}</p>
+                </div>
+                ${exercisesHtml}
+            `;
+        }
+
+        // Recording Logic
+        async function startRecording(btn, index) {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+
+            mediaRecorder.ondataavailable = event => {
+                audioChunks.push(event.data);
+            };
+
+            mediaRecorder.onstop = () => {
+                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                const audioUrl = URL.createObjectURL(audioBlob);
+                const audioEl = document.getElementById(`audio-${index}`);
+                audioEl.src = audioUrl;
+                audioEl.style.display = 'block';
+            };
+
+            mediaRecorder.start();
+
+            // UI Updates
+            btn.style.display = 'none';
+            btn.nextElementSibling.style.display = 'flex'; // Show Stop
+            btn.parentElement.querySelector('.recording-indicator').style.display = 'block';
+        }
+
+        function stopRecording(btn, index) {
+            mediaRecorder.stop();
+            
+            // UI Updates
+            btn.style.display = 'none';
+            btn.previousElementSibling.style.display = 'flex'; // Show Record
+            btn.parentElement.querySelector('.recording-indicator').style.display = 'none';
+            
+            // Stop stream tracks
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        }
+
+        function toggleFeedback(index) {
+            const feedbackDiv = document.getElementById(`feedback-${index}`);
+            if (feedbackDiv.style.display === 'block') {
+                feedbackDiv.style.display = 'none';
+            } else {
+                feedbackDiv.style.display = 'block';
+                // Scroll to feedback
+                feedbackDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+
+        // Init
+        loadDay(1);
+
+    </script>
+</body>
+</html>
