@@ -10,58 +10,60 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', 'Poppins', 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+            scroll-behavior: smooth;  /* 平滑捲動 */
         }
 
         body {
-            background: #f0f8ea;  /* Duolingo柔和背景 */
+            background: #f0f8ea;
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px 8px;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
         .duo-container {
-            max-width: 1300px;
+            max-width: 1400px;
             width: 100%;
         }
 
         /* 頂部導航／標題 */
         .header {
             background: white;
-            border-radius: 40px 40px 30px 30px;
-            padding: 20px 28px;
-            margin-bottom: 30px;
-            box-shadow: 0 12px 0 #d4e6c3, 0 8px 20px rgba(0,0,0,0.08);
+            border-radius: 32px 32px 28px 28px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 0 #d4e6c3, 0 8px 20px rgba(0,0,0,0.08);
             border: 2px solid #a5c882;
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
+            gap: 12px;
         }
 
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
 
         .duo-bird {
             background: #58cc02;
-            width: 50px;
-            height: 50px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: white;
-            box-shadow: 0 6px 0 #3a9100;
+            box-shadow: 0 5px 0 #3a9100;
         }
 
         .title-main {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             color: #2b5f1a;
             letter-spacing: -0.5px;
@@ -70,21 +72,22 @@
 
         .title-main span {
             background: #fff4c2;
-            padding: 0 12px;
+            padding: 0 10px;
             border-radius: 40px;
-            font-size: 1.3rem;
-            margin-left: 10px;
+            font-size: 1.1rem;
+            margin-left: 6px;
             border: 2px solid #f5c150;
+            white-space: nowrap;
         }
 
         .date-badge {
             background: #1f1f1f;
             color: white;
-            padding: 10px 24px;
-            border-radius: 60px;
+            padding: 8px 18px;
+            border-radius: 50px;
             font-weight: 600;
-            font-size: 1.2rem;
-            box-shadow: 0 6px 0 #00000050;
+            font-size: 1.0rem;
+            box-shadow: 0 5px 0 #00000050;
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
@@ -93,69 +96,113 @@
         .date-badge div {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .date-badge i {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
+        }
+
+        /* 導航標籤 - 可點擊 */
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background: #ffdc9f;
+            padding: 6px 18px;
+            border-radius: 40px;
+            border: 2px solid #b16f0e;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.1s;
+            box-shadow: 0 3px 0 #b16f0e;
+            color: #2e4100;
+            text-decoration: none;
+        }
+        .nav-btn:hover {
+            background: #ffe5b4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 0 #b16f0e;
+        }
+        .nav-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 #b16f0e;
+        }
+        .nav-btn.lmc {
+            background: #c2e0b0;
+            border-color: #4f7a2c;
+            box-shadow: 0 3px 0 #3b5e20;
+        }
+        .nav-btn.tyt {
+            background: #b0d4e0;
+            border-color: #1f7a9c;
+            box-shadow: 0 3px 0 #0e5570;
+        }
+        .nav-btn.general {
+            background: #f9cfa7;
+            border-color: #b16f0e;
         }
 
         /* 分類卡片網格 */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
         }
 
         .card {
             background: white;
-            border-radius: 35px;
-            padding: 22px 22px 28px;
+            border-radius: 28px;
+            padding: 18px 16px 20px;
             border: 3px solid #9bc47b;
-            box-shadow: 0 12px 0 #8bb56b, 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 0 #8bb56b, 0 8px 20px rgba(0,0,0,0.1);
             transition: transform 0.1s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
+            height: fit-content;
         }
 
         .card-header {
             display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 18px;
+            gap: 8px;
+            margin-bottom: 14px;
             border-bottom: 3px dashed #c0e0b0;
-            padding-bottom: 12px;
+            padding-bottom: 8px;
         }
 
         .card-icon {
             background: #ddf3c8;
-            width: 48px;
-            height: 48px;
-            border-radius: 30px;
+            width: 42px;
+            height: 42px;
+            border-radius: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 24px;
             border: 2px solid #6f9e4c;
+            flex-shrink: 0;
         }
 
         .card-title {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: #1f4f1a;
+            line-height: 1.2;
         }
 
         .school-tag {
             display: inline-block;
             background: #f2d55e;
-            padding: 6px 15px;
+            padding: 4px 12px;
             border-radius: 40px;
             font-weight: 600;
-            font-size: 0.9rem;
-            margin: 5px 5px 12px 0;
+            font-size: 0.8rem;
+            margin: 0 4px 10px 0;
             border: 2px solid #b98c1a;
             color: #2e4100;
         }
@@ -166,119 +213,107 @@
 
         .list-item {
             background: #fafcf8;
-            border-radius: 24px;
-            padding: 14px 18px;
-            margin-bottom: 12px;
+            border-radius: 20px;
+            padding: 10px 14px;
+            margin-bottom: 8px;
             border: 2px solid #cfe2c0;
-            box-shadow: 0 4px 0 #a3c18a;
+            box-shadow: 0 3px 0 #a3c18a;
             font-weight: 500;
             color: #1e3a0d;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 8px;
+            font-size: 0.95rem;
         }
 
         .list-item::before {
             content: "🌟";
-            font-size: 1.2rem;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
 
         .tip-bubble {
             background: #e6f7ff;
-            border-radius: 28px;
-            padding: 16px 20px;
-            margin: 16px 0 8px;
+            border-radius: 22px;
+            padding: 12px 16px;
+            margin: 12px 0 4px;
             border: 2px solid #45b3e0;
-            box-shadow: 0 5px 0 #1e7f9c;
+            box-shadow: 0 4px 0 #1e7f9c;
+            font-size: 0.95rem;
         }
 
         .tip-bubble.self-study {
             background: #fff0d9;
             border-color: #ffaa33;
-            box-shadow: 0 5px 0 #cc7f1a;
-        }
-
-        .mini-btn {
-            background: #ffdc9f;
-            padding: 5px 18px;
-            border-radius: 40px;
-            border: 2px solid #b16f0e;
-            font-weight: 600;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-right: 8px;
-            margin-bottom: 8px;
+            box-shadow: 0 4px 0 #cc7f1a;
         }
 
         .vocab-highlight {
             background: #d9f0c5;
-            border-radius: 30px;
-            padding: 12px 20px;
-            font-size: 1rem;
-            border-left: 8px solid #58cc02;
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 0.95rem;
+            border-left: 6px solid #58cc02;
+            margin-top: 10px;
         }
 
         .golden-3 {
             background: #fffacd;
             border: 3px solid #ebb400;
-            border-radius: 45px;
-            padding: 20px;
-            margin: 25px 0;
-            box-shadow: 0 8px 0 #b8860b;
+            border-radius: 40px;
+            padding: 16px 20px;
+            margin: 15px 0 20px;
+            box-shadow: 0 6px 0 #b8860b;
         }
 
         .footer-note {
             background: #273a1a;
             color: white;
-            border-radius: 50px;
-            padding: 24px 30px;
+            border-radius: 40px;
+            padding: 18px 20px;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            margin-top: 30px;
+            margin-top: 20px;
             border: 3px solid #9bbc78;
         }
 
-        /* iPad / 手機細微調整 */
+        /* section 錨點偏移修正 (讓標題不被上方擋住) */
+        .section-anchor {
+            scroll-margin-top: 20px;
+        }
+
         @media (max-width: 700px) {
-            .header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 15px;
-            }
+            .header { padding: 14px; }
             .date-badge {
                 width: 100%;
                 justify-content: space-around;
+                font-size: 0.9rem;
+                padding: 8px 8px;
             }
-            .title-main {
-                font-size: 1.5rem;
-            }
-            .card-title {
-                font-size: 1.4rem;
-            }
+            .title-main { font-size: 1.3rem; }
+            .card-title { font-size: 1.3rem; }
+            body { padding: 10px 4px; }
         }
 
         @media (max-width: 480px) {
-            .list-item {
-                flex-direction: column;
-                gap: 6px;
-            }
-            .grid {
-                grid-template-columns: 1fr;
-            }
+            .list-item { padding: 8px 10px; }
+            .grid { gap: 12px; }
+            .golden-3 h2 { font-size: 1.4rem; }
         }
 
         .story-practice {
             background: #fae9d1;
-            border-radius: 40px;
-            padding: 15px;
+            border-radius: 28px;
+            padding: 12px;
             border: 3px solid #e1a56e;
+            font-size: 0.95rem;
         }
 
         hr {
-            border: 3px solid #cfe2c0;
-            border-radius: 10px;
-            margin: 30px 0 20px;
+            border: 2px solid #cfe2c0;
+            border-radius: 8px;
+            margin: 20px 0 15px;
         }
     </style>
 </head>
@@ -289,35 +324,35 @@
             <div class="logo-area">
                 <div class="duo-bird">🐥</div>
                 <div class="title-main">
-                    JAYDEN 最後衝刺 <span>面試特攻</span>
+                    JAYDEN 衝刺 <span>面試特攻</span>
                 </div>
             </div>
             <div class="date-badge">
-                <div><span style="font-size:1.8rem;">🗓️</span> 百周年 · 本週六</div>
-                <div><span style="font-size:1.8rem;">🗓️</span> 董玉娣 · 下週六</div>
+                <div><span style="font-size:1.5rem;">🗓️</span> 百周年 · 本週六</div>
+                <div><span style="font-size:1.5rem;">🗓️</span> 董玉娣 · 下週六</div>
             </div>
+        </div>
+
+        <!-- 可點擊導航標籤 - 點擊捲動到對應section -->
+        <div class="nav-tabs">
+            <a href="#lmc-section" class="nav-btn lmc">🏫 百周年 LMC</a>
+            <a href="#tyt-section" class="nav-btn tyt">🏫 董玉娣 TYT</a>
+            <a href="#general-section" class="nav-btn general">✨ 通用應變</a>
         </div>
 
         <!-- 黃金3點法 貫穿全局 置頂重點 -->
         <div class="golden-3">
-            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
-                <span style="background:#2b5f1a; color:white; padding:10px 25px; border-radius:50px; font-weight:700; font-size:2rem;">🥇 3</span>
+            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+                <span style="background:#2b5f1a; color:white; padding:6px 18px; border-radius:50px; font-weight:700; font-size:1.8rem;">🥇 3</span>
                 <div>
-                    <h2 style="color:#2b4f1a; font-size:1.8rem;">黃金三點法 · 每題必用</h2>
-                    <p style="font-weight:500; font-size:1.2rem;">「首先 Firstly · 其次 Secondly · 最後 Finally」＋ 簡短例子 = 滿分組織力</p>
+                    <h2 style="color:#2b4f1a; font-size:1.6rem;">黃金三點法 · 每題必用</h2>
+                    <p style="font-weight:500;">「首先 Firstly · 其次 Secondly · 最後 Finally」＋ 簡短例子 = 滿分組織力</p>
                 </div>
             </div>
         </div>
 
-        <!-- 兩大專區：百周年 ｜ 董玉娣 混合分類但以學校為單位＋通用技巧 -->
-        <div style="display: flex; gap: 12px; margin-bottom: 10px;">
-            <span class="mini-btn" style="background:#c2e0b0;">🏫 百周年 LMC</span>
-            <span class="mini-btn" style="background:#b0d4e0;">🏫 董玉娣 TYT</span>
-            <span class="mini-btn" style="background:#f9cfa7;">✨ 通用應變</span>
-        </div>
-
-        <!-- 第一部分：百周年專區 (看圖故事＋創意結局) -->
-        <h2 style="font-size: 2rem; margin: 20px 0 5px; color: #174d0d;">🦉 百周年 · 看圖創意結局特訓</h2>
+        <!-- 第一部分：百周年專區 (設錨點) -->
+        <h2 id="lmc-section" class="section-anchor" style="font-size: 1.8rem; margin: 10px 0 5px; color: #174d0d;">🦉 百周年 · 看圖創意結局特訓</h2>
         <div class="grid">
             <!-- 卡片 1 : 公園氣球 創意結局 -->
             <div class="card">
@@ -329,10 +364,10 @@
                 <div class="story-practice">
                     <p style="font-weight:700;">📷 圖：女孩買氣球 → 風吹走 → 抬頭想哭 → <span style="background:#fee484;">❓ 你創作結局</span></p>
                 </div>
-                <ul class="list-block" style="margin-top:15px;">
-                    <li class="list-item"><span style="font-weight:800;">溫馨型：</span>管理員叔叔送後備氣球，女孩破涕為笑 <span style="color:#4f7d32;">(spare balloon, kindness)</span></li>
-                    <li class="list-item"><span style="font-weight:800;">創意型：</span>遙控飛機撞繩子，氣球飄回 <span style="color:#4f7d32;">(remote plane, gently nudge)</span></li>
-                    <li class="list-item"><span style="font-weight:800;">成長型：</span>媽媽教「學會放手，珍惜回憶」<span style="color:#4f7d32;">(let go, cherish)</span></li>
+                <ul class="list-block" style="margin-top:10px;">
+                    <li class="list-item"><span style="font-weight:800;">溫馨型：</span>管理員叔叔送後備氣球 (spare balloon)</li>
+                    <li class="list-item"><span style="font-weight:800;">創意型：</span>遙控飛機撞繩子 (remote plane)</li>
+                    <li class="list-item"><span style="font-weight:800;">成長型：</span>媽媽教「學會放手，珍惜回憶」(let go)</li>
                 </ul>
                 <div class="tip-bubble">
                     ✨ <strong>英語加分句：</strong> “Although I lost the balloon, I will always treasure the happy moment.”
@@ -347,15 +382,15 @@
                 </div>
                 <div class="school-tag">🏫 百周年 LMC 創意續寫</div>
                 <div class="story-practice">
-                    <p>🧪 準備實驗 → 倒入液體 → 火山噴發 (開心) → <span style="background:#fee484;">❓ 第四格</span></p>
+                    <p>🧪 準備實驗 → 倒入液體 → 火山噴發 → <span style="background:#fee484;">❓ 第四格</span></p>
                 </div>
                 <ul class="list-block">
-                    <li class="list-item"><span>延續興趣：</span>成立「小小科學家」隊伍，自製彩虹實驗</li>
-                    <li class="list-item"><span>改變內向同學：</span>小明被讚「好厲害！」慢慢開朗</li>
-                    <li class="list-item"><span>學以致用：</span>用沙堆再做迷你火山，校園小奇蹟</li>
+                    <li class="list-item"><span>延續興趣：</span>成立「小小科學家」隊伍</li>
+                    <li class="list-item"><span>改變內向同學：</span>小明被讚「好厲害！」</li>
+                    <li class="list-item"><span>學以致用：</span>用沙堆再做迷你火山</li>
                 </ul>
                 <div class="vocab-highlight">
-                    🔬 詞彙：spark an interest, sense of belonging, put into practice
+                    🔬 spark an interest · sense of belonging
                 </div>
             </div>
 
@@ -366,11 +401,11 @@
                     <div class="card-title">迷路 · 爭執</div>
                 </div>
                 <div class="school-tag">🏫 百周年 LMC 留白結局</div>
-                <p>👫 行山有說有笑 → 地圖破爛迷路 → 天黑爭論背對背 → <span style="background:#fee484;">❓ 你話事</span></p>
-                <ul class="list-block" style="margin-top:10px;">
-                    <li class="list-item"><span style="font-weight:bold;">和解合作型：</span>「對不起，一齊諗辦法」唱歌等救援</li>
-                    <li class="list-item"><span style="font-weight:bold;">智慧求救型：</span>打行山熱線，描述地標獲救</li>
-                    <li class="list-item"><span style="font-weight:bold;">驚喜發現型：</span>發現隱藏瀑布＋螢火蟲，因迷路而幸運</li>
+                <p class="small-tight">👫 行山迷路 → 天黑爭論背對背 → <span style="background:#fee484;">❓ 你話事</span></p>
+                <ul class="list-block" style="margin-top:8px;">
+                    <li class="list-item"><span>和解合作型：</span>「對不起，一齊諗辦法」</li>
+                    <li class="list-item"><span>智慧求救型：</span>打行山熱線獲救</li>
+                    <li class="list-item"><span>驚喜發現型：</span>發現隱藏瀑布＋螢火蟲</li>
                 </ul>
             </div>
 
@@ -382,19 +417,19 @@
                 </div>
                 <div class="school-tag">🏫 百周年 面試重點</div>
                 <ul class="list-block">
-                    <li class="list-item">英文考核20%：閱讀文章＋看圖說故事（創意+組織）</li>
-                    <li class="list-item">粵語考核：日常生活常識，詞彙量及組織</li>
-                    <li class="list-item"><strong>「自信眼神望對方，唔好死背，從身體語言突圍」</strong></li>
-                    <li class="list-item">圖最後一格留空，最考創造力！</li>
+                    <li class="list-item">英文考核20%：閱讀文章＋看圖說故事</li>
+                    <li class="list-item">粵語考核：日常生活常識</li>
+                    <li class="list-item"><strong>「自信眼神望對方，唔好死背」</strong></li>
+                    <li class="list-item">圖最後一格留空，考創造力</li>
                 </ul>
                 <div class="tip-bubble self-study">
-                    🦅 如果唔識答：保持眼神，展現自學精神 “I’m not sure, but I’ll look it up and learn.”
+                    🦅 自學精神： “I’m not sure, but I’ll look it up and learn.”
                 </div>
             </div>
         </div>
 
-        <!-- 第二部分：董玉娣 TYT 英文面試＋學術應變 -->
-        <h2 style="font-size: 2rem; margin: 40px 0 5px; color: #0a4f66;">🦉 董玉娣 · 英文面試拆解</h2>
+        <!-- 第二部分：董玉娣 TYT 英文面試＋學術應變 (錨點) -->
+        <h2 id="tyt-section" class="section-anchor" style="font-size: 1.8rem; margin: 25px 0 5px; color: #0a4f66;">🦉 董玉娣 · 英文面試拆解</h2>
         <div class="grid">
             <!-- 卡片 5 : TYT 英文面試形式＋學術題 -->
             <div class="card">
@@ -404,13 +439,13 @@
                 </div>
                 <div class="school-tag">保良局董玉娣中學</div>
                 <ul class="list-block">
-                    <li class="list-item">單對單 · 英文＋粵語，包含中英數學術問題</li>
-                    <li class="list-item">數學題要用英語解釋思路 (分數/百分比/代數概念)</li>
-                    <li class="list-item">開放式問題：自我認知/時事/日常生活</li>
-                    <li class="list-item"><strong>校長金句：</strong>「遇到Dead air(冷場)點應對，比答案更重要」</li>
+                    <li class="list-item">單對單 · 包含中英數學術問題</li>
+                    <li class="list-item">數學題要用英語解釋思路</li>
+                    <li class="list-item">開放式問題：自我認知/時事</li>
+                    <li class="list-item"><strong>校長金句：</strong>應對Dead air比答案重要</li>
                 </ul>
                 <div class="vocab-highlight">
-                    🧠 必練：Firstly, I’ll calculate… / In my opinion… / I strongly believe that…
+                    🧠 Firstly, I’ll calculate… / In my opinion…
                 </div>
             </div>
 
@@ -422,13 +457,10 @@
                 </div>
                 <div class="school-tag">董玉娣 常考題</div>
                 <ul class="list-block">
-                    <li class="list-item">“What is your biggest weakness?” <br>➡️ Firstly, I’m sometimes too careful. Secondly, I reflect and improve. Finally, I turn it into strength.</li>
-                    <li class="list-item">“Describe your ideal weekend.” 用三點：rest, learn, family.</li>
-                    <li class="list-item">“Do you agree students should bring phones?” 先講Firstly優點，Secondly缺點，Finally自己立場＋原因</li>
+                    <li class="list-item">“Weakness?” ➡️ Firstly too careful, Secondly reflect, Finally improve.</li>
+                    <li class="list-item">“Ideal weekend?” 三點：rest, learn, family.</li>
+                    <li class="list-item">“Mobile phones?” Firstly優點, Secondly缺點, Finally立場</li>
                 </ul>
-                <div class="tip-bubble" style="background:#bde0f0;">
-                    💡 黃金3點法：Firstly… (例子) / Secondly… (例子) / Finally… (總結)
-                </div>
             </div>
 
             <!-- 卡片 7 : 董玉娣 數學情境＋自學精神 -->
@@ -439,13 +471,10 @@
                 </div>
                 <div class="school-tag">董玉娣 學術題</div>
                 <ul class="list-block">
-                    <li class="list-item">可能題型：應用題(買賣折扣/量度面積) 用英語逐步解釋</li>
-                    <li class="list-item">必備句： “First, I need to find out the total… then I subtract…”</li>
-                    <li class="list-item">不懂就展示自學精神： “I’m not familiar with this type yet, but I’m eager to learn and will search online after the interview.”</li>
+                    <li class="list-item">應用題用英語逐步解釋</li>
+                    <li class="list-item"> “First find total… then subtract…”</li>
+                    <li class="list-item">自學精神： “I’m not familiar but eager to learn.”</li>
                 </ul>
-                <div class="tip-bubble self-study">
-                    🌱 自學精神句式： “I don’t know this now, but I can find information on the Internet and study by myself.”
-                </div>
             </div>
 
             <!-- 卡片 8 : 董玉娣 時事/世界觀題型 -->
@@ -456,16 +485,16 @@
                 </div>
                 <div class="school-tag">TYT Band 1 視野</div>
                 <ul class="list-block">
-                    <li class="list-item">氣候變化 Climate change: “I think renewable energy is the key.”</li>
-                    <li class="list-item">短片平台 TikTok/Reels: “Firstly fun, but secondly we must manage time.”</li>
-                    <li class="list-item">AI對未來最重要技能？三點：效率、解難、人類獨特創意</li>
+                    <li class="list-item">氣候變化: renewable energy</li>
+                    <li class="list-item">短片平台 TikTok: fun + time management</li>
+                    <li class="list-item">AI 三點：效率、解難、人類創意</li>
                 </ul>
             </div>
         </div>
 
-        <!-- 第三部分：通用技巧 自學/應變/面試問題回問  -->
+        <!-- 第三部分：通用技巧 (錨點) -->
         <hr>
-        <h2 style="font-size: 2rem; margin: 20px 0 10px;">⚡ 通用必殺技·兩校適用</h2>
+        <h2 id="general-section" class="section-anchor" style="font-size: 1.8rem; margin: 10px 0 10px;">⚡ 通用必殺技·兩校適用</h2>
         <div class="grid">
             <!-- 卡片 9 : 自學精神＋不懂應對 -->
             <div class="card">
@@ -474,9 +503,9 @@
                     <div class="card-title">「唔識答」完美示範</div>
                 </div>
                 <ul class="list-block">
-                    <li class="list-item"><strong>態度：</strong>保持微笑、眼神真誠</li>
-                    <li class="list-item"><strong>萬用句：</strong> “I haven’t learned that yet, but I am curious and will find out by reading or searching online.”</li>
-                    <li class="list-item">馬俊江校長：展現好奇心、肯探索，比亂講加分</li>
+                    <li class="list-item">保持微笑、眼神真誠</li>
+                    <li class="list-item"> “I haven’t learned that yet, but I am curious and will find out.”</li>
+                    <li class="list-item">馬俊江校長：好奇心加分</li>
                 </ul>
                 <div class="vocab-highlight">
                     “I am not quite sure, but I can learn through the Internet.”
@@ -491,7 +520,7 @@
                 </div>
                 <ul class="list-block">
                     <li class="list-item">切忌答「沒有」！</li>
-                    <li class="list-item">事前睇學校網頁，問特色： “I saw your school emphasizes STEAM. Could you share more about the robotics club?”</li>
+                    <li class="list-item"> “I saw your school emphasizes STEAM. Could you share more about the robotics club?”</li>
                     <li class="list-item"> “What is the most important quality you look for in a student?”</li>
                 </ul>
             </div>
@@ -503,8 +532,8 @@
                     <div class="card-title">自我認知·反思</div>
                 </div>
                 <ul class="list-block">
-                    <li class="list-item">唔好只講獎項，講弱點+改進： “I used to be shy, but I joined drama to improve.”</li>
-                    <li class="list-item"> “誠實 vs 聰明？” 用三點分析，最後誠實更重要。</li>
+                    <li class="list-item">講弱點+改進： “I used to be shy, but I joined drama.”</li>
+                    <li class="list-item"> “誠實 vs 聰明？” 用三點分析</li>
                 </ul>
             </div>
 
@@ -517,32 +546,30 @@
                 <ul class="list-block">
                     <li class="list-item">多發問日常生活，參與家務學解難</li>
                     <li class="list-item">討論時事，建立世界觀</li>
-                    <li class="list-item">正面肯定，唔好死背，整理大綱就好</li>
+                    <li class="list-item">正面肯定，整理大綱就好</li>
                 </ul>
             </div>
         </div>
 
-        <!-- 額外 Bonus : 百周年創意結局 進階參考  -->
-        <div style="background: #def0d5; border-radius: 60px; padding: 20px 30px; margin: 30px 0; border: 5px solid #58a33c;">
-            <h3 style="font-size: 2rem; display: flex; gap: 10px;">🎯 百周年獨家 · 創意結局魔法句式</h3>
-            <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-top: 20px;">
-                <span style="background:white; border-radius:40px; padding:10px 30px; font-weight:bold;">“Unexpectedly, they discovered…”</span>
-                <span style="background:white; border-radius:40px; padding:10px 30px; font-weight:bold;">“From that day on, they learned to…”</span>
-                <span style="background:white; border-radius:40px; padding:10px 30px; font-weight:bold;">“Although it was scary, it brought them closer.”</span>
+        <!-- Bonus : 百周年創意結局 進階參考 -->
+        <div style="background: #def0d5; border-radius: 40px; padding: 16px 20px; margin: 20px 0; border: 4px solid #58a33c;">
+            <h3 style="font-size: 1.6rem; display: flex; gap: 8px; flex-wrap: wrap;">🎯 百周年創意結局魔法句式</h3>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px;">
+                <span style="background:white; border-radius:40px; padding:6px 18px; font-weight:500;">“Unexpectedly, they discovered…”</span>
+                <span style="background:white; border-radius:40px; padding:6px 18px; font-weight:500;">“From that day on, they learned…”</span>
+                <span style="background:white; border-radius:40px; padding:6px 18px; font-weight:500;">“This reminds me of the time when I…”</span>
             </div>
-            <p class="mt-3" style="margin-top:20px;">⭐ 記得結合自身經歷： “This reminds me of the time when I…” 即時加分</p>
         </div>
 
-        <!-- 時間倒數及最後鼓勵 -->
+        <!-- 最後鼓勵 -->
         <div class="footer-note">
-            🐣 Jayden 仲有時間！每日用黃金三點練一題，望鏡練眼神。<br>
+            🐣 Jayden 每日用黃金三點練一題，望鏡練眼神。<br>
             本週六百周年 → 創意故事無限；下週六董玉娣 → 英語對答從容。<br>
-            💚 你已經準備好，展現最真誠嘅自己 💚
+            💚 展現最真誠嘅自己 💚
         </div>
 
-        <!-- 底部小彩蛋 -->
-        <div style="text-align:center; margin: 25px 0 10px; color:#2b5f1a; opacity:0.7;">
-            🌟 所有技巧源自 Miss Claudia Chu · 馬俊江校長 · 呂恒森校長 · 劉子聰校長 及 一眾專家 🌟
+        <div style="text-align:center; margin: 15px 0 5px; color:#2b5f1a; opacity:0.7; font-size:0.9rem;">
+            🌟 專家：Miss Chu · 馬俊江 · 呂恒森 · 劉子聰 🌟
         </div>
     </div>
 </body>
