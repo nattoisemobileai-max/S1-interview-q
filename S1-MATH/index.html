@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathSpell: S1 RPG Challenge</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Lexend:wght@400;700&display=swap');
+        body { font-family: 'Lexend', sans-serif; background: #020617; }
+        .pixel-border { border: 4px solid #1e293b; }
+        .stats-font { font-family: 'Bungee', cursive; }
+    </style>
+</head>
+<body class="text-white min-h-screen p-4 flex items-center justify-center">
+
+    <div class="max-w-md w-full space-y-4">
+        <div class="flex justify-between items-end px-2">
+            <div>
+                <p class="text-xs text-blue-400 font-bold">STREAK: <span id="streak-days">0</span> DAYS</p>
+                <h1 class="text-2xl stats-font tracking-wider text-yellow-400">MATH QUEST</h1>
+            </div>
+            <div class="text-right">
+                <p class="text-[10px] text-slate-500 uppercase">Total Mana</p>
+                <p id="total-score" class="text-2xl stats-font text-emerald-400">0000</p>
+            </div>
+        </div>
+
+        <div class="bg-slate-800 rounded-full h-4 overflow-hidden border-2 border-slate-700">
+            <div id="hp-bar" class="bg-gradient-to-r from-rose-500 to-red-400 h-full w-full transition-all duration-500"></div>
+        </div>
+
+        <div class="bg-slate-900 rounded-[2.5rem] p-8 border-b-8 border-slate-950 relative overflow-hidden">
+            <div id="daily-bonus-msg" class="hidden absolute top-2 left-0 w-full text-center text-[10px] text-yellow-500 font-bold animate__animated animate__pulse animate__infinite">
+                DAILY STREAK BONUS ACTIVE!
+            </div>
+            
+            <div class="text-center space-y-6 pt-4">
+                <div id="game-status" class="text-xs font-bold text-slate-500 uppercase tracking-widest">
+                    Ready for Daily Challenge?
+                </div>
+
+                <div id="question-text" class="h-28 flex items-center justify-center text-xl font-bold leading-tight px-4 text-slate-200">
+                    點擊「開始挑戰」<br>聆聽今日的第一道指令
+                </div>
+
+                <div id="options-grid" class="grid grid-cols-2 gap-3">
+                    </div>
+            </div>
+        </div>
+
+        <div id="action-area" class="space-y-3">
+            <button onclick="startDailyChallenge()" id="start-btn" class="w-full bg-blue-600 hover:bg-blue-500 py-5 rounded-2xl stats-font text-xl shadow-[0_6px_0_#1d4ed8] active:shadow-none active:translate-y-[6px] transition-all">
+                START CHALLENGE
+            </button>
+            <p class="text-center text-[10px] text-slate-500">答對 +20 Mana | 答錯 -10 Mana (賠償機制)</p>
+        </div>
+    </div>
+
+    <script>
+        // --- 遊戲數據庫 (第一週：有向數) ---
+        const mathSpells = [
+            { q: "Sum of negative 12 and 20", a: 8, opts: [8, -8, 32, -32] },
+            { q: "Product of negative 5 and negative 6", a: 30, opts: [30, -30, 11, -11] },
+            { q: "Difference between 5 and 15", a: -10, opts: [-10, 10, 20, -20] },
+            { q: "Quotient of 40 and negative 8", a: -5, opts: [-5, 5, 32, -48] },
+            { q: "Negative 100 divided by negative 4", a: 25, opts: [25, -25, 400, 96] }
+        ];
+
+        // --- 遊戲狀態管理 ---
+        let state = {
+            totalScore: parseInt(localStorage.getItem('math_mana')) || 0,
+            streak: parseInt(localStorage.getItem('math_streak')) || 0,
+            lastDate: localStorage.getItem('math_last_date'),
+            hp: 100,
+            currentQuest: null
+        };
+
+        // 初始化顯示
+        updateDisplay();
+        checkStreak();
+
+        function updateDisplay() {
+            document.getElementById('total-score').innerText = state.totalScore.toString().padStart(4, '0');
+            document.getElementById('streak-days').innerText = state.streak;
+            document.getElementById('hp-bar').style.width = state.hp + '%';
+            localStorage.setItem('math_mana', state.totalScore);
+            localStorage.setItem('math_streak', state.streak);
+            localStorage.setItem('math_last_date', state.lastDate);
+        }
+
+        function checkStreak() {
+            const today = new Date().toDateString();
+            if (state.lastDate === today) {
+                // 今日已挑戰
+            } else {
+                // 檢查是否連續
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                if (state.lastDate !== yesterday.toDateString()) {
+                    state.streak = 0; // 中斷連勝
+                }
+                updateDisplay();
+            }
+        }
+
+        function startDailyChallenge() {
+            if (state.hp <= 0) {
+                alert("你需要休息！HP 已耗盡，請重新開始。");
+                state.hp = 100;
+                updateDisplay();
+                return;
+            }
+            nextQuestion();
+            document.getElementById('start-btn').innerText = "🔊 REPLAY VOICE";
+        }
+
+        function nextQuestion() {
+            state.currentQuest = mathSpells[Math.floor(Math.random() * mathSpells.length)];
+            speak(state.currentQuest.q);
+            document.getElementById('game-status').innerText = "Casting Spell...";
+            document.getElementById('question-text').innerText = "???";
+            renderOptions();
+        }
+
+        function speak(text) {
+            const msg = new SpeechSynthesisUtterance(text);
+            msg.lang = 'en-US';
+            msg.rate = 0.8;
+            window.speechSynthesis.speak(msg);
+        }
+
+        function renderOptions() {
+            const grid = document.getElementById('options-grid');
+            grid.innerHTML = '';
+            state.currentQuest.opts.sort(() => Math.random() - 0.5).forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = "bg-slate-800 hover:bg-slate-700 py-5 rounded-2xl font-bold stats-font border-b-4 border-slate-950 active:border-0 active:translate-y-1 transition-all";
+                btn.innerText = opt;
+                btn.onclick = () => handleAnswer(opt, btn);
+                grid.appendChild(btn);
+            });
+        }
+
+        function handleAnswer(val, btn) {
+            if (val === state.currentQuest.a) {
+                // 答對獎勵
+                const bonus = 20 + (state.streak * 2);
+                state.totalScore += bonus;
+                const today = new Date().toDateString();
+                if (state.lastDate !== today) {
+                    state.streak++;
+                    state.lastDate = today;
+                }
+                document.getElementById('question-text').innerText = "CORRECT! +" + bonus;
+                btn.classList.add('bg-emerald-500', 'border-emerald-700');
+                setTimeout(nextQuestion, 1200);
+            } else {
+                // 答錯賠償 (扣分 + 扣HP)
+                state.totalScore = Math.max(0, state.totalScore - 10);
+                state.hp -= 20;
+                document.getElementById('question-text').innerText = "WRONG! -10 MANA";
+                btn.classList.add('bg-rose-500', 'border-rose-700');
+                if (state.hp <= 0) {
+                    document.getElementById('question-text').innerText = "GAME OVER";
+                }
+            }
+            updateDisplay();
+        }
+    </script>
+</body>
+</html>
